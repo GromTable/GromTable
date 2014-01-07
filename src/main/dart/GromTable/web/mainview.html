@@ -1,0 +1,22 @@
+<link rel="import" href="graphview.html">
+<link rel="import" href="loginview.html">
+
+<polymer-element name="main-view">
+  <template>
+    <h1>{{publicTableMsg}}</h1>
+
+    <template if="{{!isLoggedIn}}">
+      <login-view></login-view>
+    </template>
+    <template if="{{isLoggedIn}}">
+      <graph-view></graph-view>
+    </template>
+    <p></p>
+    <select value="{{selectedLocale}}">
+      <option value="uk">Ukrainian</option>
+      <option value="en_US">English</option>
+      <option value="ru">Russian</option>
+    </select>
+  </template>
+  <script type="application/dart" src="mainview.dart"></script>
+</polymer-element>

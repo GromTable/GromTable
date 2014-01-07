@@ -1,0 +1,19 @@
+<polymer-element name="login-view">
+  <template>
+    <style>
+    .warning {
+      color: red;
+    }
+    .login {
+      color: blue;
+    }
+    .loginButton {
+      color: blue;
+    }
+    </style>
+    <h1><a class="warning" href="https://www.facebook.com/groups/344033669072141/">{{developersOnly()}}</a></h1>
+    <h3 class="login">{{login()}}</h3>
+    <button class="loginButton" on-click="{{loginViaFacebook}}">Facebook</button>
+  </template>
+  <script type="application/dart" src="loginview.dart"></script>
+</polymer-element>

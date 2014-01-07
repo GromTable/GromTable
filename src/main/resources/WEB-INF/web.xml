@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+              http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+  version="2.5" xmlns="http://java.sun.com/xml/ns/javaee">
+
+  <!-- Servlets -->
+  <servlet>
+    <servlet-name>ApiServlet</servlet-name>
+    <servlet-class>com.gromtable.server.servlet.ApiServlet</servlet-class>
+    <init-param>
+      <param-name>server_store_file_name</param-name>
+      <param-value>src/main/resources/store.txt</param-value>
+    </init-param>
+    <init-param>
+      <param-name>server_facebook_client_id</param-name>
+      <param-value>facebook_client_id</param-value>
+    </init-param>
+    <init-param>
+      <param-name>server_facebook_client_id</param-name>
+      <param-value>220468611468615</param-value>
+    </init-param>
+    <init-param>
+      <param-name>server_facebook_client_secret</param-name>
+      <param-value>130d0cdcf5d3deef24a4baf9fee12a1b</param-value>
+    </init-param>
+
+	<!-- Client settings, please don't put any secret information here
+	like facebook client secret -->
+    <init-param>
+      <param-name>client_facebook_client_id</param-name>
+      <param-value>220468611468615</param-value>
+    </init-param>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>ApiServlet</servlet-name>
+    <url-pattern>/api/*</url-pattern>
+  </servlet-mapping>
+
+  <!-- Default page to server -->
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+  </welcome-file-list>
+</web-app>

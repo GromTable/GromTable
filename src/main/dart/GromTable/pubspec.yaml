@@ -1,0 +1,9 @@
+name: GromTable
+description: A sample Polymer application
+dependencies:
+    polymer: any
+    intl: any
+    cookie: 0.0.4
+transformers:
+- polymer:
+    entry_points: web/index.html

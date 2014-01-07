@@ -1,0 +1,29 @@
+<link rel="import" href="userview.html">
+
+<polymer-element name="graph-view">
+  <template>
+
+    <template if="{{!isLoaded}}">
+      {{loading()}}
+    </template>
+    <template if="{{isLoaded}}">
+      <h3>{{userInformation()}}</h3>
+      <user-view user="{{user}}" onuser="{{loadGraph}}"></user-view>
+      <button on-click="{{logout}}">{{logoutMessage()}}</button>
+      <p></p>
+      <template if="{{userDelegate != null}}">
+         {{delegatedByUser()}}
+         <user-view user="{{userDelegate}}" onuser="{{loadGraph}}"></user-view>
+      </template>
+      <p></p>
+      {{delegatedThisUser()}}
+      <template repeat="{{user in delegatedUser}}">
+         <p><user-view user="{{user}}" onuser="{{loadGraph}}"></user-view></p>
+      </template>
+      <p></p>
+      <input type="text" value="{{userDelegateId}}">
+      <button on-click="{{delegateUser}}">{{delegate()}}</button>
+    </template>
+  </template>
+  <script type="application/dart" src="graphview.dart"></script>
+</polymer-element>

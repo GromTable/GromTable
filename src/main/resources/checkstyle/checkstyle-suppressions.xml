@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE suppressions PUBLIC
+     "-//Puppy Crawl//DTD Suppressions 1.0//EN"
+     "http://www.puppycrawl.com/dtds/suppressions_1_0.dtd">
+
+<suppressions>
+
+  <suppress checks="LineLength"
+             files="src/main/java/com/godcy/client/service/JsonServiceRequest.java"
+             lines="34"/>
+  <suppress checks="IllegalCatch"
+             files="src/main/java/com/godcy/server/core/yield/GeneratorIterator.java"
+             lines="23"/>
+</suppressions>
