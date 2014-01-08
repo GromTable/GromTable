@@ -22,4 +22,13 @@ public class EntityUserTest extends EntityObjectTest<EntityUser> {
     Assert.assertEquals(savedUser.getFbId(), "1");
     Assert.assertEquals(user.getFbId(), "1");
   }
+
+  @Test
+  public void equalsTest() {
+    EntityUser user = new EntityUser("1", "User");
+    EntityUser userSame = new EntityUser("1", "User");
+    EntityUser userOther = new EntityUser("2", "Other");
+    Assert.assertTrue(user.equals(userSame));
+    Assert.assertFalse(user.equals(userOther));
+  }
 }

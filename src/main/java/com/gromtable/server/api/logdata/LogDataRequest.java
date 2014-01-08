@@ -15,7 +15,6 @@ import com.gromtable.server.core.environment.BaseEnvironment;
 public class LogDataRequest extends BaseControllerRequest {
   public static final String CATEGORY_FIELD = "category";
   public static final String DATA_FIELD = "data";
-  private static RequestFields requestFields = null;
   private class HashMapTypeToken extends TypeToken<HashMap<String, String>> {
   }
 
@@ -26,19 +25,17 @@ public class LogDataRequest extends BaseControllerRequest {
   }
 
   protected RequestFields getRequestFields() {
-    if (requestFields == null) {
-      requestFields = getBaseRequestFields();
-      requestFields.add(new RequestField(
-        CATEGORY_FIELD,
-        RequestField.Type.STRING,
-        RequestField.Optionality.REQUIRED,
-        "This is category to which data need to be logged."));
-      requestFields.add(new RequestField(
-        DATA_FIELD,
-        RequestField.Type.STRING,
-        RequestField.Optionality.REQUIRED,
-        "This is data."));
-    }
+    RequestFields requestFields = new RequestFields();
+    requestFields.add(new RequestField(
+      CATEGORY_FIELD,
+      RequestField.Type.STRING,
+      RequestField.Optionality.REQUIRED,
+      "This is category to which data need to be logged."));
+    requestFields.add(new RequestField(
+      DATA_FIELD,
+      RequestField.Type.STRING,
+      RequestField.Optionality.REQUIRED,
+      "This is data."));
     return requestFields;
   }
 

@@ -5,6 +5,7 @@ import java.util.Random;
 
 import com.gromtable.server.core.data.log.Log4jDataLog;
 import com.gromtable.server.core.loader.callback.FileStoreResource;
+import com.gromtable.server.core.time.SystemTime;
 import com.gromtable.server.fbapi.HttpFetcher;
 import com.gromtable.server.settings.Settings;
 
@@ -17,6 +18,7 @@ public class ProductionEnvironment extends BaseEnvironment {
     setHttpFetcher(new HttpFetcher());
     setDataLog(new Log4jDataLog());
     setSettings(settings);
+    setTime(new SystemTime());
   }
 
 }

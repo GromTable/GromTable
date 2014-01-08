@@ -18,5 +18,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "delegatedByUser" : () => Intl.message("Представником даного користувача є:"),
     "delegatedThisUser" : () => Intl.message("Даного користувача делегували:"),
     "delegate" : () => Intl.message("Назначте свого предстаника"),
+    "documentHeader" : () => Intl.message("Документ № 1"),
+    "commands" : () => Intl.message("Доступни команди:"),
+    "createDocument" : () => Intl.message("Створити документ"),
+    "documentsList" : () => Intl.message("Список документов"),
+    "becameDelegate" : () => Intl.message("Балатуватися в депутати"),
+    "becameVoter" : () => Intl.message("Перестаты бути депутатом"),
+    "userSettings" : () => Intl.message("Настройки"),
   };
 }

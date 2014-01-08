@@ -6,4 +6,7 @@ dependencies:
     cookie: 0.0.4
 transformers:
 - polymer:
-    entry_points: web/index.html
+    entry_points:
+    - web/index.html
+    - web/testuser.html
+

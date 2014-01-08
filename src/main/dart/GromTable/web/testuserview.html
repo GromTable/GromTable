@@ -1,0 +1,11 @@
+<polymer-element name="test-user-view">
+  <template>
+    <h1>Hello test user</h1>
+    <template repeat="{{name in names}}">
+      <button data-name="{{name}}" on-click="{{loginUser}}">{{name}}</button>
+    </template>
+    <lable>Custom user: <input value="{{customName}}"></lable>
+    <button data-name="{{customName}}" on-click="{{loginUser}}">Custom user</button>
+  </template>
+  <script type="application/dart" src="testuserview.dart"></script>
+</polymer-element>

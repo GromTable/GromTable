@@ -1,0 +1,48 @@
+<link rel="import" href="userview.html">
+
+<polymer-element name="document-votes-view">
+  <template>
+    <style>
+    .delegateHeader {
+    }
+    .delegate {
+      padding: 0 0 0 10px;
+    }
+    .delegateCurrent {
+      background-color: yellow;
+    }
+    .voter {
+      padding: 0 0 0 20px;
+    }
+    .voterCurrent {
+      background-color: yellow;
+      padding: 0 0 0 20px;
+    }
+    .totalVotes {
+    }
+    .votes {
+      border-collapse:collapse;
+      width:100%;
+    }
+    .votes td, .votes th {
+      border: 1px solid black;
+      text-align:left; 
+      vertical-align:middle;
+    }
+    </style>
+    <template if="{{totalvotes != null && allvotes != null}}">
+    <table class="votes">
+      <thead>
+      </thead>       
+      <tbody>
+        <tr template repeat="{{row in getTable(totalvotes, allvotes, viewercontext.currentUser)}}">
+          <td class="{{row.clazz}}" template repeat="{{column in row.columns}}">
+            {{column}}
+          </td>
+        </tr>     
+      </tbody>  
+    </table>
+    </template>
+  </template>
+  <script type="application/dart" src="documentvotesview.dart"></script>
+</polymer-element>

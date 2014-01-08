@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
+import com.gromtable.server.api.facebookcomments.FacebookCommentsResult;
 import com.gromtable.server.api.login.LoginResult;
 
 public class ApiResult {
@@ -26,7 +27,11 @@ public class ApiResult {
     response.addHeader("Access-Control-Allow-Credentials", "true");
     response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
     response.addHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    response.setContentType("text/javascript");
+    if (result instanceof FacebookCommentsResult) {
+      response.setContentType("text/html");
+    } else {
+      response.setContentType("text/javascript; charset=utf-8");
+    }
     // TODO: clowntown
     // TODO: use constant instead of 's'
     if (result instanceof LoginResult && result.getError() == null) {

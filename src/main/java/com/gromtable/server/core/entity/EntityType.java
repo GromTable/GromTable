@@ -5,7 +5,10 @@ public enum EntityType {
   ENTITY_HASHOUT(3),
   ENTITY_USER(5),
   ENTITY_USER_SESSION(6),
-  ENTITY_COORDINATE(9);
+  ENTITY_DOCUMENT(7),
+  ENTITY_VOTE(8),
+  ENTITY_ACTION(9),
+  ENTITY_LIST(10);
 
   private final long id;
 

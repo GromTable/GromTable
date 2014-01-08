@@ -20,7 +20,7 @@ public class BaseControllerResult {
     return new RequestFields();
   }
 
-  public final void writeResponse(Writer writer) {
+  public void writeResponse(Writer writer) {
     System.out.println(BaseEnvironment.getEnvironment().getGson().toJson(this));
     BaseEnvironment.getEnvironment().getGson().toJson(this, writer);
   }

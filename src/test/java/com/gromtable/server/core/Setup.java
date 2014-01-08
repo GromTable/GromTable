@@ -5,6 +5,7 @@ import com.gromtable.server.core.environment.BaseEnvironment;
 import com.gromtable.server.core.environment.TestEnvironment;
 import com.gromtable.server.core.loader.callback.MemoryStoreResource;
 import com.gromtable.server.core.loader.callback.StoreResource;
+import com.gromtable.server.core.time.ConstantTime;
 
 import java.util.Random;
 
@@ -19,6 +20,7 @@ public class Setup {
     environment.setStore(storeResource);
     environment.setRandom(new Random(777));
     environment.setDataLog(new ArrayDataLog());
+    environment.setTime(new ConstantTime());
     BaseEnvironment.setEnvironment(environment);
     return environment;
   }

@@ -26,6 +26,6 @@ public class LoginController extends ApiController<LoginRequest, LoginResult> {
   }
 
   protected LoginResult genControllerResult(LoginRequest request) {
-    return new LoginImpl(request.getCode(), request.getState()).genLoad();
+    return new LoginImpl(request.getType(), request.getCode(), request.getState()).genLoad();
   }
 }

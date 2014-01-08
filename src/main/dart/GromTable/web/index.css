@@ -1,0 +1,8 @@
+.fancy {
+  background-color: #00A0FF;
+  color: #fff;
+  font-size: 20px;
+  padding: 10px 20px;
+  -webkit-border-radius: 2px;
+  border: 0px;
+}

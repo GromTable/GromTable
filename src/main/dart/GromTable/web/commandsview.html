@@ -1,0 +1,43 @@
+<link rel="import" href="userview.html">
+<link rel="import" href="documentvotesview.html">
+<link rel="import" href="facebookcommentsview.html">
+
+<polymer-element name="commands-view">
+  <template>
+    <style>
+    .fancy {
+      background-color: #00A0FF;
+      color: #fff;
+      font-size: 20px;
+      padding: 10px 20px;
+      -webkit-border-radius: 2px;
+      border: 0px;
+    }
+    .deleteAction {
+      background-color: #FF0000;
+    }
+    .commands {
+      background-color: #EBF8E5;
+      padding: 10px 10px 10px 10px;
+    }
+    .header {
+      padding: 0px 0px 0px 30px;
+    }
+    </style>
+    <template if="{{viewerContext != null}}">
+    <div class="commands">
+      <h3 class="header">{{commandsMessage()}}</h3>
+      <div>
+      <template if="{{viewerContext.currentUser.type == 'DELEGATE'}}">
+        <button class="fancy" on-click="{{createDocument}}">{{createDocumentMessage()}}</button>
+      </template>
+      <button class="fancy" on-click="{{documentsList}}">{{documentsListMessage()}}</button>
+      <template if="{{viewerContext.currentUser != null}}">
+        <button class="fancy" on-click="{{userSettings}}">{{userSettingsMessage()}}</button>
+      </template>
+      </div>
+    </div>
+    </template>
+  </template>
+  <script type="application/dart" src="commandsview.dart"></script>
+</polymer-element>

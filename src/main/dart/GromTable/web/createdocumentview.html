@@ -1,0 +1,13 @@
+<polymer-element name="create-document-view">
+  <template>
+    <h1>Create document section</h1>
+    <p>
+    <label>Document name: <input value="{{document.name}}" placeholder="Type document name here..."></label>
+    </p>
+    <p>
+    <lable>Document text: <textarea rows="4" cols="50" value="{{document.text}}" placeholder="Type document text here .."></textarea></lable>
+    </p>
+    <button on-click="{{createDocument}}">{{createDocumentMessage()}}</button>
+  </template>
+  <script type="application/dart" src="createdocumentview.dart"></script>
+</polymer-element>

@@ -1,0 +1,36 @@
+<link rel="import" href="userview.html">
+<link rel="import" href="documentvotesview.html">
+<link rel="import" href="facebookcommentsview.html">
+
+<polymer-element name="documents-list-view">
+  <template>
+    <style>
+      #searchdocumentt {
+         margin-top: 20px;
+      }
+    .fancy {
+      background-color: #00A0FF;
+      color: #fff;
+      font-size: 20px;
+      padding: 10px 20px;
+      -webkit-border-radius: 2px;
+      border: 0px;
+    }
+    </style>
+    <h1>Documents list</h1>
+    <div>
+      <input id="searchdocument" type="text" value="{{searchParam}}" placeholder="Search">
+      <br>
+      <input type="checkbox" id="voting" checked="{{showVoting}}">Show voting
+      <input type="checkbox" id="accepted" checked="{{showAccepted}}">Show accepted
+      <input type="checkbox" id="rejected" checked="{{showRejected}}">Show rejected
+      <input type="checkbox" id="cancelled" checked="{{showCancelled}}">Show cancelled
+      <ul>
+        <template repeat="{{doc in filteredDocuments}}">
+          <li>{{doc.name}} {{doc.status}} {{doc.getVoteByString()}}<button class="fancy" data-document="{{doc.id}}" on-click="{{goToDocument}}">Go TO</button></li>
+        </template>
+      </ul>
+    </div>
+  </template>
+  <script type="application/dart" src="documentslistview.dart"></script>
+</polymer-element>

@@ -1,0 +1,20 @@
+<link rel="import" href="userview.html">
+<link rel="import" href="documentvotesview.html">
+<link rel="import" href="facebookcommentsview.html">
+
+<polymer-element name="header-view">
+  <template>
+    <style>
+    .header {
+      background-color: #AAAAAA;
+      padding: 10px 10px 10px 30px;
+    }
+    </style>
+    <div class="header">
+    <template if="{{viewerContext != null}}">
+      <h1>{{headerMessage()}}</h1>
+    </template>
+    </div>
+  </template>
+  <script type="application/dart" src="headerview.dart"></script>
+</polymer-element>

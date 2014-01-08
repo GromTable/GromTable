@@ -1,0 +1,66 @@
+<link rel="import" href="userview.html">
+<link rel="import" href="documentvotesview.html">
+<link rel="import" href="facebookcommentsview.html">
+
+<polymer-element name="document-view">
+  <template>
+    <style>
+    .buttonYes, .buttonNo, .buttonHold {
+      background-color: #18D673;
+      color: #fff;
+      font-size: 20px;
+      padding: 10px 20px;
+      -webkit-border-radius: 2px;
+      border: 0px;
+    }
+    .buttonYes {
+      background-color: #18D673;
+    }
+    .buttonNo {
+      background-color: #CC4D3D;
+    }
+    .buttonHold {
+      background-color: #D6D618;
+    }
+    .documentBox {
+      border: 1px solid black;
+      padding: 25px 25px 25px 25px;
+    }
+    .document {
+      background-color: #FAF8EA;
+      padding: 10px 10px 10px 10px;
+    }
+    pre {
+ white-space: pre-wrap;       /* css-3 */
+ white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+ white-space: -pre-wrap;      /* Opera 4-6 */
+ white-space: -o-pre-wrap;    /* Opera 7 */
+ word-wrap: break-word;       /* Internet Explorer 5.5+ */
+}
+
+    </style>
+    <div class="document">
+    <h1>{{documentHeaderMessage()}}</h1>
+    <template if="{{!isLoaded}}">
+      Loading...
+    </template>
+    <template if="{{isLoaded}}">
+      <div class="documentBox" style = "border:1px solid black;">
+        <h2>{{document.name}}</h2>
+        <pre>{{document.text}}</pre>    
+      </div>
+      <div>
+      Author of the document: <user-view user="{{document.author}}"></user-view>   
+      <p>
+        <button class="buttonYes" on-click="{{voteYes}}">{{documentVoteYesButtonMessage()}}</button>
+        <button class="buttonNo" on-click="{{voteNo}}">{{documentVoteNoButtonMessage()}}</button>
+        <button class="buttonHold" on-click="{{voteHold}}">{{documentVoteHoldButtonMessage()}}</button>
+      </p>     
+      <document-votes-view totalvotes="{{document.totalVotes}}" allvotes="{{document.allVotes}}" viewercontext="{{viewerContext}}" state="{{getState(document.totalVotes, document.allVotes)}}"></document-votes-view>
+      <facebook-comments-view url="{{getHref()}}"></facebook-comments-view>
+      </div>  
+    </template>
+    </div>
+  </template>
+  <script type="application/dart" src="documentview.dart"></script>
+</polymer-element>

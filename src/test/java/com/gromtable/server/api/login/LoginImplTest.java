@@ -54,7 +54,7 @@ public class LoginImplTest extends BaseTest {
   }
 
   private ViewerContext genLogin(final String code, final String state) {
-    LoginResult loginResult = new LoginImpl(code, state).genLoad();
+    LoginResult loginResult = new LoginImpl(LoginImpl.FACEBOOK, code, state).genLoad();
     return ViewerContext.genCreateFromCookie(loginResult.getCookie());
   }
 

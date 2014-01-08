@@ -1,17 +1,49 @@
-<link rel="import" href="graphview.html">
+<link rel="import" href="loggedinview.html">
+<link rel="import" href="userinfoview.html">
+<link rel="import" href="documentview.html">
+<link rel="import" href="createdocumentview.html">
+<link rel="import" href="documentslistview.html">
+<link rel="import" href="commandsview.html">
 <link rel="import" href="loginview.html">
+<link rel="import" href="headerview.html">
+<link rel="import" href="usersettingsview.html">
 
 <polymer-element name="main-view">
   <template>
-    <h1>{{publicTableMsg}}</h1>
-
-    <template if="{{!isLoggedIn}}">
+    <style>
+    .fancy {
+      background-color: #00A0FF;
+      color: #fff;
+      font-size: 20px;
+      padding: 10px 20px;
+      -webkit-border-radius: 2px;
+      border: 0px;
+    }
+    </style>     
+    <header-view></header-view>
+    <template if="{{!viewerContext.isLoggedIn}}">
       <login-view></login-view>
     </template>
-    <template if="{{isLoggedIn}}">
-      <graph-view></graph-view>
+    <template if="{{viewerContext.isLoggedIn}}">
+      <loggedin-view></loggedin-view>
     </template>
-    <p></p>
+    <commands-view></commands-view>
+
+    <template if="{{state.view == 'user'}}">
+      <user-info-view userid="{{state.id}}"></user-info-view>
+    </template>
+    <template if="{{state.view == 'create_document'}}">
+      <create-document-view></create-document-view>
+    </template>
+    <template if="{{state.view == 'document'}}">
+      <document-view></document-view>
+    </template>
+    <template if="{{state.view == 'documents_list'}}">
+      <documents-list-view></documents-list-view>
+    </template>
+    <template if="{{state.view == 'user_settings'}}">
+      <user-settings-view></user-settings-view>
+    </template>
     <select value="{{selectedLocale}}">
       <option value="uk">Ukrainian</option>
       <option value="en_US">English</option>

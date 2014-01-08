@@ -11,6 +11,7 @@ public abstract class BaseControllerRequest {
 
   private final ApiRequest apiRequest;
   private ViewerContext viewerContext = null;
+  private RequestFields cachedRequestFields = null;
 
   public BaseControllerRequest(ApiRequest apiRequest) {
     this.apiRequest = apiRequest;
@@ -36,8 +37,20 @@ public abstract class BaseControllerRequest {
     return apiRequest.getReferer();
   }
 
+  private RequestFields getCachedRequestFields() {
+    if (cachedRequestFields == null) {
+      cachedRequestFields = getRequestFields();
+      cachedRequestFields.add(new RequestField(
+        CALLBACK_FIELD,
+        RequestField.Type.STRING,
+        RequestField.Optionality.OPTIONAL,
+        "if specified, then this callback will be called"));
+    }
+    return cachedRequestFields;
+  }
+
   public boolean isValid() {
-    RequestFields requestFields = getRequestFields();
+    RequestFields requestFields = getCachedRequestFields();
     Set<String> keys = apiRequest.getKeys();
 
     // All keys defined
@@ -58,18 +71,8 @@ public abstract class BaseControllerRequest {
 
   protected abstract RequestFields getRequestFields();
 
-  protected RequestFields getBaseRequestFields() {
-    RequestFields requestFields = new RequestFields();
-    requestFields.add(new RequestField(
-      CALLBACK_FIELD,
-      RequestField.Type.STRING,
-      RequestField.Optionality.OPTIONAL,
-      "if specified, then this callback will be called"));
-    return requestFields;
-  }
-
   protected RequestField getRequestFieldByName(String name) {
-    return getRequestFields().get(name);
+    return getCachedRequestFields().get(name);
   }
 
   public ViewerContext getViewerContext() {

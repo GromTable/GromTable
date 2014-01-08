@@ -9,7 +9,7 @@ public class LogDataController extends ApiController<LogDataRequest, LogDataResu
   }
 
   public String getPath() {
-    return "/logdata";
+    return "/log_data";
   }
 
   protected LogDataRequest createControllerRequest(ApiRequest apiRequest) {

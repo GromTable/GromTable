@@ -6,6 +6,7 @@ import java.util.Arrays;
 import org.apache.commons.codec.binary.Hex;
 
 public class Data implements Comparable<Data> {
+  public static final Data EMPTY = new Data(new byte[0]);
   private final byte[] data;
 
   public Data(byte[] data) {

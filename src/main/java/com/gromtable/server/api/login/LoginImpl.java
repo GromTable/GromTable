@@ -18,15 +18,24 @@ import com.gromtable.server.fbapi.IHttpFetcher;
 public class LoginImpl extends Loader<LoginResult> {
   public static final String CLIENT_ID_KEY = "server_facebook_client_id";
   public static final String CLIENT_SECRET_KEY = "server_facebook_client_secret";
+  public static final String FACEBOOK = "facebook";
+  private static final String TEST = "test";
+
+  private String type;
   private String code;
   private String loginUrl;
   private String preloginUrl;
+  private String state;
 
-  public LoginImpl(String code, String state) {
+  public LoginImpl(String type, String code, String state) {
+    this.type = type;
     this.code = code;
     String[] parts = state.split("DELIMITER");
-    this.loginUrl = parts[0];
-    this.preloginUrl = parts[1];
+    if (parts.length == 2) {
+      this.loginUrl = parts[0];
+      this.preloginUrl = parts[1];
+    }
+    this.state = state;
   }
 
   private String genAccessToken(IHttpFetcher httpFetcher) {
@@ -43,9 +52,7 @@ public class LoginImpl extends Loader<LoginResult> {
     buffer.append("&code=" + code);
 
     String data = httpFetcher.genContent(buffer.toString());
-    System.out.println(buffer.toString());
     String accessToken = data.split("[=&]")[1];
-    System.out.println(accessToken);
     return accessToken;
   }
 
@@ -62,25 +69,55 @@ public class LoginImpl extends Loader<LoginResult> {
     return new EntityUser(id, name);
   }
 
+  private LoginResult loginViaFacebook() {
+    IHttpFetcher httpFetcher = BaseEnvironment.getEnvironment().getHttpFetcher();
+    String accessToken = genAccessToken(httpFetcher);
+    EntityUser user = genUser(httpFetcher, accessToken);
+    LoginToken loginToken = new FbLoginToken(user.getFbId());
+    Key loginTokenKey = new RowKey(loginToken.getToken());
+    HashoutLoginTokenToUser hashoutLoginTokenToUser = new HashoutLoginTokenToUser();
+    EntityUser savedUser = hashoutLoginTokenToUser.loadEntity(loginTokenKey);
+    // We need to create new user.
+    if (savedUser == null) {
+      hashoutLoginTokenToUser.addEntity(loginTokenKey, user);
+      savedUser = user;
+    }
+    UserSessionToken sessionToken = ViewerContext.genLogin(savedUser.getId());
+    return new LoginResult(sessionToken.getCookieData(), preloginUrl);
+  }
+
+  private EntityUser parseUser(String code) {
+    return new EntityUser(null, code);
+  }
+
+  private LoginResult loginViaTestUsers() {
+    EntityUser user = parseUser(code);
+    LoginToken loginToken = new TestLoginToken(user.getTestId());
+    Key loginTokenKey = new RowKey(loginToken.getToken());
+    HashoutLoginTokenToUser hashoutLoginTokenToUser = new HashoutLoginTokenToUser();
+    EntityUser savedUser = hashoutLoginTokenToUser.loadEntity(loginTokenKey);
+    // We need to create new user.
+    if (savedUser == null) {
+      hashoutLoginTokenToUser.addEntity(loginTokenKey, user);
+      savedUser = user;
+    }
+    UserSessionToken sessionToken = ViewerContext.genLogin(savedUser.getId());
+    return new LoginResult(sessionToken.getCookieData(), state);
+  }
+
   public LoginResult genLoad() {
     try {
-      IHttpFetcher httpFetcher = BaseEnvironment.getEnvironment().getHttpFetcher();
-      String accessToken = genAccessToken(httpFetcher);
-      EntityUser user = genUser(httpFetcher, accessToken);
-      LoginToken loginToken = new FbLoginToken(user.getFbId());
-      Key loginTokenKey = new RowKey(loginToken.getToken());
-      HashoutLoginTokenToUser hashoutLoginTokenToUser = new HashoutLoginTokenToUser();
-      EntityUser savedUser = hashoutLoginTokenToUser.loadEntity(loginTokenKey);
-      // We need to create new user.
-      if (savedUser == null) {
-        hashoutLoginTokenToUser.addEntity(loginTokenKey, user);
-        savedUser = user;
+      if (type.equals(FACEBOOK)) {
+        return loginViaFacebook();
+      } else if (type.equals(TEST)) {
+        return loginViaTestUsers();
+      } else {
+        throw new RuntimeException("Unknown type.");
       }
-      UserSessionToken sessionToken = ViewerContext.genLogin(savedUser.getId());
-      return new LoginResult(sessionToken.getCookieData(), preloginUrl);
     } catch (Exception exception) {
       LoginResult result = new LoginResult(null, null);
-      result.setError("Can not login");
+      result.setError("Can not login:" + exception.getMessage());
+      exception.printStackTrace();
       return result;
     }
   }

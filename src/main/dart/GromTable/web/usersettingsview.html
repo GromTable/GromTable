@@ -1,0 +1,56 @@
+<link rel="import" href="userview.html">
+<link rel="import" href="documentvotesview.html">
+<link rel="import" href="facebookcommentsview.html">
+
+<polymer-element name="user-settings-view">
+  <template>
+    <style>
+    .fancy {
+      background-color: #00A0FF;
+      color: #fff;
+      font-size: 20px;
+      padding: 10px 20px;
+      -webkit-border-radius: 2px;
+      border: 0px;
+    }
+    .updateInfo {
+      background-color: #18D673;
+    }
+    .becameDelegateButton {
+      background-color: #18D673;
+    }
+    .becameDelegate {
+      background-color: #FAF8EA;
+      padding: 10px 10px 10px 10px;
+    }
+    </style>
+    <template if="{{viewerContext.currentUser != null}}">
+    <div class="becameDelegate">
+      <div class="commands">
+        <label>Name: <input value="{{name}}"></label><br>
+        <label>City: <input value="{{city}}"></label><br>
+        <label>Zip: <input value="{{zip}}"></label><br>
+        <label>Description: <textarea rows="4" cols="50" value="{{description}}" placeholder="Type description about yourself..."></textarea></label><br>
+        <lable>Phone: <input value="{{phone}}"></lable><br>
+        <label>Facebook: <input value="{{facebook}}"></label><br>
+        <lable>Vkontakte: <input value="{{vkontakte}}"></lable><br>
+        <lable>Instagram: <input value="{{instagram}}"></lable><br>
+        <lable>Twitter: <input value="{{twitter}}"></lable><br>
+        <button class="fancy updateInfo" on-click="{{updateInfo}}">{{updateInfoMessage()}}</button>
+        <p>
+        {{voterDelegateExplanation()}}
+        </p>
+        <p>
+        <template if="{{viewerContext.currentUser.type == 'DELEGATE'}}">
+          <button class="fancy becameDelegateButton" on-click="{{becameVoter}}">{{becameVoterMessage()}}</button>
+        </template>
+        <template if="{{viewerContext.currentUser.type == 'VOTER'}}">
+          <button class="fancy becameDelegateButton" on-click="{{becameDelegate}}">{{becameDelegateMessage()}}</button>
+        </template>
+        </p>
+      </div>
+    </div>
+    </template>
+  </template>
+  <script type="application/dart" src="usersettingsview.dart"></script>
+</polymer-element>

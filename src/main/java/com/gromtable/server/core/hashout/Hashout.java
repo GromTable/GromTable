@@ -11,6 +11,7 @@ import com.gromtable.server.core.data.Data;
 import com.gromtable.server.core.data.Id;
 import com.gromtable.server.core.data.Key;
 import com.gromtable.server.core.entity.EntityObject;
+import com.gromtable.server.core.entity.EntityUserAndVote;
 import com.gromtable.server.core.loader.base.HashoutAddLoader;
 import com.gromtable.server.core.loader.base.HashoutGetMultiLoader;
 import com.gromtable.server.core.loader.base.HashoutRemoveLoader;
@@ -77,8 +78,12 @@ public abstract class Hashout<T extends EntityObject<T>> {
     List<T> entities = new ArrayList<T>();
 
     for (HashoutRecord hashoutEntry : hashoutEntries) {
-      Id id = Id.fromRowData(hashoutEntry.getKey().getRowData());
-      entities.add(EntityObject.load(id, clazz));
+      if (clazz.isInstance(EntityUserAndVote.EMPTY)) {
+        entities.add(EntityUserAndVote.load(hashoutEntry.getKey(), clazz));
+      } else {
+        Id id = Id.fromRowData(hashoutEntry.getKey().getRowData());
+        entities.add(EntityObject.load(id, clazz));
+      }
     }
 
     return entities;

@@ -4,6 +4,7 @@ import java.util.Random;
 
 import com.gromtable.server.core.data.log.DataLog;
 import com.gromtable.server.core.loader.callback.StoreResource;
+import com.gromtable.server.core.time.Time;
 import com.gromtable.server.fbapi.IHttpFetcher;
 import com.gromtable.server.settings.Settings;
 
@@ -26,5 +27,9 @@ public class TestEnvironment extends BaseEnvironment {
 
   public void setSettings(Settings settings) {
     super.setSettings(settings);
+  }
+
+  public void setTime(Time time) {
+    super.setTime(time);
   }
 }

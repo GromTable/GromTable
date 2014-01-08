@@ -31,6 +31,10 @@
       <param-name>client_facebook_client_id</param-name>
       <param-value>220468611468615</param-value>
     </init-param>
+    <init-param>
+      <param-name>client_status_document_id</param-name>
+      <param-value>bdfe00045c42d23e0000000000000002</param-value>
+    </init-param>
   </servlet>
 
   <servlet-mapping>

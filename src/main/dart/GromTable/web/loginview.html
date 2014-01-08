@@ -4,16 +4,19 @@
     .warning {
       color: red;
     }
-    .login {
-      color: blue;
-    }
-    .loginButton {
-      color: blue;
+    .fancy {
+      background-color: #00A0FF;
+      color: #fff;
+      font-size: 20px;
+      padding: 10px 20px;
+      -webkit-border-radius: 2px;
+      border: 0px;
     }
     </style>
     <h1><a class="warning" href="https://www.facebook.com/groups/344033669072141/">{{developersOnly()}}</a></h1>
     <h3 class="login">{{login()}}</h3>
-    <button class="loginButton" on-click="{{loginViaFacebook}}">Facebook</button>
+    <button class="fancy" on-click="{{loginViaFacebook}}">Facebook</button>
+    <button class="fancy" on-click="{{loginTestUsers}}">Test Users</button>
   </template>
   <script type="application/dart" src="loginview.dart"></script>
 </polymer-element>

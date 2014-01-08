@@ -1,0 +1,49 @@
+<link rel="import" href="userview.html">
+
+<polymer-element name="user-info-view">
+  <template>
+    <style>
+    .fancy {
+      background-color: #00A0FF;
+      color: #fff;
+      font-size: 20px;
+      padding: 10px 20px;
+      -webkit-border-radius: 2px;
+      border: 0px;
+    }
+    .user {
+      background-color: #FAF8EA;
+      padding: 10px 10px 10px 10px;
+    }
+    </style>
+    <div class="user">
+    <template if="{{!isLoaded}}">
+      {{loading()}}
+    </template>
+    <template if="{{isLoaded}}">
+      <h3>{{userInformation()}}</h3>
+      <user-view user="{{user}}"></user-view>
+      <p></p>
+      <template if="{{viewerContext.currentUser != null && viewerContext.currentUser.type == 'VOTER' && user.type == 'DELEGATE'}}">
+        <button class="fancy" on-click="{{voteUser}}">{{delegateMessage()}}</button>
+      </template>
+      <template if="{{user.type != 'DELEGATE'}}">
+        {{askToBeDelegateMessage()}}
+      </template>
+      <p></p>
+      <template if="{{delegate != null}}">
+         {{delegatedByUser()}}
+         <user-view user="{{delegate}}"></user-view>
+      </template>
+      <p></p>
+      <template if="{{delegate == null}}">
+        {{delegatedThisUser()}}
+        <template repeat="{{user in userVotes}}">
+           <p><user-view user="{{user}}"></user-view></p>
+        </template>
+      </template>
+    </template>
+    </div>
+  </template>
+  <script type="application/dart" src="userinfoview.dart"></script>
+</polymer-element>

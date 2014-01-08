@@ -38,6 +38,13 @@ public abstract class ApiController<
    */
   protected abstract ControllerResult genControllerResult(ControllerRequest request);
 
+  private final ApiResult getError(ControllerRequest controllerRequest, String error) {
+    return new ApiResult(
+      new BaseControllerResult().setError(error),
+      controllerRequest.getCallback()
+    );
+  }
+
   public final ApiResult genResult() {
     ApiRequest apiRequest = getRequest();
     ViewerContext viewerContext = genViewerContext(apiRequest);
@@ -45,16 +52,13 @@ public abstract class ApiController<
     controllerRequest.setViewerContext(viewerContext);
     // TODO: this look not cool
     if (getRequireLoggedIn() && !viewerContext.isLoggedIn()) {
-      return new ApiResult(
-        new BaseControllerResult().setError(NOT_LOGGED_IN),
-        controllerRequest.getCallback()
-      );
+      return getError(controllerRequest, NOT_LOGGED_IN);
     }
-    ControllerResult controllerResult = genControllerResult(controllerRequest);
     boolean isValidRequest = controllerRequest.isValid();
     if (!isValidRequest) {
-      controllerResult.setError(INVALID_REQUEST);
+      return getError(controllerRequest, INVALID_REQUEST);
     }
+    ControllerResult controllerResult = genControllerResult(controllerRequest);
     return new ApiResult(controllerResult, controllerRequest.getCallback());
   }
 

@@ -9,6 +9,7 @@ import com.gromtable.server.core.data.log.DataLog;
 import com.gromtable.server.core.json.IdDeserializer;
 import com.gromtable.server.core.json.IdSerializer;
 import com.gromtable.server.core.loader.callback.StoreResource;
+import com.gromtable.server.core.time.Time;
 import com.gromtable.server.fbapi.IHttpFetcher;
 import com.gromtable.server.settings.Settings;
 
@@ -20,6 +21,7 @@ public class BaseEnvironment implements Environment {
   private Gson gson = null;
   private IHttpFetcher httpFetcher = null;
   private Settings settings = null;
+  private Time time = null;
 
   public BaseEnvironment() {
     GsonBuilder builder = new GsonBuilder();
@@ -82,5 +84,13 @@ public class BaseEnvironment implements Environment {
 
   public Settings getSettings() {
     return settings;
+  }
+
+  protected void setTime(Time time) {
+    this.time = time;
+  }
+
+  public Time getTime() {
+    return this.time;
   }
 }

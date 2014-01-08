@@ -3,16 +3,17 @@ import 'package:intl/intl.dart';
 import 'viewercontext.dart';
 import 'messages_all.dart';
 import 'dart:html';
-
+import 'state.dart';
+ 
 @CustomTag('main-view')
 class MainView extends PolymerElement {
   static const SELECTED_LOCALE_KEY = 'selectedLocale';
   @observable var selectedLocale;
   @observable var publicTableMsg = null;
-  static MainView mainView = null;
   var _shouldRedirect = false;
   
-  @published bool isLoggedIn = ViewerContext.instance.isLoggedIn;
+  ViewerContext viewerContext = ViewerContext.instance;
+  State state = State.instance;
 
   MainView.created() : super.created() {
     var locale = window.localStorage[SELECTED_LOCALE_KEY];
@@ -23,7 +24,7 @@ class MainView extends PolymerElement {
     selectedLocale = locale;
     selectedLocaleChanged();
     _shouldRedirect = false;
-    mainView = this;
+
   }
   
   // TODO: this is clowntown
@@ -43,15 +44,5 @@ class MainView extends PolymerElement {
   }
   
   void updateLocale(localeName) {
-    publicTableMsg = publicTable();
-  }
-  
-  publicTable() {
-    return Intl.message(
-      "Public table",
-      name: 'publicTable',
-      args: [],
-      desc: 'Public table, header on the site.',
-      examples: {});
   }
 }

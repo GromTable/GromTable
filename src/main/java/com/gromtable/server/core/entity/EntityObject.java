@@ -13,6 +13,7 @@ import com.gromtable.server.core.data.Columns;
 import com.gromtable.server.core.data.Data;
 import com.gromtable.server.core.data.Id;
 import com.gromtable.server.core.data.Key;
+import com.gromtable.server.core.data.Pair;
 import com.gromtable.server.core.data.RowKey;
 import com.gromtable.server.core.environment.BaseEnvironment;
 import com.gromtable.server.core.environment.Environment;
@@ -21,7 +22,7 @@ import com.gromtable.server.core.loader.base.EntityGetLoader;
 import com.gromtable.server.core.loader.base.EntityUpdateLoader;
 
 public abstract class EntityObject<T extends EntityObject<T>> {
-  public static final String ENCODING = "ISO-8859-1";
+  public static final String ENCODING = "UTF-8";
   private Id id = null;
 
   public abstract EntityType getEntityType();
@@ -73,6 +74,16 @@ public abstract class EntityObject<T extends EntityObject<T>> {
 
     return entities;
   }
+
+  public static <T extends EntityObject<T>> Pair<T> load(final Pair<Id> ids, final Class<T> clazz) {
+    final List<Id> listIds = new ArrayList<Id>();
+    listIds.add(ids.getFirst());
+    listIds.add(ids.getSecond());
+    List<T> listEntities = load(listIds, clazz);
+    Pair<T> pair = new Pair<T>(listEntities.get(0), listEntities.get(1));
+    return pair;
+  }
+
 
   @SuppressWarnings("unchecked")
   public T saveToDb(final int dbId) {

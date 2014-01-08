@@ -11,7 +11,6 @@ public class TestHttpFetcher implements IHttpFetcher {
   }
 
   public String genContent(String httpUrl) {
-    System.out.println(httpUrl);
     Object response = null;
     for (String key : requests.keySet()) {
       if (httpUrl.endsWith(key)) {

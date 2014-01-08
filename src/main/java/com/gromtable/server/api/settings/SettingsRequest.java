@@ -5,16 +5,11 @@ import com.gromtable.server.api.core.BaseControllerRequest;
 import com.gromtable.server.api.core.RequestFields;
 
 public class SettingsRequest extends BaseControllerRequest {
-  private static RequestFields requestFields = null;
-
   public SettingsRequest(ApiRequest apiRequest) {
     super(apiRequest);
   }
 
   protected RequestFields getRequestFields() {
-    if (requestFields == null) {
-      requestFields = getBaseRequestFields();
-    }
-    return requestFields;
+    return new RequestFields();
   }
 }

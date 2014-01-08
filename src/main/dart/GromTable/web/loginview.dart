@@ -23,6 +23,10 @@ class LoginView extends PolymerElement {
     examples: {});
   
   void loginViaFacebook() {
-    ViewerContext.instance.login();
+    ViewerContext.instance.loginViaFacebook();
+  }
+  
+  void loginTestUsers() {
+    ViewerContext.instance.loginViaTestUsers();
   }
 }

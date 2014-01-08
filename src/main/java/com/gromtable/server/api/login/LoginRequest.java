@@ -6,29 +6,36 @@ import com.gromtable.server.api.core.BaseControllerRequest;
 import com.gromtable.server.api.core.RequestFields;
 
 public class LoginRequest extends BaseControllerRequest {
+  private static final String TYPE = "type";
   private static final String CODE = "code";
   private static final String STATE = "state";
-  private static RequestFields requestFields = null;
 
   public LoginRequest(ApiRequest apiRequest) {
     super(apiRequest);
   }
 
   protected RequestFields getRequestFields() {
-    if (requestFields == null) {
-      requestFields = getBaseRequestFields();
-      requestFields.add(new RequestField(
-        CODE,
-        RequestField.Type.STRING,
-        RequestField.Optionality.REQUIRED,
-        "Code used for getting access token."));
-      requestFields.add(new RequestField(
-        STATE,
-        RequestField.Type.STRING,
-        RequestField.Optionality.REQUIRED,
-        "Redirect url."));
-    }
+    RequestFields requestFields = new RequestFields();
+    requestFields.add(new RequestField(
+      TYPE,
+      RequestField.Type.STRING,
+      RequestField.Optionality.REQUIRED,
+      "Type of login system."));
+    requestFields.add(new RequestField(
+      CODE,
+      RequestField.Type.STRING,
+      RequestField.Optionality.OPTIONAL,
+      "Code used for getting access token."));
+    requestFields.add(new RequestField(
+      STATE,
+      RequestField.Type.STRING,
+      RequestField.Optionality.OPTIONAL,
+      "Redirect url."));
     return requestFields;
+  }
+
+  public String getType() {
+    return getString(TYPE);
   }
 
   public String getCode() {
