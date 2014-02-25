@@ -17,17 +17,17 @@
       border: 0px;
     }
     </style>
-    <h1>Documents list</h1>
+    <h1>{{documentListMessage()}}</h1>
     <div>
       <input id="searchdocument" type="text" value="{{searchParam}}" placeholder="Search">
       <br>
-      <input type="checkbox" id="voting" checked="{{showVoting}}">Show voting
-      <input type="checkbox" id="accepted" checked="{{showAccepted}}">Show accepted
-      <input type="checkbox" id="rejected" checked="{{showRejected}}">Show rejected
-      <input type="checkbox" id="cancelled" checked="{{showCancelled}}">Show cancelled
+      <input type="checkbox" id="voting" checked="{{showVoting}}">{{showVotingMessage()}}
+      <input type="checkbox" id="accepted" checked="{{showAccepted}}">{{showAcceptedMessage()}}
+      <input type="checkbox" id="rejected" checked="{{showRejected}}">{{showRejectedMessage()}}
+      <input type="checkbox" id="cancelled" checked="{{showCancelled}}">{{showCancelledMessage()}}
       <ul>
         <template repeat="{{doc in filteredDocuments}}">
-          <li>{{doc.name}} {{doc.status}} {{doc.getVoteByString()}}<button class="fancy" data-document="{{doc.id}}" on-click="{{goToDocument}}">Go TO</button></li>
+          <li>{{doc.name}} {{doc.status}} {{doc.getVoteByString()}}<button class="fancy" data-document="{{doc.id}}" on-click="{{goToDocument}}">{{goToDocumentButton()}}</button></li>
         </template>
       </ul>
     </div>

@@ -69,6 +69,10 @@ packages:
     description: polymer_expressions
     source: hosted
     version: "0.9.1"
+  serialization:
+    description: serialization
+    source: hosted
+    version: "0.9.1"
   shadow_dom:
     description: shadow_dom
     source: hosted

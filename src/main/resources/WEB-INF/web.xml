@@ -33,7 +33,7 @@
     </init-param>
     <init-param>
       <param-name>client_status_document_id</param-name>
-      <param-value>bdfe00045c42d23e0000000000000002</param-value>
+      <param-value>23a800041c3a9ebd0000000000000002</param-value>
     </init-param>
   </servlet>
 

@@ -88,4 +88,46 @@ class DocumentView extends PolymerElement {
     }
     filteredDocuments = newFilteredDocument;
   }
+  
+  documentListMessage() => Intl.message(
+      "Document list",
+      name: 'documentListHeader',
+      args: [],
+      desc: 'Header for document list section.',
+      examples: {});
+  
+  showVotingMessage() => Intl.message(
+      "Show voting",
+      name: 'showVotingOption',
+      args: [],
+      desc: 'Option for showing documents in voting state.',
+      examples: {});
+  
+  showAcceptedMessage() => Intl.message(
+      "Show accepted",
+      name: 'showAcceptedOption',
+      args: [],
+      desc: 'Option for showing documents in accepted state.',
+      examples: {});
+  
+  showRejectedMessage() => Intl.message(
+      "Show rejected",
+      name: 'showRejectedOption',
+      args: [],
+      desc: 'Option for showing documents in rejected state.',
+      examples: {});
+  
+  showCancelledMessage() => Intl.message(
+      "Show cancelled",
+      name: 'showCancelled',
+      args: [],
+      desc: 'Option for showing documents in cancelled state.',
+      examples: {});
+  
+  goToDocumentButton() => Intl.message(
+      "Go to document",
+      name: 'goToDocumentButton',
+      args: [],
+      desc: 'Go to document button.',
+      examples: {});
 }

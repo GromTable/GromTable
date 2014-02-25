@@ -12,6 +12,10 @@ public class FacebookCommentsController extends ApiController<FacebookCommentsRe
     return "Return facebook comments for url.";
   }
 
+  protected boolean getRequireLoggedIn() {
+    return false;
+  }
+
   public FacebookCommentsController createController() {
     return new FacebookCommentsController();
   }

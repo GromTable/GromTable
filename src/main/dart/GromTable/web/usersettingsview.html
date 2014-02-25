@@ -27,15 +27,16 @@
     <template if="{{viewerContext.currentUser != null}}">
     <div class="becameDelegate">
       <div class="commands">
-        <label>Name: <input value="{{name}}"></label><br>
-        <label>City: <input value="{{city}}"></label><br>
-        <label>Zip: <input value="{{zip}}"></label><br>
-        <label>Description: <textarea rows="4" cols="50" value="{{description}}" placeholder="Type description about yourself..."></textarea></label><br>
-        <lable>Phone: <input value="{{phone}}"></lable><br>
-        <label>Facebook: <input value="{{facebook}}"></label><br>
-        <lable>Vkontakte: <input value="{{vkontakte}}"></lable><br>
-        <lable>Instagram: <input value="{{instagram}}"></lable><br>
-        <lable>Twitter: <input value="{{twitter}}"></lable><br>
+        <label>{{nameMessage()}}Name: <input value="{{name}}" placeholder="{{namePlaceholder()}}"></label><br>
+        <label>{{ageMessage()}}Age: <input value="{{age}}" placeholder="{{agePlaceholder()}}"></label><br>
+        <label>{{cityMessage()}}City: <input value="{{city}}" placeholder="{{cityPlaceholder()}}"></label><br>
+        <label>{{zipMessage()}}Zip: <input value="{{zip}}" placeholder="{{zipPlaceholder()}}"></label><br>
+        <label>{{descriptionMessage()}}Description: <textarea rows="4" cols="50" value="{{description}}" placeholder="{{descriptionPlaceholder()}}"></textarea></label><br>
+        <lable>{{phoneMessage()}}Phone: <input value="{{phone}}" placeholder="{{phonePlaceholder()}}"></lable><br>
+        <label>{{facebookMessage()}}Facebook: <input value="{{facebook}}" placeholder="{{facebookPlaceholder()}}"></label><br>
+        <lable>{{vkontakteMessage()}}Vkontakte: <input value="{{vkontakte}}" placeholder="{{vkontaktePlaceholder()}}"></lable><br>
+        <lable>{{instagramMessage()}}Instagram: <input value="{{instagram}}" placeholder="{{instagramPlaceholder()}}"></lable><br>
+        <lable>{{twitterMessage()}}Twitter: <input value="{{twitter}}" placeholder="{{twitterPlaceholder()}}"></lable><br>
         <button class="fancy updateInfo" on-click="{{updateInfo}}">{{updateInfoMessage()}}</button>
         <p>
         {{voterDelegateExplanation()}}

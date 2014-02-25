@@ -4,7 +4,6 @@ import 'package:intl/intl.dart';
 import 'package:polymer/polymer.dart';
 import 'user.dart';
 import 'host.dart';
-import 'state.dart';
 import 'viewercontext.dart';
 
 @CustomTag('loggedin-view')

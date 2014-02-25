@@ -40,7 +40,13 @@ class ViewerContext extends Observable {
     String type = Uri.encodeQueryComponent('test');
     String redirect_url = Uri.encodeQueryComponent(Host.href);
     String hash = '${Host.origin}/api/login?type=${type}&state=${redirect_url}';
-    String test_user_url = Host.href.replaceAll('index', 'testuser');
+    String href = Host.href;
+    String test_user_url = null;
+    if (href.contains('index')) {
+      test_user_url = href.replaceAll('index', 'testuser');
+    } else {
+      test_user_url = href.replaceAll('/#', '/testuser.html#');
+    }
     int hashIndex = test_user_url.indexOf('#');
     if (hashIndex > 0) {
       test_user_url = test_user_url.substring(0, hashIndex);

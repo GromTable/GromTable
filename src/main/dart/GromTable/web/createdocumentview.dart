@@ -62,10 +62,45 @@ class CreateDocumentView extends PolymerElement {
     State.instance = new State(State.DOCUMENT, documentId);
   }
   
-  createDocumentMessage() => Intl.message(
+  createDocumentHeader() => Intl.message(
       "Create document",
-      name: 'createDocument',
+      name: 'createDocumentHeader',
       args: [],
-      desc: 'Label on create document button.',
+      desc: 'Header on create document page.',
       examples: {});
+  
+  documentNameMessage() => Intl.message(
+      "Document name: ",
+      name: 'documentNameMessage',
+      args: [],
+      desc: 'Label for document name field.',
+      examples: {});  
+  
+  documentTextMessage() => Intl.message(
+      "Document text: ",
+      name: 'documentTextMessage',
+      args: [],
+      desc: 'Label for document text field.',
+      examples: {});    
+  
+  documentNamePlaceholder() => Intl.message(
+      "Type document name here...",
+      name: 'documentNamePlaceholder',
+      args: [],
+      desc: 'Placeholder for document name',
+      examples: {});
+      
+  documentTextPlacehlder() => Intl.message(
+      "Type document text here...",
+      name: 'documentTextPlacehlder',
+      args: [],
+      desc: 'Placeholder for document text',
+      examples: {});  
+  
+  createDocumentButton() => Intl.message(
+    "Create document",
+    name: 'createDocumentButton',
+    args: [],
+    desc: 'Label on create document button.',
+    examples: {});
 }
