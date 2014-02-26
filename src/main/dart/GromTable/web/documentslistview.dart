@@ -11,7 +11,7 @@ class DocumentView extends PolymerElement {
   List<DocumentInfo> _allDocuments = [];
   @observable String searchParam = '';
   @observable bool showVoting = true;
-  @observable bool showAccepted = false;
+  @observable bool showAccepted = true;
   @observable bool showRejected = false;
   @observable bool showCancelled = false;
   @observable List<DocumentInfo> filteredDocuments = [];

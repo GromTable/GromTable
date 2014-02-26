@@ -40,7 +40,7 @@ public class IdTest {
   public void toStringTest() {
     Id id = Id.genIdForDb(1, 2, 3);
     String base16 = id.getString();
-    Assert.assertEquals(base16, "00010002f60f94d60000000000000003");
+    Assert.assertEquals(base16, "00010002000000000000000319f756af");
   }
 
   @Test

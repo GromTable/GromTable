@@ -107,7 +107,7 @@
            <outputDirectory>${basedir}/src/main/webapp</outputDirectory>
            <resources>
              <resource>
-                <directory>${basedir}/src/main/dart/GromTable/build</directory>
+                <directory>${basedir}/src/main/dart/GromTable/build/web</directory>
              </resource>
            </resources>
          </configuration>

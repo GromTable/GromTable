@@ -4,6 +4,7 @@ dependencies:
     polymer: any
     intl: any
     cookie: 0.0.4
+    serialization: any
 transformers:
 - polymer:
     entry_points:

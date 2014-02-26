@@ -27,16 +27,16 @@
     <template if="{{viewerContext.currentUser != null}}">
     <div class="becameDelegate">
       <div class="commands">
-        <label>{{nameMessage()}}Name: <input value="{{name}}" placeholder="{{namePlaceholder()}}"></label><br>
-        <label>{{ageMessage()}}Age: <input value="{{age}}" placeholder="{{agePlaceholder()}}"></label><br>
-        <label>{{cityMessage()}}City: <input value="{{city}}" placeholder="{{cityPlaceholder()}}"></label><br>
-        <label>{{zipMessage()}}Zip: <input value="{{zip}}" placeholder="{{zipPlaceholder()}}"></label><br>
-        <label>{{descriptionMessage()}}Description: <textarea rows="4" cols="50" value="{{description}}" placeholder="{{descriptionPlaceholder()}}"></textarea></label><br>
-        <lable>{{phoneMessage()}}Phone: <input value="{{phone}}" placeholder="{{phonePlaceholder()}}"></lable><br>
-        <label>{{facebookMessage()}}Facebook: <input value="{{facebook}}" placeholder="{{facebookPlaceholder()}}"></label><br>
-        <lable>{{vkontakteMessage()}}Vkontakte: <input value="{{vkontakte}}" placeholder="{{vkontaktePlaceholder()}}"></lable><br>
-        <lable>{{instagramMessage()}}Instagram: <input value="{{instagram}}" placeholder="{{instagramPlaceholder()}}"></lable><br>
-        <lable>{{twitterMessage()}}Twitter: <input value="{{twitter}}" placeholder="{{twitterPlaceholder()}}"></lable><br>
+        <label>{{nameMessage()}}<input value="{{name}}" placeholder="{{namePlaceholder()}}"></label><br>
+        <label>{{ageMessage()}}<input value="{{age}}" placeholder="{{agePlaceholder()}}"></label><br>
+        <label>{{cityMessage()}}<input value="{{city}}" placeholder="{{cityPlaceholder()}}"></label><br>
+        <label>{{zipMessage()}}<input value="{{zip}}" placeholder="{{zipPlaceholder()}}"></label><br>
+        <label>{{descriptionMessage()}}<textarea rows="4" cols="50" value="{{description}}" placeholder="{{descriptionPlaceholder()}}"></textarea></label><br>
+        <lable>{{phoneMessage()}}<input value="{{phone}}" placeholder="{{phonePlaceholder()}}"></lable><br>
+        <label>{{facebookMessage()}}<input value="{{facebook}}" placeholder="{{facebookPlaceholder()}}"></label><br>
+        <lable>{{vkontakteMessage()}}<input value="{{vkontakte}}" placeholder="{{vkontaktePlaceholder()}}"></lable><br>
+        <lable>{{instagramMessage()}}<input value="{{instagram}}" placeholder="{{instagramPlaceholder()}}"></lable><br>
+        <lable>{{twitterMessage()}}<input value="{{twitter}}" placeholder="{{twitterPlaceholder()}}"></lable><br>
         <button class="fancy updateInfo" on-click="{{updateInfo}}">{{updateInfoMessage()}}</button>
         <p>
         {{voterDelegateExplanation()}}
