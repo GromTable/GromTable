@@ -37,11 +37,7 @@ public class HttpApiRequest implements ApiRequest {
   }
 
   public Id getId(String key) {
-    try {
-      return Id.fromBase16(getString(key));
-    } catch (Exception e) {
-      return null;
-    }
+    return Id.fromKey(getString(key));
   }
 
   public Boolean getBoolean(String key) {

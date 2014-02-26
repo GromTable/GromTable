@@ -11,7 +11,6 @@ import org.apache.hadoop.hbase.client.Row;
 import com.gromtable.server.core.data.Columns;
 import com.gromtable.server.core.data.Data;
 import com.gromtable.server.core.data.Key;
-import com.gromtable.server.core.data.RowKey;
 import com.gromtable.server.core.data.Rows;
 
 public class HashoutGetMultiLoader extends StoreLoader<Columns> {
@@ -27,7 +26,7 @@ public class HashoutGetMultiLoader extends StoreLoader<Columns> {
 
   public void hbasePreDispatch(List<Row> rows, List<StoreLoader<?>> rowLoaders, List<Increment> increments,
       List<StoreLoader<?>> incrementLoaders, byte[] familyName) {
-    Get row = new Get(getRowKey().getRowData());
+    Get row = new Get(getRowKey().getBytes());
     row.addFamily(familyName);
 
     rows.add(row);
@@ -35,12 +34,17 @@ public class HashoutGetMultiLoader extends StoreLoader<Columns> {
   }
 
   public void hbasePostDispatch(Result result, byte[] familyName) {
+    System.out.println(result);
+    System.out.println(familyName);
     Map<byte[], byte[]> familyMap = result.getFamilyMap(familyName);
+    System.out.println(familyMap);
     Columns columns = new Columns();
-    for (Map.Entry<byte[], byte[]> column : familyMap.entrySet()) {
-      Key columnName = new RowKey(column.getKey());
-      Data columnData = new Data(column.getValue());
-      columns.put(columnName, columnData);
+    if (familyMap != null) {
+      for (Map.Entry<byte[], byte[]> column : familyMap.entrySet()) {
+        Key columnName = new Key(column.getKey());
+        Data columnData = new Data(column.getValue());
+        columns.put(columnName, columnData);
+      }
     }
     setResult(columns);
   }

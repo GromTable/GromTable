@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.codec.DecoderException;
-
 import com.gromtable.server.core.data.Id;
 import com.gromtable.server.core.environment.Environment;
 
@@ -51,11 +49,7 @@ public class MapApiRequest implements ApiRequest {
   }
 
   public Id getId(String key) {
-    try {
-      return Id.fromBase16(getString(key));
-    } catch (DecoderException e) {
-      return null;
-    }
+    return Id.fromKey(getString(key));
   }
 
   public Boolean getBoolean(String key) {

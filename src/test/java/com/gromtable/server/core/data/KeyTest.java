@@ -11,17 +11,17 @@ public class KeyTest {
 
   @Test
   public void hashTest() {
-    Assert.assertEquals(new RowKey(DATA).hashCode(), new RowKey(DATA).hashCode());
-    Assert.assertEquals(new RowKey(DATA).hashCode(), new RowKey(DATA_SAME).hashCode());
+    Assert.assertEquals(new Key(DATA).hashCode(), new Key(DATA).hashCode());
+    Assert.assertEquals(new Key(DATA).hashCode(), new Key(DATA_SAME).hashCode());
 
-    Assert.assertFalse(new RowKey(DATA).hashCode() == new RowKey(DATA_DIFF).hashCode());
+    Assert.assertFalse(new Key(DATA).hashCode() == new Key(DATA_DIFF).hashCode());
   }
 
   @Test
   public void equalsTest() {
-    Assert.assertEquals(new RowKey(DATA), new RowKey(DATA));
-    Assert.assertEquals(new RowKey(DATA), new RowKey(DATA_SAME));
+    Assert.assertEquals(new Key(DATA), new Key(DATA));
+    Assert.assertEquals(new Key(DATA), new Key(DATA_SAME));
 
-    Assert.assertFalse(new RowKey(DATA).equals(new RowKey(DATA_DIFF)));
+    Assert.assertFalse(new Key(DATA).equals(new Key(DATA_DIFF)));
   }
 }

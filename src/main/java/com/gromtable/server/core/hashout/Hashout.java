@@ -42,7 +42,7 @@ public abstract class Hashout<T extends EntityObject<T>> {
   }
 
   public List<HashoutRecord> loadRecords(final Key fromKey) {
-    Columns columns = new HashoutGetMultiLoader(hashoutId, fromKey).genLoad();
+    Columns columns = new HashoutGetMultiLoader(hashoutId.getKey(), fromKey).genLoad();
     List<HashoutRecord> entries = new ArrayList<HashoutRecord>();
     if (columns != null) {
       for (Map.Entry<Key, Data> entry : columns.entrySet()) {
@@ -81,7 +81,7 @@ public abstract class Hashout<T extends EntityObject<T>> {
       if (clazz.isInstance(EntityUserAndVote.EMPTY)) {
         entities.add(EntityUserAndVote.load(hashoutEntry.getKey(), clazz));
       } else {
-        Id id = Id.fromRowData(hashoutEntry.getKey().getRowData());
+        Id id = Id.fromKey(hashoutEntry.getKey());
         entities.add(EntityObject.load(id, clazz));
       }
     }
@@ -114,7 +114,7 @@ public abstract class Hashout<T extends EntityObject<T>> {
   }
 
   public void removeKey(final Key fromKey, final Key toKey) {
-    new HashoutRemoveLoader(hashoutId, fromKey, toKey).genLoad();
+    new HashoutRemoveLoader(hashoutId.getKey(), fromKey, toKey).genLoad();
   }
 
   public void addKey(final Key fromKey, final Key toKey) {
@@ -130,12 +130,12 @@ public abstract class Hashout<T extends EntityObject<T>> {
 
   public void addEntity(final Key fromKey, final T entity, final int dbId) {
     entity.saveToDb(dbId);
-    addKey(fromKey, entity.getId());
+    addKey(fromKey, entity.getId().getKey());
   }
 
   public void addEntity(final Key fromKey, final T entity) {
     entity.save();
-    addKey(fromKey, entity.getId());
+    addKey(fromKey, entity.getId().getKey());
   }
 
   public void multiAddEntry(final Map<Key, T> entities) {

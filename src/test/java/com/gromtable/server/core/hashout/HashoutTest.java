@@ -19,8 +19,8 @@ public abstract class HashoutTest<T extends EntityObject<T>> extends BaseTest {
   @Test
   public void addKey() {
     Hashout<T> hashout = getHashout();
-    Key fromKey = Id.genIdForDb(0, 0, 1);
-    Key toKey = Id.genIdForDb(0, 0, 2);
+    Key fromKey = Id.genIdForDb(0, 0, 1).getKey();
+    Key toKey = Id.genIdForDb(0, 0, 2).getKey();
     hashout.addKey(fromKey, toKey);
     List<HashoutRecord> loadedEntries = hashout.loadRecords(fromKey);
     Assert.assertEquals(loadedEntries.size(), 1);
@@ -30,7 +30,7 @@ public abstract class HashoutTest<T extends EntityObject<T>> extends BaseTest {
   @Test
   public void addEntity() {
     Hashout<T> hashout = getHashout();
-    Key fromKey = Id.genIdForDb(0, 0, 1);
+    Key fromKey = Id.genIdForDb(0, 0, 1).getKey();
     T entity = getEntityObject();
     hashout.addEntity(fromKey, entity);
     T loadedEntity = hashout.loadEntity(fromKey);

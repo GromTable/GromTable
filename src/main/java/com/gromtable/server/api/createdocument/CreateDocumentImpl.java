@@ -23,7 +23,7 @@ public class CreateDocumentImpl extends Loader<CreateDocumentResult> {
     EntityDocument document = new EntityDocument(name, text, voteByTime, creatorId);
     document.save();
     HashoutListToDocument hashoutListToDocument = new HashoutListToDocument();
-    hashoutListToDocument.addKey(HashoutList.ALL_DOCUMENTS.getId(), document.getId());
+    hashoutListToDocument.addKey(HashoutList.ALL_DOCUMENTS.getId().getKey(), document.getId().getKey());
     return new CreateDocumentResult(true, document.getId());
   }
 }

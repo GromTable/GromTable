@@ -40,16 +40,16 @@ public class CounterLoader extends StoreLoader<Long> {
 
   public void hbasePreDispatch(List<Row> rows, List<StoreLoader<?>> rowLoaders, List<Increment> increments,
       List<StoreLoader<?>> incrementLoaders, byte[] familyName) {
-    Increment increment = new Increment(getRowKey().getRowData());
-    increment.addColumn(familyName, getColumnKey().getRowData(), getData().asLong());
+    Increment increment = new Increment(getRowKey().getBytes());
+    increment.addColumn(familyName, getColumnKey().getBytes(), getData().asLong());
 
     increments.add(increment);
     incrementLoaders.add(this);
   }
 
   public void hbasePostDispatch(Result result, byte[] familyName) {
-    KeyValue column = result.getColumnLatest(familyName, getColumnKey().getRowData());
-    Data columnData = new Data(column.getValue());
+    KeyValue column = result.getColumnLatest(familyName, getColumnKey().getBytes());
+    Data columnData = Data.fromLongBytes(column.getValue());
     setResult(columnData.asLong());
   }
 

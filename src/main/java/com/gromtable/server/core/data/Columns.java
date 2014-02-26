@@ -13,14 +13,14 @@ public class Columns extends HashMap<Key, Data> {
     this.isAll = isAll;
   }
 
-  public Columns(Key toId, Data data) {
-    put(toId, data);
+  public Columns(Key toKey, Data data) {
+    put(toKey, data);
   }
 
   public Columns() {
   }
 
-  public Columns(Key columnName) {
+  public Columns(String columnName) {
   }
 
   public boolean isAll() {

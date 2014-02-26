@@ -6,7 +6,6 @@ import com.gromtable.server.base.BaseTest;
 import com.gromtable.server.core.data.Data;
 import com.gromtable.server.core.data.Id;
 import com.gromtable.server.core.data.Key;
-import com.gromtable.server.core.data.RowKey;
 import com.gromtable.server.core.loader.base.CounterLoader;
 import com.gromtable.server.core.loader.base.HashoutAddLoader;
 import com.gromtable.server.core.loader.base.HashoutGetLoader;
@@ -17,9 +16,9 @@ import org.junit.Test;
 
 public abstract class StoreResourceTest extends BaseTest {
   private static final Id HASHOUT_ID = Id.genIdForDb(0, 0, 1);
-  private static final Key FROM_ID = Id.genIdForDb(0, 0, 2);
-  private static final Key TO_ID = Id.genIdForDb(0, 0, 3);
-  private static final Key TO_ID2 = Id.genIdForDb(0, 0, 4);
+  private static final Key FROM_ID = Id.genIdForDb(0, 0, 2).getKey();
+  private static final Key TO_ID = Id.genIdForDb(0, 0, 3).getKey();
+  private static final Key TO_ID2 = Id.genIdForDb(0, 0, 4).getKey();
   private static final Data DATA = new Data("data".getBytes());
   private static final Data DATA2 = new Data("data2".getBytes());
 
@@ -59,8 +58,8 @@ public abstract class StoreResourceTest extends BaseTest {
     for (int i = 0; i < 100; i++) {
       long amount = i + 1;
       sum += amount;
-      Key rowKey = new RowKey("ab");
-      Key columnKey = new RowKey("cd");
+      Key rowKey = new Key("ab");
+      Key columnKey = new Key("cd");
       CounterLoader counterLoader = new CounterLoader(rowKey, columnKey, amount);
       Assert.assertEquals(sum, counterLoader.genLoad().longValue());
     }

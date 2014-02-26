@@ -36,7 +36,7 @@ public class VoteUserImpl extends Loader<VoteUserResult> {
     if (!users.getSecond().getType().equals(UserType.DELEGATE)) {
       throw new VoteUserException("Delegate is not of type delegate: " + delegateId);
     }
-    List<EntityUserAndVote> currentVotes = hashoutUserToDelegate.loadEntities(voterId);
+    List<EntityUserAndVote> currentVotes = hashoutUserToDelegate.loadEntities(voterId.getKey());
     List<EntityVote> activeVotes = new ArrayList<EntityVote>();
     for (EntityUserAndVote userAndVote : currentVotes) {
       EntityVote vote = userAndVote.getVote();
@@ -65,8 +65,9 @@ public class VoteUserImpl extends Loader<VoteUserResult> {
     EntityVote newVote = new EntityVote(VoteType.DOCUMENT, voterId, delegateId, time);
     newVote.setVoteUserDecision(voteDecision);
     newVote.save();
-    hashoutUserToDelegate.addKey(voterId, getKey(delegateId, newVote.getId()));
-    hashoutDelegateToUser.addKey(delegateId, getKey(voterId, newVote.getId()));
+    hashoutUserToDelegate.addKey(voterId.getKey(), getKey(delegateId, newVote.getId()));
+    hashoutDelegateToUser.addKey(delegateId.getKey(), getKey(voterId, newVote.getId()));
     return new VoteUserResult(true, newVote.getId());
   }
+
 }

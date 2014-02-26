@@ -18,15 +18,15 @@ public class HashoutAddLoader extends StoreLoader<Void> {
   private final Data data;
 
   public HashoutAddLoader(Id hashoutId, Key fromKey, Key toKey, Data data) {
-    this(new Key[] {fromKey, hashoutId}, new Key[] {toKey}, data);
+    this(new Key[] {fromKey, hashoutId.getKey()}, new Key[] {toKey}, data);
   }
 
   public HashoutAddLoader(Id hashoutId, Key[] fromKeys, Key toKey, Data data) {
-    this(combineKeys(fromKeys, hashoutId), new Key[] {toKey}, data);
+    this(combineKeys(fromKeys, hashoutId.getKey()), new Key[] {toKey}, data);
   }
 
   public HashoutAddLoader(Id hashoutId, Key fromKey, Key[] toKeys, Data data) {
-    this(new Key[] {fromKey, hashoutId}, toKeys, data);
+    this(new Key[] {fromKey, hashoutId.getKey()}, toKeys, data);
   }
 
 
@@ -57,8 +57,8 @@ public class HashoutAddLoader extends StoreLoader<Void> {
 
   public void hbasePreDispatch(List<Row> rows, List<StoreLoader<?>> rowLoaders, List<Increment> increments,
       List<StoreLoader<?>> incrementLoaders, byte[] familyName) {
-    Put row = new Put(getRowKey().getRowData());
-    row.add(familyName, getColumnKey().getRowData(), getData().getRowData());
+    Put row = new Put(getRowKey().getBytes());
+    row.add(familyName, getColumnKey().getBytes(), getData().getBytes());
 
     rows.add(row);
     rowLoaders.add(this);

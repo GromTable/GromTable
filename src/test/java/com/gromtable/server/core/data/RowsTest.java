@@ -7,7 +7,7 @@ import org.junit.Test;
 
 public class RowsTest {
   private void put(Rows rows, String row, String column, String data) {
-    rows.put(new RowKey(row.getBytes()), new RowKey(column.getBytes()), new Data(data.getBytes()));
+    rows.put(new Key(row), new Key(column), new Data(data));
   }
   private Rows getExampleRows() {
     Rows rows = new Rows();

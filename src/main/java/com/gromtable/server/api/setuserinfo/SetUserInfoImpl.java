@@ -42,7 +42,7 @@ public class SetUserInfoImpl extends Loader<SetUserInfoResult> {
 
   private void endVotes(Hashout<EntityUserAndVote> hashout, Id userId, long time) {
     List<EntityUserAndVote> userVotes =
-      VoteFilter.filterVotes(hashout.loadEntities(userId), time);
+      VoteFilter.filterVotes(hashout.loadEntities(userId.getKey()), time);
     for (EntityUserAndVote userVote : userVotes) {
       EntityVote vote = userVote.getVote();
       vote.setEndTime(time);

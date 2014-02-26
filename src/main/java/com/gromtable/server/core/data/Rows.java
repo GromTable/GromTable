@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.codec.DecoderException;
-import org.apache.commons.codec.binary.Hex;
 import org.apache.hadoop.hbase.client.Result;
 
 
@@ -12,11 +11,11 @@ import org.apache.hadoop.hbase.client.Result;
 public class Rows extends HashMap<Key, Columns> {
 
   public void addResult(byte[] family, Result result) {
-    Key key = new RowKey(result.getRow());
+    Key key = new Key(result.getRow());
     Map<byte[], byte[]> familyMap = result.getFamilyMap(family);
     Columns columns = new Columns();
     for (Map.Entry<byte[], byte[]> column : familyMap.entrySet()) {
-      Key columnName = new RowKey(column.getKey());
+      Key columnName = new Key(column.getKey());
       Data columnData = new Data(column.getValue());
       columns.put(columnName, columnData);
     }
@@ -85,23 +84,15 @@ public class Rows extends HashMap<Key, Columns> {
     }
   }
 
-  private static String hex(byte[] data) {
-    return Hex.encodeHexString(data);
-  }
-
-  private static byte[] unhex(String hex) throws DecoderException {
-    return Hex.decodeHex(hex.toCharArray());
-  }
-
   public String serializeRow() {
     StringBuffer buffer = new StringBuffer();
     for (Map.Entry<Key, Columns> rowEntity : entrySet()) {
       for (Map.Entry<Key, Data> columnEntity: rowEntity.getValue().entrySet()) {
-        buffer.append(hex(rowEntity.getKey().getRowData()));
+        buffer.append(rowEntity.getKey().getString());
         buffer.append(",");
-        buffer.append(hex(columnEntity.getKey().getRowData()));
+        buffer.append(columnEntity.getKey().getString());
         buffer.append(",");
-        buffer.append(hex(columnEntity.getValue().getRowData()));
+        buffer.append(columnEntity.getValue().getString());
         buffer.append(",");
       }
     }
@@ -133,9 +124,9 @@ public class Rows extends HashMap<Key, Columns> {
     String[] parts = str.split(",");
     int index = 0;
     while (index + 2 < parts.length) {
-      Key rowKey = new RowKey(unhex(parts[index++]));
-      Key columnKey = new RowKey(unhex(parts[index++]));
-      Data columnData = new Data(unhex(parts[index++]));
+      Key rowKey = new Key(parts[index++]);
+      Key columnKey = new Key(parts[index++]);
+      Data columnData = new Data(parts[index++]);
       rows.put(rowKey, columnKey, columnData);
     }
     return rows;

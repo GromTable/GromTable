@@ -6,7 +6,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.gromtable.server.core.data.Key;
-import com.gromtable.server.core.data.RowKey;
 import com.gromtable.server.core.entity.EntityUser;
 import com.gromtable.server.core.environment.BaseEnvironment;
 import com.gromtable.server.core.hashout.HashoutLoginTokenToUser;
@@ -74,7 +73,7 @@ public class LoginImpl extends Loader<LoginResult> {
     String accessToken = genAccessToken(httpFetcher);
     EntityUser user = genUser(httpFetcher, accessToken);
     LoginToken loginToken = new FbLoginToken(user.getFbId());
-    Key loginTokenKey = new RowKey(loginToken.getToken());
+    Key loginTokenKey = new Key(loginToken.getToken());
     HashoutLoginTokenToUser hashoutLoginTokenToUser = new HashoutLoginTokenToUser();
     EntityUser savedUser = hashoutLoginTokenToUser.loadEntity(loginTokenKey);
     // We need to create new user.
@@ -93,7 +92,7 @@ public class LoginImpl extends Loader<LoginResult> {
   private LoginResult loginViaTestUsers() {
     EntityUser user = parseUser(code);
     LoginToken loginToken = new TestLoginToken(user.getTestId());
-    Key loginTokenKey = new RowKey(loginToken.getToken());
+    Key loginTokenKey = new Key(loginToken.getToken());
     HashoutLoginTokenToUser hashoutLoginTokenToUser = new HashoutLoginTokenToUser();
     EntityUser savedUser = hashoutLoginTokenToUser.loadEntity(loginTokenKey);
     // We need to create new user.

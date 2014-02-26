@@ -14,7 +14,6 @@ import com.gromtable.server.core.data.Data;
 import com.gromtable.server.core.data.Id;
 import com.gromtable.server.core.data.Key;
 import com.gromtable.server.core.data.Pair;
-import com.gromtable.server.core.data.RowKey;
 import com.gromtable.server.core.environment.BaseEnvironment;
 import com.gromtable.server.core.environment.Environment;
 import com.gromtable.server.core.loader.base.CreateIdLoader;
@@ -39,7 +38,7 @@ public abstract class EntityObject<T extends EntityObject<T>> {
     return "e:" + id;
   }
 
-  private static String bytesToString(byte[] data) {
+  public static String bytesToString(byte[] data) {
     try {
       return new String(data, ENCODING);
     } catch (UnsupportedEncodingException e) {
@@ -47,7 +46,7 @@ public abstract class EntityObject<T extends EntityObject<T>> {
     }
   }
 
-  private static byte[] stringToBytes(String str) {
+  public static byte[] stringToBytes(String str) {
     try {
       return str.getBytes(ENCODING);
     } catch (UnsupportedEncodingException e) {
@@ -60,7 +59,7 @@ public abstract class EntityObject<T extends EntityObject<T>> {
     JsonObject jsonObject = new JsonObject();
     Gson gson = BaseEnvironment.getEnvironment().getGson();
     for (Entry<Key, Data> entity : columns.entrySet()) {
-      jsonObject.add(entity.getKey().stringValue(), new JsonPrimitive(bytesToString(entity.getValue().getRowData())));
+      jsonObject.add(entity.getKey().getString(), new JsonPrimitive(entity.getValue().getString()));
     }
     return gson.fromJson(jsonObject, clazz);
   }
@@ -101,7 +100,7 @@ public abstract class EntityObject<T extends EntityObject<T>> {
     Id entityId = EntityObject.this.id;
     Columns columns = new Columns();
     for (Entry<String, JsonElement> column : jsonObject.entrySet()) {
-      columns.put(new RowKey(column.getKey()), new Data(stringToBytes(column.getValue().getAsString())));
+      columns.put(new Key(column.getKey()), new Data(stringToBytes(column.getValue().getAsString())));
     }
     new EntityUpdateLoader(entityId, columns).genLoad();
     return (T) EntityObject.this;

@@ -47,9 +47,9 @@ public class DataTest {
   @Test
   public void testToString() {
     Data data = new Data("datadata".getBytes());
-    Assert.assertEquals("Data(hex=6461746164617461,long=7233190438178485345,str=datadata)", data.toString());
+    Assert.assertEquals("datadata", data.toString());
 
     Data dataLong = new Data(7233190438178485345L);
-    Assert.assertEquals("Data(hex=6461746164617461,long=7233190438178485345,str=datadata)", dataLong.toString());
+    Assert.assertEquals("7233190438178485345", dataLong.toString());
   }
 }

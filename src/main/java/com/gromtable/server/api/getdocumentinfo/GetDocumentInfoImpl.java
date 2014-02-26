@@ -9,7 +9,6 @@ import com.gromtable.server.api.helper.VoteFilter;
 import com.gromtable.server.core.data.Id;
 import com.gromtable.server.core.data.Key;
 import com.gromtable.server.core.data.Pair;
-import com.gromtable.server.core.data.RowKey;
 import com.gromtable.server.core.entity.EntityDocument;
 import com.gromtable.server.core.entity.EntityUser;
 import com.gromtable.server.core.entity.EntityUserAndVote;
@@ -44,7 +43,7 @@ public class GetDocumentInfoImpl extends Loader<GetDocumentInfoResult> {
       HashoutDocumentToUser hashoutDocumentToUser = new HashoutDocumentToUser();
       HashoutUserToDelegate hashoutUserToDelegate = new HashoutUserToDelegate();
       HashoutDelegateToUser hashoutDelegateToUser = new HashoutDelegateToUser();
-      List<EntityUserAndVote> documentVotes = hashoutDocumentToUser.loadEntities(documentId);
+      List<EntityUserAndVote> documentVotes = hashoutDocumentToUser.loadEntities(documentId.getKey());
       documentVotes = VoteFilter.filterVotes(documentVotes, voteTime);
       List<Key> votes = getKeys(documentVotes);
       Map<Key, List<EntityUserAndVote>> userVotes = hashoutUserToDelegate.loadMultiEntities(votes);
@@ -62,7 +61,7 @@ public class GetDocumentInfoImpl extends Loader<GetDocumentInfoResult> {
   private List<Key> getKeys(List<EntityUserAndVote> documentVotes) {
     List<Key> keys = new ArrayList<Key>();
     for (EntityUserAndVote userAndVote : documentVotes) {
-      keys.add(userAndVote.getUser().getId());
+      keys.add(userAndVote.getUser().getId().getKey());
     }
     return keys;
   }
@@ -91,7 +90,7 @@ public class GetDocumentInfoImpl extends Loader<GetDocumentInfoResult> {
   private Map<Key, EntityUserAndVote> createDocumentUserToVote(List<EntityUserAndVote> documentVotes) {
     Map<Key, EntityUserAndVote> documentUserToVote = new HashMap<Key, EntityUserAndVote>();
     for (EntityUserAndVote documentVote : documentVotes) {
-      Key key = documentVote.getUser().getId();
+      Key key = documentVote.getUser().getId().getKey();
       EntityUserAndVote previousVote = documentUserToVote.get(key);
       if (previousVote != null) {
         throw new GetDocumentInfoException(
@@ -117,12 +116,12 @@ public class GetDocumentInfoImpl extends Loader<GetDocumentInfoResult> {
       Map<Key, EntityUserAndVote> documentUserToVote) {
     EntityUserAndVote delegate = null;
     EntityUserAndVote user = null;
-    if (delegateVotes.containsKey(documentVote.getUser().getId())) {
+    if (delegateVotes.containsKey(documentVote.getUser().getId().getKey())) {
       delegate = documentVote;
     } else {
-      List<EntityUserAndVote> delegateList = userVotes.get(documentVote.getUser().getId());
+      List<EntityUserAndVote> delegateList = userVotes.get(documentVote.getUser().getId().getKey());
       if (delegateList != null) {
-        Key delegateKey = delegateList.get(0).getUser().getId();
+        Key delegateKey = delegateList.get(0).getUser().getId().getKey();
         delegate = documentUserToVote.get(delegateKey);
       }
       user = documentVote;
@@ -134,9 +133,9 @@ public class GetDocumentInfoImpl extends Loader<GetDocumentInfoResult> {
       EntityUserAndVote delegate,
       Map<Key, DelegateGroupVotes> allVotesMap,
       Map<Key, List<EntityUserAndVote>> delegateVotes) {
-    Key delegateKey = RowKey.EMPTY;
+    Key delegateKey = Key.EMPTY;
     if (delegate != null) {
-      delegateKey = delegate.getUser().getId();
+      delegateKey = delegate.getUser().getId().getKey();
     }
 
     DelegateGroupVotes delegateGroupVotes = allVotesMap.get(delegateKey);

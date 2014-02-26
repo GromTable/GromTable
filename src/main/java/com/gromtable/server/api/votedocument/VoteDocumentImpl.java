@@ -49,7 +49,7 @@ public class VoteDocumentImpl extends Loader<VoteDocumentResult> {
     EntityVote newVote = new EntityVote(VoteType.DOCUMENT, voterId, documentId, time);
     newVote.setVoteDocumentDecision(voteDecision);
     hashoutUserToDocument.addEntity(getKey(voterId, documentId), newVote);
-    hashoutDocumentToUser.addKey(documentId, getKey(voterId, newVote.getId()));
+    hashoutDocumentToUser.addKey(documentId.getKey(), getKey(voterId, newVote.getId()));
     return new VoteDocumentResult(true, newVote.getId());
   }
 }

@@ -1,37 +1,36 @@
 package com.gromtable.server.core.data;
 
-import java.util.Arrays;
+import com.gromtable.server.core.entity.EntityObject;
 
-import org.apache.commons.codec.binary.Hex;
+public class Key {
+  public static final Key EMPTY = new Key("");
+  private String str;
 
-public abstract class Key implements Comparable<Key> {
-  public abstract byte[] getRowData();
+  public Key(String str) {
+    this.str = str;
+  }
 
-  public boolean equals(Object obj) {
-    Key other = (Key) obj;
-    return Arrays.equals(getRowData(), other.getRowData());
+  public Key(byte[] bytes) {
+    this.str = EntityObject.bytesToString(bytes);
+  }
+
+  public boolean equals(Object other) {
+    return str.equals(other.toString());
   }
 
   public int hashCode() {
-    return Arrays.hashCode(getRowData());
-  }
-
-  public int compareTo(Key key) {
-    byte[] data1 = getRowData();
-    byte[] data2 = key.getRowData();
-    return new String(data1).compareTo(new String(data2));
-  }
-
-  public String stringValue() {
-    return new String(getRowData());
+    return str.hashCode();
   }
 
   public String toString() {
-    StringBuffer buffer = new StringBuffer();
-    buffer.append("Key(");
-    buffer.append("hex=" + Hex.encodeHexString(getRowData()) + ",");
-    buffer.append("str=" + new String(getRowData()) + ",");
-    buffer.append(")");
-    return buffer.toString();
+    return str;
+  }
+
+  public byte[] getBytes() {
+    return EntityObject.stringToBytes(str);
+  }
+
+  public String getString() {
+    return str;
   }
 }

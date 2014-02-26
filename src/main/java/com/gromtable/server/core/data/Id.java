@@ -10,7 +10,7 @@ import org.apache.commons.codec.binary.Hex;
 /**
  * DbId - 2 byte Type - 2 bytes Check - 4 bytes Sequence - 8 bytes
  */
-public class Id extends RowKey {
+public class Id {
   public static final int MIN_DB_ID = 0;
   public static final int MAX_DB_ID = (1 << 16) - 1;
   public static final int MIN_TYPE_ID = 0;
@@ -21,13 +21,17 @@ public class Id extends RowKey {
 
   protected static final int DB_ID_OFFSET = 0;
   protected static final int TYPE_ID_OFFSET = 2;
-  protected static final int HASH_OFFSET = 4;
-  private static final int SEQUENCE_ID_OFFSET = 8;
+  protected static final int SEQUENCE_ID_OFFSET = 4;
+  protected static final int HASH_OFFSET = 12;
 
   private static final MessageDigest MESSAGE_DIGEST = initializeMessageDigest();
 
+  private final byte[] data;
+  private final Key key;
+
   protected Id(byte[] data) {
-    super(data);
+    this.data = data;
+    this.key = new Key(Hex.encodeHexString(data));
   }
 
   private static MessageDigest initializeMessageDigest() {
@@ -50,12 +54,16 @@ public class Id extends RowKey {
     }
   }
 
-  public static Id fromRowData(byte[] data) {
-    return new Id(data);
+  public static Id fromKey(Key key) {
+    return fromKey(key.toString());
   }
 
-  public static Id fromBase16(String base16) throws DecoderException {
-    return new Id(Hex.decodeHex(base16.toCharArray()));
+  public static Id fromKey(String key) {
+    try {
+      return new Id(Hex.decodeHex(key.toCharArray()));
+    } catch (DecoderException e) {
+      return null;
+    }
   }
 
   public static Id genIdForDb(int dbId, int type, long sequenceId) {
@@ -67,13 +75,9 @@ public class Id extends RowKey {
     return new Id(buffer.array());
   }
 
-  public String getStoreString() {
-    return Hex.encodeHexString(getRowData());
-  }
-
   public boolean isValid() {
     int storedHash = getHash();
-    int calculatedHash = calculateHash(getRowData());
+    int calculatedHash = calculateHash(data);
     return storedHash == calculatedHash;
   }
 
@@ -88,22 +92,42 @@ public class Id extends RowKey {
   }
 
   private int getHash() {
-    ByteBuffer buf = ByteBuffer.wrap(getRowData());
+    ByteBuffer buf = ByteBuffer.wrap(data);
     return buf.getInt(HASH_OFFSET);
   }
 
   public int getDbId() {
-    ByteBuffer buf = ByteBuffer.wrap(getRowData());
+    ByteBuffer buf = ByteBuffer.wrap(data);
     return buf.getShort(DB_ID_OFFSET) & 0xFFFF;
   }
 
   public int getTypeId() {
-    ByteBuffer buf = ByteBuffer.wrap(getRowData());
+    ByteBuffer buf = ByteBuffer.wrap(data);
     return buf.getShort(TYPE_ID_OFFSET) & 0xFFFF;
   }
 
   public long getSequenceId() {
-    ByteBuffer buf = ByteBuffer.wrap(getRowData());
+    ByteBuffer buf = ByteBuffer.wrap(data);
     return buf.getLong(SEQUENCE_ID_OFFSET);
+  }
+
+  public Key getKey() {
+    return key;
+  }
+
+  public String getString() {
+    return key.getString();
+  }
+
+  public boolean equals(Object obj) {
+    return key.equals(((Id) obj).key);
+  }
+
+  public int hashCode() {
+    return key.hashCode();
+  }
+
+  public String toString() {
+    return getString();
   }
 }

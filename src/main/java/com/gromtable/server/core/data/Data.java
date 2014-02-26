@@ -1,75 +1,60 @@
 package com.gromtable.server.core.data;
 
 import java.nio.ByteBuffer;
-import java.util.Arrays;
-
-import org.apache.commons.codec.binary.Hex;
 
 public class Data implements Comparable<Data> {
-  public static final Data EMPTY = new Data(new byte[0]);
-  private final byte[] data;
+  public static final Data EMPTY = new Data("");
+  private final String str;
+
+  public Data(String str) {
+    this.str = str;
+  }
 
   public Data(byte[] data) {
-    this.data = data;
+    this.str = new String(data);
   }
 
-  public Data(long data) {
-    this.data = longToBytes(data);
+  public Data(long number) {
+    this.str = Long.toString(number);
   }
 
-  private static long bytesToLong(byte[] x) {
-    ByteBuffer buf = ByteBuffer.wrap(x);
-    return buf.getLong();
-  }
-
-  private static byte[] longToBytes(long x) {
-    byte b[] = new byte[8];
-
-    ByteBuffer buf = ByteBuffer.wrap(b);
-    buf.putLong(x);
-    return b;
-  }
-
-  public byte[] getRowData() {
-    return data;
+  public static Data fromLongBytes(byte[] bytes) {
+    ByteBuffer buf = ByteBuffer.wrap(bytes);
+    return new Data(buf.getLong());
   }
 
   public int hashCode() {
-    return Arrays.hashCode(data);
+    return str.hashCode();
   }
 
   public boolean equals(Object obj) {
-    Data other = (Data) obj;
-    return Arrays.equals(data, other.data);
+    return str.equals(obj.toString());
   }
 
   public int compareTo(Data data) {
-    byte[] data1 = getRowData();
-    byte[] data2 = data.getRowData();
-    return new String(data1).compareTo(new String(data2));
+    return str.compareTo(data.toString());
   }
 
   public String toString() {
-    StringBuffer buffer = new StringBuffer();
-    buffer.append("Data(hex=");
-    buffer.append(Hex.encodeHex(data));
-    if (data.length == 8) {
-      buffer.append(",long=" + asLong().toString());
-    }
-    buffer.append(",str=" + stringValue());
-    buffer.append(")");
-    return buffer.toString();
-  }
-
-  public String stringValue() {
-    return new String(data);
+    return str;
   }
 
   public Long asLong() {
-    return bytesToLong(data);
+    if (str.length() == 0) {
+      return new Long(0);
+    }
+    return Long.parseLong(str);
   }
 
   public Data addData(Data other) {
-    return new Data(longToBytes(bytesToLong(data) + bytesToLong(other.data)));
+    return new Data(asLong() + other.asLong());
+  }
+
+  public byte[] getBytes() {
+    return str.getBytes();
+  }
+
+  public String getString() {
+    return str;
   }
 }

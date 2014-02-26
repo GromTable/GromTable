@@ -33,9 +33,9 @@ public class EntityUpdateLoader extends StoreLoader<Void> {
 
   public void hbasePreDispatch(List<Row> rows, List<StoreLoader<?>> rowLoaders, List<Increment> increments,
       List<StoreLoader<?>> incrementLoaders, byte[] familyName) {
-    Put entityPutRow = new Put(getId().getRowData());
+    Put entityPutRow = new Put(getId().getKey().getBytes());
     for (Map.Entry<Key, Data> column : getColumns().entrySet()) {
-      entityPutRow.add(familyName, column.getKey().getRowData(), column.getValue().getRowData());
+      entityPutRow.add(familyName, column.getKey().getBytes(), column.getValue().getBytes());
     }
 
     rows.add(entityPutRow);
@@ -46,6 +46,6 @@ public class EntityUpdateLoader extends StoreLoader<Void> {
   }
 
   public void memoryDispatch(Rows rows) {
-    rows.put(getId(), getColumns());
+    rows.put(getId().getKey(), getColumns());
   }
 }

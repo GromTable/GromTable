@@ -37,7 +37,7 @@ public class GetUserInfoImpl extends Loader<GetUserInfoResult> {
       userVotes = getVotes(user);
       HashoutUserToDelegate hashoutUserToDelegate = new HashoutUserToDelegate();
       List<EntityUserAndVote> userDelegateVotes =
-        VoteFilter.filterVotes(hashoutUserToDelegate.loadEntities(userId), votesTime);
+        VoteFilter.filterVotes(hashoutUserToDelegate.loadEntities(userId.getKey()), votesTime);
       if (userDelegateVotes.size() > 1) {
         throw new GetUserInfoException("More then one delegate: " + userId);
       }
@@ -55,7 +55,7 @@ public class GetUserInfoImpl extends Loader<GetUserInfoResult> {
   private List<EntityUser> getVotes(EntityUser user) {
     HashoutDelegateToUser hashoutDelegateToUser = new HashoutDelegateToUser();
     List<EntityUserAndVote> userAndVotes =
-      VoteFilter.filterVotes(hashoutDelegateToUser.loadEntities(user.getId()), votesTime);
+      VoteFilter.filterVotes(hashoutDelegateToUser.loadEntities(user.getId().getKey()), votesTime);
     List<EntityUser> userVotes = new ArrayList<EntityUser>();
     for (EntityUserAndVote userAndVote : userAndVotes) {
       userVotes.add(userAndVote.getUser());

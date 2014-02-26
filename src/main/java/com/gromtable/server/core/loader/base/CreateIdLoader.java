@@ -1,7 +1,7 @@
 package com.gromtable.server.core.loader.base;
 
 import com.gromtable.server.core.data.Id;
-import com.gromtable.server.core.data.RowKey;
+import com.gromtable.server.core.data.Key;
 import com.gromtable.server.core.loader.Loader;
 
 public class CreateIdLoader extends Loader<Id> {
@@ -18,8 +18,8 @@ public class CreateIdLoader extends Loader<Id> {
 
   public Id genLoad() {
     long sequenceId = new CounterLoader(
-        new RowKey(ID_GENERATOR_ROW_KEY),
-        new RowKey(ID_GENERATOR_NEXT_ID_COLUMN_KEY), 1L).genLoad() - 1;
+        new Key(ID_GENERATOR_ROW_KEY),
+        new Key(ID_GENERATOR_NEXT_ID_COLUMN_KEY), 1L).genLoad() - 1;
     return Id.genIdForDb(dbId, typeId, sequenceId);
   }
 }

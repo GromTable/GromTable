@@ -6,7 +6,6 @@ import org.junit.Test;
 
 import com.gromtable.server.core.Setup;
 import com.gromtable.server.core.entity.EntityUser;
-import com.gromtable.server.core.environment.BaseEnvironment;
 
 public class ViewerContextTest {
   @Before
@@ -17,7 +16,7 @@ public class ViewerContextTest {
   @Test
   public void testGenViewerContextFromToken() {
     EntityUser user = new EntityUser("1", "Name").save();
-    UserSessionToken token = UserSessionToken.create(user.getId(), BaseEnvironment.getEnvironment());
+    UserSessionToken token = new UserSessionToken(user.getId());
 
     ViewerContext unknownViewerContext = ViewerContext.genCreateFromCookie(token.getCookieData());
     Assert.assertNull(unknownViewerContext.getUserId());

@@ -5,7 +5,6 @@ import java.util.Random;
 import junit.framework.Assert;
 
 import org.apache.commons.codec.DecoderException;
-import org.apache.commons.codec.binary.Hex;
 import org.junit.Test;
 
 public class IdTest {
@@ -38,13 +37,21 @@ public class IdTest {
   }
 
   @Test
+  public void toStringTest() {
+    Id id = Id.genIdForDb(1, 2, 3);
+    String base16 = id.getString();
+    Assert.assertEquals(base16, "00010002f60f94d60000000000000003");
+  }
+
+  @Test
   public void fromBase16Test() throws DecoderException {
     Id id = Id.genIdForDb(1, 2, 3);
-    String base16 = Hex.encodeHexString(id.getRowData());
+    String base16 = id.getString();
     Assert.assertEquals(Id.SIZE * 2, base16.length());
 
-    Id fromStrId = Id.fromBase16(base16);
-    Assert.assertEquals(id, fromStrId);
+    Id fromStrId = Id.fromKey(base16);
+    Assert.assertEquals(id.toString(), fromStrId.toString());
+    Assert.assertTrue(id.equals(fromStrId));
   }
 
   @Test
@@ -53,7 +60,7 @@ public class IdTest {
     for (int i = 0; i < 1000; i++) {
       byte[] data = new byte[Id.SIZE];
       random.nextBytes(data);
-      Id id = Id.fromRowData(data);
+      Id id = new Id(data);
       Assert.assertFalse(id.isValid());
     }
   }

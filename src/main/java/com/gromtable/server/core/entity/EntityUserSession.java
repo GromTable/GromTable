@@ -2,6 +2,7 @@ package com.gromtable.server.core.entity;
 
 import com.gromtable.server.core.data.Id;
 
+
 public class EntityUserSession extends EntityObject<EntityUserSession> {
   public enum Status {
     LOGED_IN,
@@ -34,5 +35,9 @@ public class EntityUserSession extends EntityObject<EntityUserSession> {
 
   public void setStatus(Status status) {
     this.status = status;
+  }
+
+  public static EntityUserSession load(final Id id) {
+    return EntityObject.load(id, EntityUserSession.class);
   }
 }

@@ -29,8 +29,8 @@ public class HashoutRemoveLoader extends StoreLoader<Void> {
 
   public void hbasePreDispatch(List<Row> rows, List<StoreLoader<?>> rowLoaders, List<Increment> increments,
       List<StoreLoader<?>> incrementLoaders, byte[] familyName) {
-    Delete row = new Delete(getRowKey().getRowData());
-    row.deleteColumn(familyName, getColumnKey().getRowData());
+    Delete row = new Delete(getRowKey().getBytes());
+    row.deleteColumn(familyName, getColumnKey().getBytes());
 
     rows.add(row);
     rowLoaders.add(this);

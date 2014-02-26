@@ -14,7 +14,7 @@ public class GetDocumentsListImpl extends Loader<GetDocumentsListResult> {
 
   public GetDocumentsListResult genLoad() {
     HashoutListToDocument hashoutListToDocument = new HashoutListToDocument();
-    List<EntityDocument> documents = hashoutListToDocument.loadEntities(HashoutList.ALL_DOCUMENTS.getId());
+    List<EntityDocument> documents = hashoutListToDocument.loadEntities(HashoutList.ALL_DOCUMENTS.getId().getKey());
     long currentTime = BaseEnvironment.getEnvironment().getTime().getNanoTime();
     for (EntityDocument document : documents) {
       if (document.isNeedDecision(currentTime)) {

@@ -15,8 +15,8 @@ public class HashoutAddLoaderTest extends BaseTest {
     Id fromKey = Id.genIdForDb(0, 0, 2);
     Id toId = Id.genIdForDb(0, 0, 3);
     Data savedData = new Data(new byte[] {'d', 'a', 't', 'a'});
-    new HashoutAddLoader(hashoutId, fromKey, toId, savedData).genLoad();
-    Data loadedData = new HashoutGetLoader(hashoutId, fromKey, toId).genLoad();
+    new HashoutAddLoader(hashoutId, fromKey.getKey(), toId.getKey(), savedData).genLoad();
+    Data loadedData = new HashoutGetLoader(hashoutId, fromKey.getKey(), toId.getKey()).genLoad();
     Assert.assertEquals(savedData, loadedData);
   }
 
@@ -28,10 +28,10 @@ public class HashoutAddLoaderTest extends BaseTest {
     Id toId2 = Id.genIdForDb(0, 0, 4);
     Data savedData1 = new Data(new byte[] {'d', 'a', 't', 'a', '1'});
     Data savedData2 = new Data(new byte[] {'d', 'a', 't', 'a', '2'});
-    new HashoutAddLoader(hashoutId, fromKey, toId1, savedData1).genLoad();
-    new HashoutAddLoader(hashoutId, fromKey, toId2, savedData2).genLoad();
-    Data loadedData1 = new HashoutGetLoader(hashoutId, fromKey, toId1).genLoad();
-    Data loadedData2 = new HashoutGetLoader(hashoutId, fromKey, toId2).genLoad();
+    new HashoutAddLoader(hashoutId, fromKey.getKey(), toId1.getKey(), savedData1).genLoad();
+    new HashoutAddLoader(hashoutId, fromKey.getKey(), toId2.getKey(), savedData2).genLoad();
+    Data loadedData1 = new HashoutGetLoader(hashoutId, fromKey.getKey(), toId1.getKey()).genLoad();
+    Data loadedData2 = new HashoutGetLoader(hashoutId, fromKey.getKey(), toId2.getKey()).genLoad();
     Assert.assertEquals(loadedData1, savedData1);
     Assert.assertEquals(loadedData2, savedData2);
   }

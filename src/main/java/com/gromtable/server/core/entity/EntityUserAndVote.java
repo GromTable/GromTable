@@ -28,14 +28,8 @@ public class EntityUserAndVote extends EntityObject<EntityUserAndVote> {
   }
 
   private static Pair<Id> splitIds(Key key) {
-    // TODO: clowntown
-    byte[] data = key.getRowData();
-    int length = data.length / 2;
-    byte[] data1 = new byte[length];
-    byte[] data2 = new byte[length];
-    System.arraycopy(data, 0, data1, 0, length);
-    System.arraycopy(data, length + 1, data2, 0, length);
-    return new Pair<Id>(Id.fromRowData(data1), Id.fromRowData(data2));
+    String[] parts = key.toString().split(":");
+    return new Pair<Id>(Id.fromKey(parts[0]), Id.fromKey(parts[1]));
   }
 
   public EntityUser getUser() {

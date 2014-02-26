@@ -26,7 +26,7 @@ class MainView extends PolymerElement {
     _shouldRedirect = false;
 
   }
-  
+
   // TODO: this is clowntown
   void selectedLocaleChanged() {
     Intl.defaultLocale = selectedLocale;

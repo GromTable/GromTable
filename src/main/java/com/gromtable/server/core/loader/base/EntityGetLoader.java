@@ -12,7 +12,6 @@ import com.gromtable.server.core.data.Columns;
 import com.gromtable.server.core.data.Data;
 import com.gromtable.server.core.data.Id;
 import com.gromtable.server.core.data.Key;
-import com.gromtable.server.core.data.RowKey;
 import com.gromtable.server.core.data.Rows;
 import com.gromtable.server.core.environment.BaseEnvironment;
 import com.gromtable.server.core.environment.Environment;
@@ -26,12 +25,12 @@ public class EntityGetLoader extends StoreLoader<Columns> {
   }
 
   public Key getRowKey() {
-    return id;
+    return id.getKey();
   }
 
   public void hbasePreDispatch(List<Row> rows, List<StoreLoader<?>> rowLoaders, List<Increment> increments,
       List<StoreLoader<?>> incrementLoaders, byte[] familyName) {
-    Get row = new Get(getRowKey().getRowData());
+    Get row = new Get(getRowKey().getBytes());
     row.addFamily(familyName);
 
     rows.add(row);
@@ -41,10 +40,12 @@ public class EntityGetLoader extends StoreLoader<Columns> {
   public void hbasePostDispatch(Result result, byte[] familyName) {
     Map<byte[], byte[]> familyMap = result.getFamilyMap(familyName);
     Columns columns = new Columns();
-    for (Map.Entry<byte[], byte[]> column : familyMap.entrySet()) {
-      Key columnName = new RowKey(column.getKey());
-      Data columnData = new Data(column.getValue());
-      columns.put(columnName, columnData);
+    if (familyMap != null) {
+      for (Map.Entry<byte[], byte[]> column : familyMap.entrySet()) {
+        Key columnName = new Key(column.getKey());
+        Data columnData = new Data(column.getValue());
+        columns.put(columnName, columnData);
+      }
     }
     setResult(columns);
   }
