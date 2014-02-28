@@ -4,6 +4,7 @@ import 'viewercontext.dart';
 import 'messages_all.dart';
 import 'dart:html';
 import 'state.dart';
+import 'host.dart';
  
 @CustomTag('main-view')
 class MainView extends PolymerElement {
@@ -16,6 +17,12 @@ class MainView extends PolymerElement {
   State state = State.instance;
 
   MainView.created() : super.created() {
+    var href = Host.clientHref;
+    // Only localhost allowed to access api.
+    if (href.contains("127.0.0.1")) {
+      window.location.assign(href.replaceAll("127.0.0.1", "localhost"));
+    }
+
     var locale = window.localStorage[SELECTED_LOCALE_KEY];
     if (locale == null) {
       locale = 'uk';

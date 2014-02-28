@@ -1,9 +1,11 @@
 import 'package:polymer/polymer.dart';
 import 'package:intl/intl.dart';
+import 'dart:convert';
 import 'viewercontext.dart';
 import 'host.dart';
 import 'state.dart';
 import 'dart:html';
+import 'error.dart';
 
 @CustomTag('user-settings-view')
 class UserSettingsView extends PolymerElement {
@@ -24,7 +26,7 @@ class UserSettingsView extends PolymerElement {
   
   void startSetUserInfo(String userType) {
     Uri uri = new Uri.http(
-      Host.serverDomain,
+      Host.apiDomain,
       '/api/set_user_info',
       {
         'user_type': userType,
@@ -33,11 +35,13 @@ class UserSettingsView extends PolymerElement {
     var request = HttpRequest.getString(uri.toString(), withCredentials : true)
       .then(onSetUserInfoDone)
       .catchError((var error) {
-        print(error.toString());
+        ErrorHandler.handleError(error);
     });
   }
   
   void onSetUserInfoDone(String response) {
+    Map map = JSON.decode(response);
+    ErrorHandler.handleResponse(map);
     State.instance = new State(State.USER, viewerContext.currentUser.id);
     // Clowntown - this shoud return new user info
     window.location.reload();

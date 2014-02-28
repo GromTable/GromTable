@@ -6,6 +6,7 @@ import 'host.dart';
 import 'state.dart';
 import 'document.dart';
 import 'viewercontext.dart';
+import 'error.dart';
 
 @CustomTag('document-view')
 class DocumentView extends PolymerElement {
@@ -25,7 +26,7 @@ class DocumentView extends PolymerElement {
   
   void startLoadingDocument(String documentId) {
     Uri uri = new Uri.http(
-      Host.serverDomain,
+      Host.apiDomain,
       '/api/get_document_info',
       {
         'document_id': documentId,
@@ -36,13 +37,13 @@ class DocumentView extends PolymerElement {
     var request = HttpRequest.getString(uri.toString())
         .then(onDocumentLoaded)
         .catchError((var error) {
-          print(error.toString());
+          ErrorHandler.handleError(error);
          });
   }
   
   void onDocumentLoaded(String response) {
-    print(response);
     Map map = JSON.decode(response);
+    ErrorHandler.handleResponse(map);
     document = new DocumentInfo.fromMap(map);
     isLoaded = true;
   }
@@ -53,7 +54,7 @@ class DocumentView extends PolymerElement {
   
   void startVoteDocument(String documentId, String voteDecision) {
     Uri uri = new Uri.http(
-      Host.serverDomain,
+      Host.apiDomain,
       '/api/vote_document',
       {
         'document_id': documentId,
@@ -63,11 +64,13 @@ class DocumentView extends PolymerElement {
     var request = HttpRequest.getString(uri.toString(), withCredentials : true)
         .then(onVoteDocumentDone)
         .catchError((var error) {
-          print(error.toString());
+          ErrorHandler.handleError(error);
          });
   }
   
   void onVoteDocumentDone(String response) {
+    Map map = JSON.decode(response);
+    ErrorHandler.handleResponse(map);
     startLoadingDocument(State.instance.id);
   }
   
@@ -89,7 +92,7 @@ class DocumentView extends PolymerElement {
   }
   
   String getHref() {
-    return Host.href;
+    return Host.clientHref;
   }
   
   documentHeaderMessage() => Intl.message(

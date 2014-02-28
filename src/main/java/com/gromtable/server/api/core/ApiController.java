@@ -1,12 +1,11 @@
 package com.gromtable.server.api.core;
 
+import com.gromtable.server.core.entity.ErrorType;
 import com.gromtable.server.core.viewer.ViewerContext;
 
 public abstract class ApiController<
     ControllerRequest extends BaseControllerRequest,
     ControllerResult extends BaseControllerResult> {
-  public static final String INVALID_REQUEST = "Invalid request";
-  public static final String NOT_LOGGED_IN = "Not logged in";
   private ApiRequest request;
 
   public void setRequest(ApiRequest request) {
@@ -38,7 +37,7 @@ public abstract class ApiController<
    */
   protected abstract ControllerResult genControllerResult(ControllerRequest request);
 
-  private final ApiResult getError(ControllerRequest controllerRequest, String error) {
+  private final ApiResult getError(ControllerRequest controllerRequest, ErrorType error) {
     return new ApiResult(
       new BaseControllerResult().setError(error),
       controllerRequest.getCallback()
@@ -52,11 +51,11 @@ public abstract class ApiController<
     controllerRequest.setViewerContext(viewerContext);
     // TODO: this look not cool
     if (getRequireLoggedIn() && !viewerContext.isLoggedIn()) {
-      return getError(controllerRequest, NOT_LOGGED_IN);
+      return getError(controllerRequest, ErrorType.NOT_LOGGED_IN);
     }
     boolean isValidRequest = controllerRequest.isValid();
     if (!isValidRequest) {
-      return getError(controllerRequest, INVALID_REQUEST);
+      return getError(controllerRequest, ErrorType.INVALID_REQUEST);
     }
     ControllerResult controllerResult = genControllerResult(controllerRequest);
     return new ApiResult(controllerResult, controllerRequest.getCallback());

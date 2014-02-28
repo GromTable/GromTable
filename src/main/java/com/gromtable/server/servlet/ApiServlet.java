@@ -18,6 +18,7 @@ import com.gromtable.server.api.getdocumentslist.GetDocumentsListController;
 import com.gromtable.server.api.getloggedinuser.GetLoggedinUserController;
 import com.gromtable.server.api.getuserinfo.GetUserInfoController;
 import com.gromtable.server.api.login.LoginController;
+import com.gromtable.server.api.logout.LogoutController;
 import com.gromtable.server.api.settings.SettingsController;
 import com.gromtable.server.api.setuserinfo.SetUserInfoController;
 import com.gromtable.server.api.votedocument.VoteDocumentController;
@@ -53,6 +54,7 @@ public class ApiServlet extends HttpServlet {
     controllers.add(new GetDocumentsListController());
     controllers.add(new GetLoggedinUserController());
     controllers.add(new FacebookCommentsController());
+    controllers.add(new LogoutController());
   }
 
   private void handleRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {

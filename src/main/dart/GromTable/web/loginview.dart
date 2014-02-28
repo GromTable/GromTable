@@ -27,7 +27,6 @@ class LoginView extends PolymerElement {
   }
   
   void loginTestUsers() {
-    print('here');
     ViewerContext.instance.loginViaTestUsers();
   }
 }

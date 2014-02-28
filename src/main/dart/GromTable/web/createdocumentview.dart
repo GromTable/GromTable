@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'host.dart';
 import 'document.dart';
 import 'state.dart';
+import 'error.dart';
 
 @CustomTag('create-document-view')
 class CreateDocumentView extends PolymerElement {
@@ -17,7 +18,7 @@ class CreateDocumentView extends PolymerElement {
 
   void startCreateDocument(DocumentInfo document) {
     Uri uri = new Uri.http(
-      Host.serverDomain,
+      Host.apiDomain,
       '/api/create_document'
     );
     
@@ -30,7 +31,7 @@ class CreateDocumentView extends PolymerElement {
         if (request.status == 200 || request.status == 0) {
           onCreateDocumentDone(request.responseText);
         } else {
-          print('ERROR: ' + request.status.toString());
+          ErrorHandler.handleError(request.status);
         }
       }
     });
@@ -49,12 +50,11 @@ class CreateDocumentView extends PolymerElement {
   
   void onCreateDocumentDone(String response) {
     Map map = JSON.decode(response);
+    ErrorHandler.handleResponse(map);
     var success = map['success'];
     if (success) {
       String documentId = map['documentId'];
       startLoadingDocument(documentId);
-    } else {
-      print(response);
     }
   }
   

@@ -1,13 +1,8 @@
 package com.gromtable.server.api.core;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-
-import com.gromtable.server.api.facebookcomments.FacebookCommentsResult;
-import com.gromtable.server.api.login.LoginResult;
 
 public class ApiResult {
   private BaseControllerResult result;
@@ -27,38 +22,6 @@ public class ApiResult {
     response.addHeader("Access-Control-Allow-Credentials", "true");
     response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
     response.addHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    if (result instanceof FacebookCommentsResult) {
-      response.setContentType("text/html");
-    } else {
-      response.setContentType("text/javascript; charset=utf-8");
-    }
-    // TODO: clowntown
-    // TODO: use constant instead of 's'
-    if (result instanceof LoginResult && result.getError() == null) {
-      LoginResult loginResult = (LoginResult) result;
-      Cookie cookie = new Cookie("s", loginResult.getCookie());
-      cookie.setMaxAge(30 * 24 * 60 * 60);
-      cookie.setPath("/");
-      response.addCookie(cookie);
-      response.sendRedirect(loginResult.getRedirectUrl());
-      return;
-    }
-    if (ApiController.NOT_LOGGED_IN.equals(result.getError())) {
-      Cookie cookie = new Cookie("s", "");
-      cookie.setMaxAge(0);
-      cookie.setPath("/");
-      response.addCookie(cookie);
-    }
-
-    PrintWriter writer = response.getWriter();
-    if (callback != null) {
-      writer.append(callback);
-      writer.append("(");
-    }
-    result.writeResponse(writer);
-    if (callback != null) {
-      writer.append(")");
-    }
-    writer.close();
+    result.writeResponse(response, callback);
   }
 }

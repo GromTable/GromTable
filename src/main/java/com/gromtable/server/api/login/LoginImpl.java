@@ -7,6 +7,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.gromtable.server.core.data.Key;
 import com.gromtable.server.core.entity.EntityUser;
+import com.gromtable.server.core.entity.ErrorType;
 import com.gromtable.server.core.environment.BaseEnvironment;
 import com.gromtable.server.core.hashout.HashoutLoginTokenToUser;
 import com.gromtable.server.core.loader.Loader;
@@ -115,7 +116,7 @@ public class LoginImpl extends Loader<LoginResult> {
       }
     } catch (Exception exception) {
       LoginResult result = new LoginResult(null, null);
-      result.setError("Can not login:" + exception.getMessage());
+      result.setError(ErrorType.UKNOWN_ERROR);
       exception.printStackTrace();
       return result;
     }

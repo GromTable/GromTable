@@ -9,7 +9,7 @@ class FacebookCommentsView extends PolymerElement {
   
   String getIframeSrc(String url) {
     Uri uri = new Uri.http(
-      Host.serverDomain,
+      Host.apiDomain,
       '/api/facebook_comments',
       {
         'url': url,

@@ -16,13 +16,12 @@ class Host {
     var parts = origin.split("//");
     return parts[1];
   }
-  static String get serverDomain {
-    return clientDomain.replaceAll('3030', '8080');
+  static String get apiDomain {
+     return 'gromstol.org';
+     // Uncomment for local api server
+     // return clientDomain.replaceAll('3030', '8080');
   }
-  static String get path {
-    return window.location.pathname;
-  }
-  static String get href {
+  static String get clientHref {
     return window.location.href;
   }
   static String get hash {

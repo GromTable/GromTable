@@ -115,9 +115,6 @@ class DocumentVotesView extends PolymerElement {
   }
   
   attributeChanged(String name, String oldValue, String newValue) {
-    print('attributeChanged ' + name);
-    print(totalvotes);
-    print(allvotes);
     super.attributeChanged(name, oldValue, newValue);
   }
 }

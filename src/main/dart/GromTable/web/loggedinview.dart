@@ -5,6 +5,7 @@ import 'package:polymer/polymer.dart';
 import 'user.dart';
 import 'host.dart';
 import 'viewercontext.dart';
+import 'error.dart';
 
 @CustomTag('loggedin-view')
 class LoggedinView extends PolymerElement {
@@ -22,18 +23,19 @@ class LoggedinView extends PolymerElement {
   
   void startLoadingLoggedinUser() {
     Uri uri = new Uri.http(
-      Host.serverDomain,
+      Host.apiDomain,
       '/api/get_loggedin_user'
     );
     var request = HttpRequest.getString(uri.toString(), withCredentials: true)
         .then(onLoggedinUserLoaded)
         .catchError((var error) {
-          print(error.toString());
+          ErrorHandler.handleError(error);
          }); 
   }
   
   void onLoggedinUserLoaded(String response) {
     Map map = JSON.decode(response);
+    ErrorHandler.handleResponse(map);
     viewerContext.currentUser = new User.fromMap(map[USER_KEY]);
   }
   

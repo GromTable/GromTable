@@ -6,6 +6,7 @@ import 'user.dart';
 import 'host.dart';
 import 'state.dart';
 import 'viewercontext.dart';
+import 'error.dart';
 
 @CustomTag('user-info-view')
 class UserInfoView extends PolymerElement {
@@ -26,13 +27,10 @@ class UserInfoView extends PolymerElement {
   }
   
   enteredView() {
-    print('enterView');
-    //startLoadingUserInfo(userid);
     super.enteredView();
   }
   
   attributeChanged(String name, String oldValue, String newValue) {
-    print('attributeChanged ' + oldValue + " " + newValue + " " + userid);
     startLoadingUserInfo(userid);
     super.attributeChanged(name, oldValue, newValue);
   }
@@ -66,7 +64,7 @@ class UserInfoView extends PolymerElement {
   void startVoteUser(String delegateId) {
     isLoaded = false;
     Uri uri = new Uri.http(
-      Host.serverDomain,
+      Host.apiDomain,
       '/api/vote_user',
       {
         'delegate_id': delegateId,
@@ -76,24 +74,23 @@ class UserInfoView extends PolymerElement {
     var request = HttpRequest.getString(uri.toString(), withCredentials : true)
       .then(onVoteUserDone)
       .catchError((var error) {
-        print(error.toString());
+        ErrorHandler.handleError(error);
     }); 
   }
   
   void onVoteUserDone(String response) {
     Map map = JSON.decode(response);
+    ErrorHandler.handleResponse(map);
     var success = map['success'];
     if (success) {
       startLoadingUserInfo(State.instance.id);
-    } else {
-      print(response);
     }
   }
   
   void startLoadingUserInfo(String userId, [votesTime = 0]) {
     isLoaded = false;
     Uri uri = new Uri.http(
-      Host.serverDomain,
+      Host.apiDomain,
       '/api/get_user_info',
       {
         'user_id': userId,
@@ -104,13 +101,13 @@ class UserInfoView extends PolymerElement {
     var request = HttpRequest.getString(uri.toString(), withCredentials : true)
       .then(onUserInfoLoaded)
       .catchError((var error) {
-        print(error.toString());
+        ErrorHandler.handleError(error);
     });
   }
 
   void onUserInfoLoaded(String response) {
-    print(response);
     Map map = JSON.decode(response);
+    ErrorHandler.handleResponse(map);
     user = new User.fromMap(map[USER_KEY]);
     delegate = loadUser(map[DELEGATE_KEY]);
     userVotes = loadUserList(map[USER_VOTES_KEY]);

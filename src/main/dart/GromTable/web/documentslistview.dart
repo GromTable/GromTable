@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'host.dart';
 import 'state.dart';
 import 'document.dart';
+import 'error.dart';
 
 @CustomTag('documents-list-view')
 class DocumentView extends PolymerElement {
@@ -31,7 +32,7 @@ class DocumentView extends PolymerElement {
   
   void startLoadingDocumentsList() {
     Uri uri = new Uri.http(
-      Host.serverDomain,
+      Host.apiDomain,
       '/api/get_documents_list',
       {
       }
@@ -39,13 +40,13 @@ class DocumentView extends PolymerElement {
     var request = HttpRequest.getString(uri.toString(), withCredentials : true)
         .then(onDocumentsListLoaded)
         .catchError((var error) {
-          print(error.toString());
+          ErrorHandler.handleError(error);
          });
   }
   
   void onDocumentsListLoaded(String response) {
-    print(response);
     Map result = JSON.decode(response);
+    ErrorHandler.handleResponse(result);
     List documentsList = result['documents'];
     List<DocumentInfo> newDocuments = [];
     for (var documentMap in documentsList) {
