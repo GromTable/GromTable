@@ -1,0 +1,134 @@
+<polymer-element name="welcome-view"> <template>
+<style>
+.welcome {
+  padding: 200px 0px 0px 0px;
+  margin: 0 auto;
+  width: 600px;
+  height: auto;
+}
+
+.title {
+  font-family: Georgia, serif;
+  font-size: 48px;
+}
+
+.description {
+  white-space: pre-wrap;
+  font-family: Arial, sans-serif;
+}
+
+.statutLink {
+  width: mi text-decoration:none;
+  border-bottom: 3px dotted;
+  font-size: 30px;
+  color: #465a9b;
+}
+
+.loginVia {
+  padding: 20px 0px 0px 0px;
+}
+
+.viaFacebook {
+  -moz-box-shadow: inset 0px -2px 0px 0px #aaaaaa;
+  -webkit-box-shadow: inset 0px -2px 0px 0px #aaaaaa;
+  box-shadow: inset 0px -2px 0px 0px #aaaaaa;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #475a96
+    ), color-stop(1, #475a96));
+  background: -moz-linear-gradient(center top, #475a96 5%, #475a96 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#475a96',
+    endColorstr='#475a96');
+  background-color: #475a96;
+  -webkit-border-top-left-radius: 7px;
+  -moz-border-radius-topleft: 7px;
+  border-top-left-radius: 7px;
+  -webkit-border-top-right-radius: 7px;
+  -moz-border-radius-topright: 7px;
+  border-top-right-radius: 7px;
+  -webkit-border-bottom-right-radius: 7px;
+  -moz-border-radius-bottomright: 7px;
+  border-bottom-right-radius: 7px;
+  -webkit-border-bottom-left-radius: 7px;
+  -moz-border-radius-bottomleft: 7px;
+  border-bottom-left-radius: 7px;
+  text-indent: 0px;
+  border: 1px solid #dcdcdc;
+  display: inline-block;
+  color: #ffffff;
+  font-family: arial;
+  font-size: 20px;
+  font-weight: normal;
+  font-style: normal;
+  height: 50px;
+  line-height: 50px;
+  width: 240px;
+  text-decoration: none;
+  text-align: center;
+  text-shadow: 0px -1px 1px #000000;
+}
+
+.viaFacebook:hover {
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #384776
+    ), color-stop(1, #384776));
+  background: -moz-linear-gradient(center top, #384776 5%, #384776 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#384776',
+    endColorstr='#384776');
+  background-color: #384776;
+}
+
+.viaFacebook:active {
+  position: relative;
+  top: 1px;
+}
+
+.viaTest {
+  -moz-box-shadow: inset 0px -2px 0px 0px #aaaaaa;
+  -webkit-box-shadow: inset 0px -2px 0px 0px #aaaaaa;
+  box-shadow: inset 0px -2px 0px 0px #aaaaaa;
+  background-color: #00b6ed;
+  -webkit-border-top-left-radius: 7px;
+  -moz-border-radius-topleft: 7px;
+  border-top-left-radius: 7px;
+  -webkit-border-top-right-radius: 7px;
+  -moz-border-radius-topright: 7px;
+  border-top-right-radius: 7px;
+  -webkit-border-bottom-right-radius: 7px;
+  -moz-border-radius-bottomright: 7px;
+  border-bottom-right-radius: 7px;
+  -webkit-border-bottom-left-radius: 7px;
+  -moz-border-radius-bottomleft: 7px;
+  border-bottom-left-radius: 7px;
+  text-indent: 0px;
+  border: 1px solid #dcdcdc;
+  display: inline-block;
+  color: #ffffff;
+  font-family: arial;
+  font-size: 20px;
+  font-weight: normal;
+  font-style: normal;
+  height: 50px;
+  line-height: 50px;
+  width: 200px;
+  text-decoration: none;
+  text-align: center;
+  text-shadow: 0px -1px 1px #000000;
+}
+
+.viaTest:hover {
+  background-color: #5dd7fc;
+}
+
+.viaTest:active {
+  position: relative;
+  top: 1px;
+}
+</style>
+<div class="welcome">
+  <div class="title">{{welcomeHeader()}}</div>
+  <pre class="description">{{welcomeDescription()}}</pre>
+  <a class="statutLink" on-click="{{goToStatus}}">{{welcomeStatus()}}</a>
+  <div class="loginVia">
+    <button class="viaFacebook" on-click="{{loginViaFacebook}}">{{welcomeLoginViaFacebook()}}</button>
+    <button class="viaTest" on-click="{{loginTestUsers}}">{{welcomeViaTestUser()}}</button>
+  </div>
+</div>
+</template> <script type="application/dart" src="welcomeview.dart"></script> </polymer-element>

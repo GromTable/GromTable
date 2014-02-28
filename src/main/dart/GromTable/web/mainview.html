@@ -7,6 +7,7 @@
 <link rel="import" href="loginview.html">
 <link rel="import" href="headerview.html">
 <link rel="import" href="usersettingsview.html">
+<link rel="import" href="welcomeview.html">
 
 <polymer-element name="main-view">
   <template>
@@ -20,15 +21,16 @@
       border: 0px;
     }
     </style>
-    <header-view></header-view>
-    <template if="{{!viewerContext.isLoggedIn}}">
-      <login-view></login-view>
+    <template if="{{state.view != 'welcome'}}">
+      <header-view></header-view>
+      <template if="{{!viewerContext.isLoggedIn}}">
+        <login-view></login-view>
+      </template>
+      <template if="{{viewerContext.isLoggedIn}}">
+        <loggedin-view></loggedin-view>
+      </template>
+      <commands-view></commands-view>
     </template>
-    <template if="{{viewerContext.isLoggedIn}}">
-      <loggedin-view></loggedin-view>
-    </template>
-    <commands-view></commands-view>
-
     <template if="{{state.view == 'user'}}">
       <user-info-view userid="{{state.id}}"></user-info-view>
     </template>
@@ -43,6 +45,9 @@
     </template>
     <template if="{{state.view == 'user_settings'}}">
       <user-settings-view></user-settings-view>
+    </template>
+    <template if="{{state.view == 'welcome'}}">
+      <welcome-view></welcome-view>
     </template>
     <select value="{{selectedLocale}}">
       <option value="uk">Ukrainian</option>

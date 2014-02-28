@@ -124,6 +124,16 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static vkontkte() => "Vkontakte: ";
 
+  static welcomeDescription() => "Загальногонаціональний позапартійний проект, створений для того, щоб всі громадяні могли вести діалог з приводу подльших шляхів розвитку громадянського суспільства в нашій країні.\n\nОсновні цінності проекту:\n- Довіра - прозора система вибору представників;\n- Доступність - в діалозі може прийняти участ будь-яка людина;\n- Загальнонаціональність - представлені всі верстви населення.";
+
+  static welcomeHeader() => "Громадський стіл";
+
+  static welcomeLoginViaFacebook() => "Увійти через Facebook";
+
+  static welcomeLoginViaTestUser() => "Пробний доступ";
+
+  static welcomeStatus() => "Статут";
+
   static zip() => "Індекс: ";
 
   static zipPlaceholder() => "Введіть Ваш індекс тут...";
@@ -185,6 +195,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "userSettings" : userSettings,
     "vkontaktePlaceholder" : vkontaktePlaceholder,
     "vkontkte" : vkontkte,
+    "welcomeDescription" : welcomeDescription,
+    "welcomeHeader" : welcomeHeader,
+    "welcomeLoginViaFacebook" : welcomeLoginViaFacebook,
+    "welcomeLoginViaTestUser" : welcomeLoginViaTestUser,
+    "welcomeStatus" : welcomeStatus,
     "zip" : zip,
     "zipPlaceholder" : zipPlaceholder
   };

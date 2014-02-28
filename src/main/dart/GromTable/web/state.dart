@@ -11,6 +11,7 @@ class State extends Observable {
   static final CREATE_DOCUMENT = 'create_document';
   static final DOCUMENTS_LIST = 'documents_list';
   static final USER_SETTINGS = 'user_settings';
+  static final WELCOME = 'welcome';
   static final UNKNOWN = 'unknown';
   
   static State _instance = new State.fromString(Host.hash);
@@ -24,7 +25,7 @@ class State extends Observable {
   
   State.fromString(String str) {
     str = str.replaceAll('#', '');
-    List<String> validViews = [DOCUMENT, USER, CREATE_DOCUMENT, DOCUMENTS_LIST, USER_SETTINGS];
+    List<String> validViews = [DOCUMENT, USER, CREATE_DOCUMENT, DOCUMENTS_LIST, USER_SETTINGS, WELCOME];
     this.view = UNKNOWN;
     for (var view in validViews) {
       if (str.startsWith(view)) {
@@ -33,7 +34,7 @@ class State extends Observable {
       }
     }
     if (view == State.UNKNOWN) {
-      Settings.neeedSettings(goToStatus);
+      Settings.neeedSettings(goToStatut);
     }
     if (State._isListen == false) {
       State._isListen = true;
@@ -43,7 +44,7 @@ class State extends Observable {
     }
   }
   
-  void goToStatus(Map<String, String> settings) {
+  void goToStatut(Map<String, String> settings) {
     State.instance = new State(State.DOCUMENT, settings['client_status_document_id']);
   }
   
