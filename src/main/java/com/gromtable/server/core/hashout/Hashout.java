@@ -16,6 +16,7 @@ import com.gromtable.server.core.loader.base.HashoutAddLoader;
 import com.gromtable.server.core.loader.base.HashoutGetMultiLoader;
 import com.gromtable.server.core.loader.base.HashoutRemoveLoader;
 
+// TODO: add interfaces with using Id instead of Key.
 public abstract class Hashout<T extends EntityObject<T>> {
   private Id hashoutId;
   private Class<T> clazz;

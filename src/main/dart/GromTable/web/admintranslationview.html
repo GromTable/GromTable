@@ -1,0 +1,114 @@
+<link rel="import" href="userview.html">
+<link rel="import" href="documentvotesview.html">
+<link rel="import" href="facebookcommentsview.html">
+
+<polymer-element name="admin-translation-view"> <template>
+<style>
+.messages {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.messages td,.messages th {
+  border: 1px solid black;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.hidden {
+  display: none;
+}
+
+.message {
+  width: 40px;
+}
+
+.description {
+  width: 160px;
+}
+
+.changeButton {
+  width: 40px;
+}
+
+.modal {
+  position: fixed;
+  z-index: 101;
+  top: 33%;
+  left: 25%;
+  width: 50%;
+  background-color: yellow;
+}
+</style>
+<table class="messages">
+  <thead>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Message</th>
+      <th>Description</th>
+      <th>Ukrainian</th>
+      <th>Russian</th>
+      <th>English</th>
+      <th>Change</th>
+    </tr>
+    <tr template repeat="{{record in translationRecords | enumerate}}">
+      <td class="message">{{record.value.message}}</td>
+      <td class="description">{{record.value.description}}</td>
+      <td>{{record.value.uk}}</td>
+      <td>{{record.value.ru}}</td>
+      <td>{{record.value.en}}</td>
+      <td class="changeButton"><button
+          data-record="{{record.index}}" on-click="{{changeRecord}}">Change</button></td>
+    </tr>
+  </tbody>
+</table>
+<button on-click="{{saveTranslationInfo}}">Save Translation</button>
+<template if="{{currentRow != null}}">
+<div class="modal">
+  <p>
+    <label>Name: {{currentRow.name}}</label>
+  </p>
+  <p>
+    <label>Message: {{currentRow.message}}</label>
+  </p>
+  <p>
+    <label>Description: {{currentRow.description}}</label>
+  </p>
+  <p>
+    <lable>Ukrainian: <textarea rows="4" cols="50"
+      value="{{currentRow.uk}}"></textarea></lable>
+  </p>
+  <p>
+    <lable>Russsian: <textarea rows="4" cols="50"
+      value="{{currentRow.ru}}"></textarea></lable>
+  </p>
+  <p>
+    <lable>English: <textarea rows="4" cols="50"
+      value="{{currentRow.en}}"></textarea></lable>
+  </p>
+  <button on-click="{{closePopup}}">Close</button>
+</div>
+</template>
+<div class="hidden">
+  <p>
+    <lable>Intl messages source: <textarea rows="4" cols="50"
+      value="{{translation.intlMessagesSource}}"></textarea></lable>
+  </p>
+  <p>
+    <lable>Intl messages uk: <textarea rows="4" cols="50"
+      value="{{translation.intlMessagesUk}}"></textarea></lable>
+  </p>
+  <p>
+    <lable>Intl messages ru: <textarea rows="4" cols="50"
+      value="{{translation.intlMessagesRu}}"></textarea></lable>
+  </p>
+  <p>
+    <lable>Intl messages en: <textarea rows="4" cols="50"
+      value="{{translation.intlMessagesEn}}"></textarea></lable>
+  </p>
+  <button on-click="{{saveRowTranslation}}">Save Row Translation</button>
+</div>
+
+</template> <script type="application/dart" src="admintranslationview.dart"></script>
+</polymer-element>

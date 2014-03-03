@@ -57,8 +57,13 @@ public abstract class ApiController<
     if (!isValidRequest) {
       return getError(controllerRequest, ErrorType.INVALID_REQUEST);
     }
-    ControllerResult controllerResult = genControllerResult(controllerRequest);
-    return new ApiResult(controllerResult, controllerRequest.getCallback());
+    try {
+      ControllerResult controllerResult = genControllerResult(controllerRequest);
+      return new ApiResult(controllerResult, controllerRequest.getCallback());
+    } catch (Exception exception) {
+      System.out.println(exception);
+      return getError(controllerRequest, ErrorType.UKNOWN_ERROR);
+    }
   }
 
   protected ViewerContext genViewerContext(final ApiRequest request) {

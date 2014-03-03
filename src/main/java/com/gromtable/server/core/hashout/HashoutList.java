@@ -4,7 +4,9 @@ import com.gromtable.server.core.data.Id;
 import com.gromtable.server.core.entity.EntityType;
 
 public enum HashoutList {
-  ALL_DOCUMENTS(1L);
+  ALL_DOCUMENTS(1L),
+  INTL_MESSAGES_ALL(2L),
+  INTL_MESSAGES_CURRENT(3L);
 
   private final Id id;
 

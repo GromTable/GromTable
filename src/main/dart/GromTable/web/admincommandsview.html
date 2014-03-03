@@ -1,0 +1,20 @@
+<link rel="import" href="userview.html">
+<link rel="import" href="documentvotesview.html">
+<link rel="import" href="facebookcommentsview.html">
+
+<polymer-element name="admin-commands-view"> <template>
+<style>
+.commands {
+  background-color: #EBF8E5;
+  padding: 10px 10px 10px 10px;
+}
+</style>
+<template if="{{viewerContext != null}}">
+<div class="commands">
+  <h3 class="header">Commands:</h3>
+  <div>
+    <button class="fancy" on-click="{{goToTranslation}}">Translation</button>
+  </div>
+</div>
+</template> </template> <script type="application/dart" src="admincommandsview.dart"></script>
+</polymer-element>

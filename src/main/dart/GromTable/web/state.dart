@@ -12,6 +12,7 @@ class State extends Observable {
   static final DOCUMENTS_LIST = 'documents_list';
   static final USER_SETTINGS = 'user_settings';
   static final WELCOME = 'welcome';
+  static final TRANSLATION = 'translation';
   static final UNKNOWN = 'unknown';
   
   static State _instance = new State.fromString(Host.hash);
@@ -25,7 +26,7 @@ class State extends Observable {
   
   State.fromString(String str) {
     str = str.replaceAll('#', '');
-    List<String> validViews = [DOCUMENT, USER, CREATE_DOCUMENT, DOCUMENTS_LIST, USER_SETTINGS, WELCOME];
+    List<String> validViews = [DOCUMENT, USER, CREATE_DOCUMENT, DOCUMENTS_LIST, USER_SETTINGS, WELCOME, TRANSLATION];
     this.view = UNKNOWN;
     for (var view in validViews) {
       if (str.startsWith(view)) {

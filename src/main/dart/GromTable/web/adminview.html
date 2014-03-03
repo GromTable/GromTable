@@ -1,0 +1,25 @@
+<link rel="import" href="loggedinview.html">
+<link rel="import" href="loginview.html">
+<link rel="import" href="admintranslationview.html">
+<link rel="import" href="admincommandsview.html">
+
+<polymer-element name="admin-view">
+  <template>
+    <style>
+    </style>
+    <h1>Admin Tool</h1>
+      <template if="{{!viewerContext.isLoggedIn}}">
+        <login-view></login-view>
+      </template>
+      <template if="{{viewerContext.isLoggedIn}}">
+        <loggedin-view></loggedin-view>
+      </template>
+    <template if="{{viewerContext.isLoggedIn}}">
+      <admin-commands-view></admin-commands-view>
+      <template if="{{state.view == 'translation'}}">
+        <admin-translation-view></admin-translation-view>
+      </template>
+    </template>
+  </template>
+  <script type="application/dart" src="adminview.dart"></script>
+</polymer-element>

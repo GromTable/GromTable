@@ -10,4 +10,5 @@ transformers:
     entry_points:
     - web/index.html
     - web/testuser.html
+    - web/admin.html
 
