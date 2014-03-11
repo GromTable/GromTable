@@ -109,6 +109,9 @@
              <resource>
                 <directory>${basedir}/src/main/dart/GromTable/build/web</directory>
              </resource>
+             <resource>
+                <directory>${basedir}/src/main/resources/images</directory>
+             </resource>
            </resources>
          </configuration>
          <executions>

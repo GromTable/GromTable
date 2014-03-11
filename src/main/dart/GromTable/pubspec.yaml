@@ -5,6 +5,8 @@ dependencies:
     intl: any
     cookie: 0.0.4
     serialization: any
+    suffixarray: any
+    unittest: any
 transformers:
 - polymer:
     entry_points:

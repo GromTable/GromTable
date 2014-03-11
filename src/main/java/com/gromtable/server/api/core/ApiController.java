@@ -61,7 +61,7 @@ public abstract class ApiController<
       ControllerResult controllerResult = genControllerResult(controllerRequest);
       return new ApiResult(controllerResult, controllerRequest.getCallback());
     } catch (Exception exception) {
-      System.out.println(exception);
+      exception.printStackTrace();
       return getError(controllerRequest, ErrorType.UKNOWN_ERROR);
     }
   }

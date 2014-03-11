@@ -12,7 +12,7 @@ public class CreateDocumentImplTest extends BaseTest {
     EntityUser creator = new EntityUser("1", "Viewer").save();
     long time = 10;
     CreateDocumentResult createDocumentResult =
-        new CreateDocumentImpl("Document name", "Document text", time, creator.getId()).genLoad();
+        new CreateDocumentImpl(null, "Document name", "Document text", time, creator.getId()).genLoad();
 
     Assert.assertTrue(createDocumentResult.getSuccess());
   }

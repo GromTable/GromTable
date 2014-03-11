@@ -9,9 +9,20 @@ import 'error.dart';
 
 @CustomTag('create-document-view')
 class CreateDocumentView extends PolymerElement {
+  @published DocumentInfo basedocument = null;
   @observable DocumentInfo document = new DocumentInfo(null, null);
   CreateDocumentView.created() : super.created() {
   }
+  
+  enteredView() {
+    if (basedocument != null) {
+      document.name = basedocument.name;
+      document.text = basedocument.text;
+    }
+    super.enteredView();
+  }
+  
+  
   void createDocument(event, detail, target) {
     startCreateDocument(document);
   }
@@ -23,6 +34,9 @@ class CreateDocumentView extends PolymerElement {
     );
     
     Map<String, String> requestData = {'name': document.name, 'text': document.text};
+    if (basedocument != null) {
+      requestData['parent_id'] = basedocument.id;
+    }
     HttpRequest request = new HttpRequest();
     
     // add an event handler that is called when the request finishes
@@ -103,4 +117,11 @@ class CreateDocumentView extends PolymerElement {
     args: [],
     desc: 'Label on create document button.',
     examples: {});
+  
+  showChangesButton() => Intl.message(
+    "Show changes",
+    name: 'showChangesButton',
+    args: [],
+    desc: 'Label on show changes button during document modification.',
+    examples: {});  
 }

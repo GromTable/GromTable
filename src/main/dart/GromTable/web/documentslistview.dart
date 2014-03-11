@@ -6,9 +6,11 @@ import 'host.dart';
 import 'state.dart';
 import 'document.dart';
 import 'error.dart';
+import 'viewercontext.dart';
 
 @CustomTag('documents-list-view')
 class DocumentView extends PolymerElement {
+  @published DocumentInfo basedocument = null;
   List<DocumentInfo> _allDocuments = [];
   @observable String searchParam = '';
   @observable bool showVoting = true;
@@ -16,6 +18,7 @@ class DocumentView extends PolymerElement {
   @observable bool showRejected = false;
   @observable bool showCancelled = false;
   @observable List<DocumentInfo> filteredDocuments = [];
+  @observable ViewerContext viewerContext = ViewerContext.instance;
   
   DocumentView.created() : super.created() {
   }
@@ -31,12 +34,16 @@ class DocumentView extends PolymerElement {
   }
   
   void startLoadingDocumentsList() {
+    Map<String, String> requestData = {};
+    if (basedocument != null) {
+      requestData['parent_id'] = basedocument.id;
+    }
     Uri uri = new Uri.http(
       Host.apiDomain,
       '/api/get_documents_list',
-      {
-      }
+      requestData
     );
+
     var request = HttpRequest.getString(uri.toString(), withCredentials : true)
         .then(onDocumentsListLoaded)
         .catchError((var error) {
@@ -54,6 +61,11 @@ class DocumentView extends PolymerElement {
     }
     _allDocuments = newDocuments;
     search();
+  }
+
+  void proposeChanges(event, detail, target) {
+    State.instance = new State(State.CHANGE_DOCUMENT, '');
+    State.instance.baseDocument = basedocument;
   }
   
   void goToDocument(event, detail, target) {
@@ -130,5 +142,13 @@ class DocumentView extends PolymerElement {
       name: 'goToDocumentButton',
       args: [],
       desc: 'Go to document button.',
+      examples: {});
+  
+  
+  proposeChangesButtonMessage() => Intl.message(
+      "Propouse changes",
+      name: 'propouseChangesButton',
+      args: [],
+      desc: 'Text on the button for proposing changes for the document.',
       examples: {});
 }

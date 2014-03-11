@@ -8,7 +8,7 @@
       #searchdocumentt {
          margin-top: 20px;
       }
-    .fancy {
+    .fancy, .proposeChanges {
       background-color: #00A0FF;
       color: #fff;
       font-size: 20px;
@@ -16,11 +16,18 @@
       -webkit-border-radius: 2px;
       border: 0px;
     }
+    .proposeChanges {
+      background-color: #18D673;
+    }
     </style>
     <h1>{{documentListMessage()}}</h1>
     <div>
+      <template if="{{basedocument != null && viewerContext.currentUser.type == 'DELEGATE'}}">
+        <button class="proposeChanges" on-click="{{proposeChanges}}">{{proposeChangesButtonMessage()}}</button>
+      </template>
+      <br/>
       <input id="searchdocument" type="text" value="{{searchParam}}" placeholder="Search">
-      <br>
+      <br/>
       <input type="checkbox" id="voting" checked="{{showVoting}}">{{showVotingMessage()}}
       <input type="checkbox" id="accepted" checked="{{showAccepted}}">{{showAcceptedMessage()}}
       <input type="checkbox" id="rejected" checked="{{showRejected}}">{{showRejectedMessage()}}

@@ -5,7 +5,7 @@
 <polymer-element name="document-view">
   <template>
     <style>
-    .buttonYes, .buttonNo, .buttonHold {
+    .buttonYes, .buttonNo, .buttonHold, .buttonProposeChange {
       background-color: #18D673;
       color: #fff;
       font-size: 20px;
@@ -22,6 +22,11 @@
     .buttonHold {
       background-color: #D6D618;
     }
+    
+    .buttonProposeChange {
+       background-color: #385F9D;
+    }
+
     .documentBox {
       border: 1px solid black;
       padding: 25px 25px 25px 25px;
@@ -55,7 +60,8 @@
         <button class="buttonYes" on-click="{{voteYes}}">{{documentVoteYesButtonMessage()}}</button>
         <button class="buttonNo" on-click="{{voteNo}}">{{documentVoteNoButtonMessage()}}</button>
         <button class="buttonHold" on-click="{{voteHold}}">{{documentVoteHoldButtonMessage()}}</button>
-      </p>     
+        <button class="buttonProposeChange" on-click="{{documentChanges}}">{{documentChangesButtonMessage()}}</button>
+      </p>  
       <document-votes-view totalvotes="{{document.totalVotes}}" allvotes="{{document.allVotes}}" viewercontext="{{viewerContext}}" state="{{getState(document.totalVotes, document.allVotes)}}"></document-votes-view>
       <facebook-comments-view url="{{getHref()}}"></facebook-comments-view>
       </div>  

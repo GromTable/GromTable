@@ -1,5 +1,7 @@
 package com.gromtable.server.api.core;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.Set;
 
 import javax.servlet.http.Cookie;
@@ -7,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.gromtable.server.api.Assert;
 import com.gromtable.server.core.data.Id;
+import com.gromtable.server.core.entity.EntityObject;
 import com.gromtable.server.core.environment.Environment;
 
 public class HttpApiRequest implements ApiRequest {
@@ -23,7 +26,16 @@ public class HttpApiRequest implements ApiRequest {
   }
 
   public String getString(String key) {
-    return request.getParameter(key);
+    String str = request.getParameter(key);
+    if (str == null) {
+      return null;
+    }
+    try {
+      str = URLDecoder.decode(str, EntityObject.ENCODING);
+    } catch (UnsupportedEncodingException e) {
+      return null;
+    }
+    return str;
   }
 
   public Long getLong(String key) {
@@ -37,7 +49,11 @@ public class HttpApiRequest implements ApiRequest {
   }
 
   public Id getId(String key) {
-    return Id.fromKey(getString(key));
+    String keyId = getString(key);
+    if (keyId != null) {
+      return Id.fromKey(getString(key));
+    }
+    return null;
   }
 
   public Boolean getBoolean(String key) {

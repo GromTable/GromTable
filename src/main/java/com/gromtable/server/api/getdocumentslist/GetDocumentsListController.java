@@ -25,6 +25,6 @@ public class GetDocumentsListController extends ApiController<GetDocumentsListRe
   }
 
   protected GetDocumentsListResult genControllerResult(GetDocumentsListRequest request) {
-    return new GetDocumentsListImpl().genLoad();
+    return new GetDocumentsListImpl(request.getParentId()).genLoad();
   }
 }

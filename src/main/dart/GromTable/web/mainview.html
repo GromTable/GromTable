@@ -37,11 +37,17 @@
     <template if="{{state.view == 'create_document'}}">
       <create-document-view></create-document-view>
     </template>
+    <template if="{{state.view == 'change_document'}}">
+      <create-document-view basedocument="{{state.baseDocument}}"></create-document-view>
+    </template>
     <template if="{{state.view == 'document'}}">
       <document-view></document-view>
     </template>
     <template if="{{state.view == 'documents_list'}}">
       <documents-list-view></documents-list-view>
+    </template>
+    <template if="{{state.view == 'document_changes'}}">
+      <documents-list-view basedocument="{{state.baseDocument}}"></documents-list-view>
     </template>
     <template if="{{state.view == 'user_settings'}}">
       <user-settings-view></user-settings-view>
@@ -49,11 +55,13 @@
     <template if="{{state.view == 'welcome'}}">
       <welcome-view></welcome-view>
     </template>
+    <!--
     <select value="{{selectedLocale}}">
       <option value="uk">Ukrainian</option>
       <option value="en_US">English</option>
       <option value="ru">Russian</option>
     </select>
+    -->
   </template>
   <script type="application/dart" src="mainview.dart"></script>
 </polymer-element>

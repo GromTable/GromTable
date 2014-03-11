@@ -86,6 +86,11 @@ class DocumentView extends PolymerElement {
     startVoteDocument(State.instance.id, 'hold');
   }
   
+  void documentChanges(event, detail, target) {
+    State.instance = new State(State.DOCUMENT_CHANGES, '');
+    State.instance.baseDocument = document;
+  }
+  
   @observable
   String getState(var x, var y) {
     return x.toString() + y.toString();
@@ -122,4 +127,12 @@ class DocumentView extends PolymerElement {
       args: [],
       desc: 'Text on the button voting hold on the document',
       examples: {});
+  
+  documentChangesButtonMessage() => Intl.message(
+      "Document changes",
+      name: 'documentChangesButton',
+      args: [],
+      desc: 'Text on the button to see proposed document changes.',
+      examples: {});
+
 }

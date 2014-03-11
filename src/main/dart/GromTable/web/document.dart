@@ -28,6 +28,7 @@ class DocumentInfo extends Observable {
   
   DocumentInfo.fromMap(Map<String, Object> map) {
     var documentMap = map[DOCUMENT_KEY];
+    this.id = documentMap[ID_KEY];
     this.name = documentMap[NAME_KEY];
     this.text = documentMap[TEXT_KEY];
     this.author = new User.fromMap(map[AUTHOR_KEY]);

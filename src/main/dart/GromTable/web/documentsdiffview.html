@@ -1,0 +1,55 @@
+<link rel="import" href="userview.html">
+<link rel="import" href="documentvotesview.html">
+<link rel="import" href="facebookcommentsview.html">
+
+<polymer-element name="documents-diff-view">
+  <template>
+    <style>
+   
+    .documentBox {
+      border: 1px solid black;
+      padding: 25px 25px 25px 25px;
+    }
+    .document {
+      background-color: #FAF8EA;
+      padding: 10px 10px 10px 10px;
+    }
+     
+   .same {
+     background-color: #white;
+   }
+   
+   .add {
+     background-color: #3DDB96;
+   }
+   
+   .remove {
+     background-color: #F56666;
+   }
+   
+   .add_from {
+     background-color: #9FCCB6;
+   }
+   
+   .remove_from {
+     background-color: #F1C5D9;
+   }
+
+    </style>
+    <div class="document">
+      <div class="documentBox" style = "border:1px solid black;">
+        <div>
+          <template repeat="{{diffPart in editScript}}">
+            <span class="{{diffPart.command}}">
+            <template repeat="{{line in splitLines(diffPart.text) | enumerate}}">
+              <template if="{{line.index != 0}}"><br/></template>
+              {{line.value}}
+            </template>
+            </span>
+          </template>
+        </div>    
+      </div>
+    </div>  
+  </template>
+  <script type="application/dart" src="documentsdiffview.dart"></script>
+</polymer-element>

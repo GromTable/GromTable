@@ -23,17 +23,17 @@ public class GetDocumentsListTest extends BaseTest {
     EntityUser creator = new EntityUser("1", "Viewer").save();
     long time = 10;
 
-    documentsList = new GetDocumentsListImpl().genLoad();
+    documentsList = new GetDocumentsListImpl(null).genLoad();
     Assert.assertEquals(documentsIds, getSetIds(documentsList.getDocuments()));
 
-    createDocumentResult = new CreateDocumentImpl("X", "Y", time, creator.getId()).genLoad();
+    createDocumentResult = new CreateDocumentImpl(null, "X", "Y", time, creator.getId()).genLoad();
     documentsIds.add(createDocumentResult.getDocumentId());
-    documentsList = new GetDocumentsListImpl().genLoad();
+    documentsList = new GetDocumentsListImpl(null).genLoad();
     Assert.assertEquals(documentsIds, getSetIds(documentsList.getDocuments()));
 
-    createDocumentResult = new CreateDocumentImpl("X", "Y", time, creator.getId()).genLoad();
+    createDocumentResult = new CreateDocumentImpl(null, "X", "Y", time, creator.getId()).genLoad();
     documentsIds.add(createDocumentResult.getDocumentId());
-    documentsList = new GetDocumentsListImpl().genLoad();
+    documentsList = new GetDocumentsListImpl(null).genLoad();
     Assert.assertEquals(documentsIds, getSetIds(documentsList.getDocuments()));
   }
 

@@ -31,7 +31,9 @@ class UserInfoView extends PolymerElement {
   }
   
   attributeChanged(String name, String oldValue, String newValue) {
-    startLoadingUserInfo(userid);
+    if (name == 'userid' && userid != null && userid != '') {
+      startLoadingUserInfo(userid);
+    }
     super.attributeChanged(name, oldValue, newValue);
   }
   
