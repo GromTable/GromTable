@@ -16,7 +16,9 @@ public class SetUserInfoImplTest extends BaseTest {
 
     GetUserInfoResult userInfo = new GetUserInfoImpl(user.getId(), false, 0).genLoad();
     Assert.assertEquals(userInfo.getUser().getType(), UserType.VOTER);
-    SetUserInfoResult setUserInfo = new SetUserInfoImpl(user.getId(), UserType.VOTER).genLoad();
+    EntityUser newType = new EntityUser();
+    newType.setType(UserType.VOTER);
+    SetUserInfoResult setUserInfo = new SetUserInfoImpl(user.getId(), newType).genLoad();
     Assert.assertEquals(setUserInfo.getUser().getType(), UserType.VOTER);
     userInfo = new GetUserInfoImpl(user.getId(), false, 0).genLoad();
     Assert.assertEquals(userInfo.getUser().getType(), UserType.VOTER);

@@ -23,6 +23,10 @@
     <template if="{{isLoaded}}">
       <h3>{{userInformation()}}</h3>
       <user-view user="{{user}}"></user-view>
+      <br/>
+      {{user.description}}
+      <br/>
+      Facebook: <a href="{{user.facebook}}">{{user.facebook}}</a>
       <p></p>
       <template if="{{viewerContext.currentUser != null && viewerContext.currentUser.type == 'VOTER' && user.type == 'DELEGATE'}}">
         <button class="fancy" on-click="{{voteUser}}">{{delegateMessage()}}</button>

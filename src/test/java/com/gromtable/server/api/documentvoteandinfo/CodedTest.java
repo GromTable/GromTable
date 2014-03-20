@@ -30,9 +30,13 @@ public class CodedTest extends BaseTest {
     EntityUser user3 = new EntityUser("3", "Viewer").save();
     EntityDocument document = new EntityDocument("Document", "Document", 20, user1.getId()).save();
     constantTime.setNanoTime(5);
-    new SetUserInfoImpl(user1.getId(), UserType.VOTER).genLoad();
-    new SetUserInfoImpl(user2.getId(), UserType.DELEGATE).genLoad();
-    new SetUserInfoImpl(user3.getId(), UserType.VOTER).genLoad();
+    EntityUser userVoterType = new EntityUser();
+    userVoterType.setType(UserType.VOTER);
+    EntityUser userDelegateType = new EntityUser();
+    userDelegateType.setType(UserType.DELEGATE);
+    new SetUserInfoImpl(user1.getId(), userVoterType).genLoad();
+    new SetUserInfoImpl(user2.getId(), userDelegateType).genLoad();
+    new SetUserInfoImpl(user3.getId(), userVoterType).genLoad();
 
     constantTime.setNanoTime(10);
     new VoteUserImpl(user1.getId(), user2.getId(), VoteUserDecision.DELEGATE).genLoad();

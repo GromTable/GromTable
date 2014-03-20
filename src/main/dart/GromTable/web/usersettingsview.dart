@@ -6,31 +6,34 @@ import 'host.dart';
 import 'state.dart';
 import 'dart:html';
 import 'error.dart';
+import 'user.dart';
 
 @CustomTag('user-settings-view')
 class UserSettingsView extends PolymerElement {
-  @observable String description;
-  @observable String phone;
-  @observable String facebook;
-  @observable String vkontakte;
-  @observable String instagram;
-  @observable String twittter;
-  
-  ViewerContext viewerContext = ViewerContext.instance;
+  @observable User user = null;
+  @observable ViewerContext viewerContext = ViewerContext.instance;
   UserSettingsView.created() : super.created() {
-  } 
-  
-  void updateInfo(event, detail, target) {
-    window.alert('not implemented yet');
+  }
+  enteredView() {
+    if (viewerContext != null) {
+      user = viewerContext.currentUser;
+    }
+    super.enteredView();
   }
   
-  void startSetUserInfo(String userType) {
+  void updateInfo(event, detail, target) {
+    startSetUserInfo(user.getInfoMap());
+  }
+  
+  void startSetUserType(String userType) {
+    startSetUserInfo({User.TYPE_KEY : userType});
+  }
+  
+  void startSetUserInfo(Map<String, String> userInfo) {
     Uri uri = new Uri.http(
       Host.apiDomain,
       '/api/set_user_info',
-      {
-        'user_type': userType,
-      }
+      userInfo
     );
     var request = HttpRequest.getString(uri.toString(), withCredentials : true)
       .then(onSetUserInfoDone)
@@ -48,11 +51,11 @@ class UserSettingsView extends PolymerElement {
   }
 
   void becameVoter(event, detail, target) {
-    startSetUserInfo('VOTER');
+    startSetUserType('VOTER');
   }
   
   void becameDelegate(event, detail, target) {
-    startSetUserInfo('DELEGATE');
+    startSetUserType('DELEGATE');
   }
   
   nameMessage() => Intl.message(
@@ -62,11 +65,11 @@ class UserSettingsView extends PolymerElement {
       desc: 'Label for name.',
       examples: {});
   
-  ageMessage() => Intl.message(
-      "Age: ",
-      name: 'age',
+  birthdayMessage() => Intl.message(
+      "Birthday: ",
+      name: 'birthday',
       args: [],
-      desc: 'Label for age.',
+      desc: 'Label for birthday.',
       examples: {});
   
   cityMessage() => Intl.message(
@@ -125,6 +128,13 @@ class UserSettingsView extends PolymerElement {
       desc: 'Label for Twitter.',
       examples: {});
   
+  googleMessage() => Intl.message(
+      "Google+: ",
+      name: 'google',
+      args: [],
+      desc: 'Label for Google+.',
+      examples: {});
+  
   namePlaceholder() => Intl.message(
       "Put your name here...",
       name: 'namePlaceholder',
@@ -132,11 +142,11 @@ class UserSettingsView extends PolymerElement {
       desc: 'Name placeholder.',
       examples: {});
   
-  agePlaceholder() => Intl.message(
-      "Put your age here...",
-      name: 'agePlaceholder',
+  birthdayPlaceholder() => Intl.message(
+      "Put your birthday here...",
+      name: 'birthdayPlaceholder',
       args: [],
-      desc: 'Age placeholder.',
+      desc: 'Birthday placeholder.',
       examples: {});
   
   cityPlaceholder() => Intl.message(
@@ -193,6 +203,13 @@ class UserSettingsView extends PolymerElement {
       name: 'twitterPlaceholder',
       args: [],
       desc: 'Twitter placeholder.',
+      examples: {});
+  
+  googlePlaceholder() => Intl.message(
+      "Put your google plus here...",
+      name: 'googlePlaceholder',
+      args: [],
+      desc: 'Google plus placeholder.',
       examples: {});
    
   updateInfoMessage() => Intl.message(

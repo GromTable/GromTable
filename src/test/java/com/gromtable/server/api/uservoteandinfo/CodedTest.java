@@ -19,8 +19,12 @@ public class CodedTest extends BaseTest {
     ConstantTime constantTime = (ConstantTime) getTestEnvironment().getTime();
     EntityUser user1 = new EntityUser("1", "Viewer").save();
     EntityUser user2 = new EntityUser("2", "Viewer").save();
-    new SetUserInfoImpl(user1.getId(), UserType.VOTER).genLoad();
-    new SetUserInfoImpl(user2.getId(), UserType.DELEGATE).genLoad();
+    EntityUser voterType = new EntityUser();
+    voterType.setType(UserType.VOTER);
+    new SetUserInfoImpl(user1.getId(), voterType).genLoad();
+    EntityUser delegateType = new EntityUser();
+    delegateType.setType(UserType.DELEGATE);
+    new SetUserInfoImpl(user2.getId(), delegateType).genLoad();
 
     constantTime.setNanoTime(10);
     new VoteUserImpl(user1.getId(), user2.getId(), VoteUserDecision.DELEGATE).genLoad();

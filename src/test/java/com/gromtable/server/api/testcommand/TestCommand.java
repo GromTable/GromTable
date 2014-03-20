@@ -96,7 +96,9 @@ public class TestCommand {
       time = Long.parseLong(st.nextToken());
 
       constantTime.setNanoTime(time);
-      new SetUserInfoImpl(user.getId(), userType).genLoad();
+      EntityUser newUserType = new EntityUser();
+      newUserType.setType(userType);
+      new SetUserInfoImpl(user.getId(), newUserType).genLoad();
     } else if (commandName.equals(VOTE_USER)) {
       voter = getUser(st.nextToken());
       delegate = getUser(st.nextToken());

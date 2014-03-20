@@ -16,15 +16,16 @@ import com.gromtable.server.core.loader.Loader;
 
 public class SetUserInfoImpl extends Loader<SetUserInfoResult> {
   private Id userId;
-  private UserType userType;
+  private EntityUser userInfo;
 
-  public SetUserInfoImpl(Id userId, UserType userType) {
+  public SetUserInfoImpl(Id userId, EntityUser userInfo) {
     this.userId = userId;
-    this.userType = userType;
+    this.userInfo = userInfo;
   }
 
   public SetUserInfoResult genLoad() {
     EntityUser user = EntityUser.load(userId);
+    UserType userType = userInfo.getType();
     if (userType != null) {
       long time = BaseEnvironment.getEnvironment().getTime().getNanoTime();
       if (user.getType().equals(UserType.DELEGATE) && userType.equals(UserType.VOTER)) {
@@ -34,9 +35,10 @@ public class SetUserInfoImpl extends Loader<SetUserInfoResult> {
         endVotes(new HashoutUserToDelegate(), user.getId(), time);
       }
       user.setType(userType);
-      user.save();
-      user = EntityUser.load(userId);
     }
+    user.copyNotNullProperties(userInfo);
+    user.save();
+    user = EntityUser.load(userId);
     return new SetUserInfoResult(user);
   }
 
