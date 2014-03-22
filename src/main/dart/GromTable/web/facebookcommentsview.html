@@ -1,6 +1,8 @@
 <polymer-element name="facebook-comments-view">
   <template>
-    <iframe src="{{getIframeSrc(url)}}" style="border: none; overflow: hidden; height: 400px; width: 100%"></iframe>
+    <template if="{{url != null}">
+      <iframe src="{{getIframeSrc(url)}}" style="border: none; overflow: hidden; height: 400px; width: 100%"></iframe>
+    </template>
   </template>
   <script type="application/dart" src="facebookcommentsview.dart"></script>
 </polymer-element>
