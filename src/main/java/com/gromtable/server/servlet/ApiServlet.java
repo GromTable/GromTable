@@ -76,7 +76,7 @@ public class ApiServlet extends HttpServlet {
     controller.setRequest(apiRequest);
 
     ApiResult apiResponse = controller.genResult();
-    apiResponse.writeResponse(response);
+    apiResponse.writeResponse(request, response);
   }
 
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
