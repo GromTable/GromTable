@@ -1,6 +1,7 @@
 library host;
 
 import 'dart:html';
+import 'devsettings.dart';
 
 class Host {
   static String get origin {
@@ -17,9 +18,11 @@ class Host {
     return parts[1];
   }
   static String get apiDomain {
+    if (DevSettings.instance.isLocalApi) {
+      return clientDomain.replaceAll('3030', '8080');
+    } else {
      return 'gromstol.org';
-     // Uncomment for local api server
-     // return clientDomain.replaceAll('3030', '8080');
+    }
   }
   static String get clientHref {
     return window.location.href;

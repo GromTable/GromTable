@@ -6,6 +6,7 @@ import 'messages_all.dart';
 import 'dart:html';
 import 'state.dart';
 import 'host.dart';
+import 'devsettings.dart';
  
 @CustomTag('main-view')
 class MainView extends PolymerElement {
@@ -16,6 +17,7 @@ class MainView extends PolymerElement {
   
   ViewerContext viewerContext = ViewerContext.instance;
   State state = State.instance;
+  DevSettings devSettings = DevSettings.instance;
 
   MainView.created() : super.created() {
     var href = Host.clientHref;

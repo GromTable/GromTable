@@ -8,6 +8,7 @@
 <link rel="import" href="headerview.html">
 <link rel="import" href="usersettingsview.html">
 <link rel="import" href="welcomeview.html">
+<link rel="import" href="devsettingsview.html">
 
 <polymer-element name="main-view">
   <template>
@@ -21,6 +22,9 @@
       border: 0px;
     }
     </style>
+    <template if="{{devSettings.showSettings}}">
+      <dev-settings-view></dev-settings-view>
+    </template>
     <template if="{{state.view != 'welcome'}}">
       <header-view></header-view>
       <template if="{{!viewerContext.isLoggedIn}}">
