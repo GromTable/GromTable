@@ -27,7 +27,7 @@ public class VoteDocumentImpl extends Loader<VoteDocumentResult> {
 
   public VoteDocumentResult genLoad() {
     Environment environment = BaseEnvironment.getEnvironment();
-    long time = environment.getTime().getNanoTime();
+    long time = environment.getTime().getTimeMillis();
     HashoutUserToDocument hashoutUserToDocument = new HashoutUserToDocument();
     HashoutDocumentToUser hashoutDocumentToUser = new HashoutDocumentToUser();
     Key key = getKey(voterId, documentId);

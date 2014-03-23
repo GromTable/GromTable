@@ -21,7 +21,7 @@ public class GetUserInfoImpl extends Loader<GetUserInfoResult> {
     this.userId = userId;
     this.showVotes = showVotes;
     if (votesTime == 0) {
-      this.votesTime = BaseEnvironment.getEnvironment().getTime().getNanoTime();
+      this.votesTime = BaseEnvironment.getEnvironment().getTime().getTimeMillis();
     } else {
       this.votesTime = votesTime;
     }

@@ -28,7 +28,7 @@ public class GetDocumentInfoImpl extends Loader<GetDocumentInfoResult> {
     this.documentId = documentId;
     this.showVotes = showVotes;
     if (voteTime == 0) {
-      this.voteTime = BaseEnvironment.getEnvironment().getTime().getNanoTime();
+      this.voteTime = BaseEnvironment.getEnvironment().getTime().getTimeMillis();
     } else {
       this.voteTime = voteTime;
     }
@@ -38,7 +38,7 @@ public class GetDocumentInfoImpl extends Loader<GetDocumentInfoResult> {
     EntityDocument document = EntityDocument.load(documentId);
     EntityUser author = EntityUser.load(document.getCreatorId());
     GetDocumentInfoResult result = new GetDocumentInfoResult(document, author);
-    long currentTime = BaseEnvironment.getEnvironment().getTime().getNanoTime();
+    long currentTime = BaseEnvironment.getEnvironment().getTime().getTimeMillis();
     if (showVotes) {
       HashoutDocumentToUser hashoutDocumentToUser = new HashoutDocumentToUser();
       HashoutUserToDelegate hashoutUserToDelegate = new HashoutUserToDelegate();

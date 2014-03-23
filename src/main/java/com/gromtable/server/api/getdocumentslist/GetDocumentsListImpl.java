@@ -22,7 +22,7 @@ public class GetDocumentsListImpl extends Loader<GetDocumentsListResult> {
       listId = HashoutList.ALL_DOCUMENTS.getId();
     }
     List<EntityDocument> documents = hashoutListToDocument.loadEntities(listId.getKey());
-    long currentTime = BaseEnvironment.getEnvironment().getTime().getNanoTime();
+    long currentTime = BaseEnvironment.getEnvironment().getTime().getTimeMillis();
     for (EntityDocument document : documents) {
       if (document.isNeedDecision(currentTime)) {
         document.doDecision(currentTime);

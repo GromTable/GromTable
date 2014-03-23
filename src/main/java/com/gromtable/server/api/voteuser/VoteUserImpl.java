@@ -52,7 +52,7 @@ public class VoteUserImpl extends Loader<VoteUserResult> {
 
   public VoteUserResult genLoad() {
     Environment environment = BaseEnvironment.getEnvironment();
-    long time = environment.getTime().getNanoTime();
+    long time = environment.getTime().getTimeMillis();
     HashoutUserToDelegate hashoutUserToDelegate = new HashoutUserToDelegate();
     HashoutDelegateToUser hashoutDelegateToUser = new HashoutDelegateToUser();
 

@@ -27,7 +27,7 @@ public class SetUserInfoImpl extends Loader<SetUserInfoResult> {
     EntityUser user = EntityUser.load(userId);
     UserType userType = userInfo.getType();
     if (userType != null) {
-      long time = BaseEnvironment.getEnvironment().getTime().getNanoTime();
+      long time = BaseEnvironment.getEnvironment().getTime().getTimeMillis();
       if (user.getType().equals(UserType.DELEGATE) && userType.equals(UserType.VOTER)) {
         endVotes(new HashoutDelegateToUser(), user.getId(), time);
       }

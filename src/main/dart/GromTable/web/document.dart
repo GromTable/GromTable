@@ -1,6 +1,7 @@
 library document;
 
 import 'package:polymer/polymer.dart';
+import 'package:intl/intl.dart';
 import 'user.dart';
 
 class DocumentInfo extends Observable {
@@ -13,7 +14,6 @@ class DocumentInfo extends Observable {
   static final AUTHOR_KEY = 'author';
   static final TOTAL_VOTES_KEY = 'totalVotes';
   static final ALL_VOTES_KEY = 'allVotes';
-  static final NANO_TO_MILLI = 1000000;
   
   @observable String id;
   @observable String name;
@@ -46,6 +46,7 @@ class DocumentInfo extends Observable {
   
   @observable
   String getVoteByString() {
-    return new DateTime.fromMillisecondsSinceEpoch(voteByTime ~/ NANO_TO_MILLI).toString();
+    DateFormat format = new DateFormat("yyyy.MM.dd HH:mm:ss");
+    return format.format(new DateTime.fromMillisecondsSinceEpoch(voteByTime));
   }
 }

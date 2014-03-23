@@ -1,5 +1,6 @@
 import 'package:polymer/polymer.dart';
 import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'viewercontext.dart';
 import 'messages_all.dart';
 import 'dart:html';
@@ -37,13 +38,11 @@ class MainView extends PolymerElement {
   // TODO: this is clowntown
   void selectedLocaleChanged() {
     Intl.defaultLocale = selectedLocale;
-    if (selectedLocale == 'en_US') {
-      updateLocale(selectedLocale);
-    } else {
-      initializeMessages(selectedLocale).then(
-          (succeeded) => updateLocale(selectedLocale));
-    }
+    initializeDateFormatting(selectedLocale, null).then((succeded) =>
+    initializeMessages(selectedLocale).then((succeeded) =>
+    updateLocale(selectedLocale)));
     window.localStorage[SELECTED_LOCALE_KEY] = selectedLocale;
+
     if (_shouldRedirect) {
       window.location.reload();
     }
