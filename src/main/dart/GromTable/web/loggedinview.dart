@@ -5,6 +5,7 @@ import 'package:polymer/polymer.dart';
 import 'user.dart';
 import 'host.dart';
 import 'viewercontext.dart';
+import 'devsettings.dart';
 import 'error.dart';
 
 @CustomTag('loggedin-view')
@@ -12,8 +13,8 @@ class LoggedinView extends PolymerElement {
   static final USER_KEY = 'user';
     
   ViewerContext viewerContext = ViewerContext.instance;
+  DevSettings devSettings = DevSettings.instance;
   LoggedinView.created(): super.created() {
-    // onPropertyChange(this, #viewerContext.currentUser, startLoadingLoggedinUser);
   }
   
   enteredView() {
@@ -41,6 +42,21 @@ class LoggedinView extends PolymerElement {
   
   void logout(event, detail, target) {
     ViewerContext.instance.logout();
+  }
+  
+  login() => Intl.message(
+    "Login using:",
+    name: 'login',
+    args: [],
+    desc: 'Invitation to login into site.',
+    examples: {});
+  
+  void loginViaFacebook() {
+    ViewerContext.instance.loginViaFacebook();
+  }
+  
+  void loginTestUsers() {
+    ViewerContext.instance.loginViaTestUsers();
   }
   
   logoutMessage() => Intl.message(

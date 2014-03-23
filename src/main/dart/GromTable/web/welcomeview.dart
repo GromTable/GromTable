@@ -3,11 +3,11 @@ import 'package:intl/intl.dart';
 import 'viewercontext.dart';
 import 'state.dart';
 import 'settings.dart';
-
+import 'devsettings.dart';
 
 @CustomTag('welcome-view')
 class WelcomeView extends PolymerElement {
-
+  DevSettings devSettings = DevSettings.instance;
   WelcomeView.created() : super.created() {
   } 
  

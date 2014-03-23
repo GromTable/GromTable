@@ -4,7 +4,9 @@
 
 <polymer-element name="dev-settings-view">
   <template>
-    <input type="checkbox" id="isLocalApi" checked="{{devSettings.isLocalApi}}">Use local API
+    <input type="checkbox" checked="{{devSettings.isLocalApi}}">Use local API<br/>
+    <input type="checkbox" checked="{{devSettings.isDemoLogin}}">Show demo login<br/>
+    <input type="checkbox" checked="{{devSettings.isRawTranslate}}">Show raw translate<br/>    
   </template>
   <script type="application/dart" src="devsettingsview.dart"></script>
 </polymer-element>

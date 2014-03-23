@@ -128,7 +128,9 @@
   <a class="statutLink" on-click="{{goToStatus}}">{{welcomeStatus()}}</a>
   <div class="loginVia">
     <button class="viaFacebook" on-click="{{loginViaFacebook}}">{{welcomeLoginViaFacebook()}}</button>
-    <button class="viaTest" on-click="{{loginTestUsers}}">{{welcomeViaTestUser()}}</button>
+    <template if="{{devSettings.isDemoLogin}}">
+      <button class="viaTest" on-click="{{loginTestUsers}}">{{welcomeViaTestUser()}}</button>
+    </template>
   </div>
 </div>
 </template> <script type="application/dart" src="welcomeview.dart"></script> </polymer-element>

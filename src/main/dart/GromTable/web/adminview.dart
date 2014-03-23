@@ -2,12 +2,14 @@ import 'package:polymer/polymer.dart';
 import 'dart:html';
 import 'host.dart';
 import 'state.dart';
+import 'devsettings.dart';
 import 'viewercontext.dart';
  
 @CustomTag('admin-view')
 class AdminView extends PolymerElement {
   ViewerContext viewerContext = ViewerContext.instance;
   @observable State state = State.instance;
+  DevSettings devSettings = DevSettings.instance;
   AdminView.created() : super.created() {
     var href = Host.clientHref;
     // Only localhost allowed to access api.

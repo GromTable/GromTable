@@ -15,10 +15,6 @@
   vertical-align: middle;
 }
 
-.hidden {
-  display: none;
-}
-
 .message {
   width: 40px;
 }
@@ -90,7 +86,8 @@
   <button on-click="{{closePopup}}">Close</button>
 </div>
 </template>
-<div class="hidden">
+<template if="{{devSettings.isRawTranslate}}">
+<div>
   <p>
     <lable>Intl messages source: <textarea rows="4" cols="50"
       value="{{translation.intlMessagesSource}}"></textarea></lable>
@@ -109,6 +106,7 @@
   </p>
   <button on-click="{{saveRowTranslation}}">Save Row Translation</button>
 </div>
+</template>
 
 </template> <script type="application/dart" src="admintranslationview.dart"></script>
 </polymer-element>

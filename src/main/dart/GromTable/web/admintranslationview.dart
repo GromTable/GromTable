@@ -5,6 +5,7 @@ import 'host.dart';
 import 'error.dart';
 import 'translation.dart';
 import 'translationrecord.dart';
+import 'devsettings.dart';
 
 @CustomTag('admin-translation-view')
 class AdminTranslationView extends PolymerElement {
@@ -12,6 +13,7 @@ class AdminTranslationView extends PolymerElement {
   @observable TranslationInfo translation = null;
   @observable List<TranslationRecord> translationRecords = [];
   @observable TranslationRecord currentRow = null;
+  @observable DevSettings devSettings = DevSettings.instance;
 
   AdminTranslationView.created() : super.created() {
   }

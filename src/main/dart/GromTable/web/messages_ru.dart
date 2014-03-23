@@ -14,11 +14,7 @@ final messages = new MessageLookup();
 class MessageLookup extends MessageLookupByLibrary {
 
   get localeName => 'ru';
-  static age() => "Возраст: ";
-
-  static agePlaceholder() => "Введите Ваш возраст здесь...";
-
-  static askToBeDelegate() => "Предложить ем стать делегатомесли Вы доверяете этому пользователю";
+  static askToBeDelegate() => "Предложить этому пользователю стать делегатом";
 
   static becameDelegate() => "Стать делегатом";
 
@@ -44,23 +40,21 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static delegate() => "Избран пользователем id:";
 
-  static delegatedByUser() => "Этот пользователь избран:";
+  static delegatedByUser() => "Избранный пользователь:";
 
-  static delegatedThisUser() => "Людикоторые избрали этого пользователя:";
+  static delegatedThisUser() => "Люди, которые избрали этого пользователя:";
 
   static description() => "Описание: ";
 
-  static descriptionPlaceholder() => "Введите описание деятельности которой Вы хотели бы заниматься здесь...";
-
-  static developersOnly() => "";
+  static descriptionPlaceholder() => "Введите описание деятельности, которой Вы хотели бы заниматься здесь...";
 
   static documentHeader() => "Документ №1";
 
   static documentListHeader() => "Список документов";
 
-  static documentNameMessage() => "Имя документа: ";
+  static documentNameMessage() => "Название документа: ";
 
-  static documentNamePlaceholder() => "Введите имя документа здесь...";
+  static documentNamePlaceholder() => "Введите название документа здесь...";
 
   static documentTextMessage() => "Текст документа: ";
 
@@ -74,11 +68,13 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static documentsList() => "Список документов";
 
+  static en() => "анг";
+
   static facebook() => "Facebook: ";
 
   static facebookPlaceholder() => "Введите Ваш facebook здесь...";
 
-  static goToDocumentButton() => "Перейти в документ";
+  static goToDocumentButton() => "Перейти к документу";
 
   static instagram() => "Instagram: ";
 
@@ -86,7 +82,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static loading() => "Загрузка...";
 
-  static login() => "";
+  static login() => "Войти";
 
   static logout() => "Выйти";
 
@@ -100,11 +96,13 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static publicTable() => "Общественный стол";
 
-  static showAcceptedOption() => "Показать принятые";
+  static rus() => "рус";
 
-  static showCancelled() => "Показати аннулированные";
+  static showAcceptedOption() => "Принятые документы";
 
-  static showRejectedOption() => "Показать отвергнутые";
+  static showCancelled() => "Аннулированные документы";
+
+  static showRejectedOption() => "Отклоненные документы";
 
   static showVotingOption() => "Показать голоса";
 
@@ -112,11 +110,13 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static twitterPlaceholder() => "Введите Ваш twitter здесь...";
 
-  static updateInfo() => "Сохранить информацию пользователя";
+  static ukr() => "укр";
+
+  static updateInfo() => "Сохранить ";
 
   static userInformation() => "Информация пользователя";
 
-  static userIsUnknown() => "Пожалуйста,решите - Вы хотите быть избирателем или делегатом: ";
+  static userIsUnknown() => "Выберите кем вы хотите быть: избирателем или делегатом. ";
 
   static userSettings() => "Настройки пользователя";
 
@@ -130,8 +130,6 @@ class MessageLookup extends MessageLookupByLibrary {
 
 
   final messages = const {
-    "age" : age,
-    "agePlaceholder" : agePlaceholder,
     "askToBeDelegate" : askToBeDelegate,
     "becameDelegate" : becameDelegate,
     "becameDelegateButton" : becameDelegateButton,
@@ -149,7 +147,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "delegatedThisUser" : delegatedThisUser,
     "description" : description,
     "descriptionPlaceholder" : descriptionPlaceholder,
-    "developersOnly" : developersOnly,
     "documentHeader" : documentHeader,
     "documentListHeader" : documentListHeader,
     "documentNameMessage" : documentNameMessage,
@@ -160,6 +157,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "documentVoteNoButton" : documentVoteNoButton,
     "documentVoteYesButton" : documentVoteYesButton,
     "documentsList" : documentsList,
+    "en" : en,
     "facebook" : facebook,
     "facebookPlaceholder" : facebookPlaceholder,
     "goToDocumentButton" : goToDocumentButton,
@@ -173,12 +171,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "phone" : phone,
     "phonePlaceholder" : phonePlaceholder,
     "publicTable" : publicTable,
+    "rus" : rus,
     "showAcceptedOption" : showAcceptedOption,
     "showCancelled" : showCancelled,
     "showRejectedOption" : showRejectedOption,
     "showVotingOption" : showVotingOption,
     "twitter" : twitter,
     "twitterPlaceholder" : twitterPlaceholder,
+    "ukr" : ukr,
     "updateInfo" : updateInfo,
     "userInformation" : userInformation,
     "userIsUnknown" : userIsUnknown,

@@ -18,21 +18,31 @@
       padding: 10px 10px 10px 10px;
     }
     </style>
-    <div class="login">
-    <div class="loginInner">
-    <template if="{{viewerContext.currentUser == null}}">
-      {{loading()}}
+    <template if="{{viewerContext.isLoggedIn}}">
+      <div class="login">
+        <div class="loginInner">
+        <template if="{{viewerContext.currentUser == null}}">
+          Loading...
+        </template>
+        <template if="{{viewerContext.currentUser != null}}">
+          <h3>{{loggedInAs()}}</h3>
+          <user-view user="{{viewerContext.currentUser}}"></user-view>
+          <button class="fancy" on-click="{{logout}}">{{logoutMessage()}}</button>
+          <p>
+            {{user.type}}
+          </p>
+        </template>
+        </div>
+      </div>
     </template>
-    <template if="{{viewerContext.currentUser != null}}">
-      <h3>{{loggedInAs()}}</h3>
-      <user-view user="{{viewerContext.currentUser}}"></user-view>
-      <button class="fancy" on-click="{{logout}}">{{logoutMessage()}}</button>
-      <p>
-        {{user.type}}
-      </p>
+    <template if="{{!viewerContext.isLoggedIn}}">
+      <h3 class="login">{{login()}}</h3>
+      <button class="fancy" on-click="{{loginViaFacebook}}">Facebook</button>
+      <template if="{{devSettings.isDemoLogin}}">
+        <button class="fancy" on-click="{{loginTestUsers}}">Test Users</button>
+      </template>
     </template>
-    </div>
-    </div>
+
   </template>
   <script type="application/dart" src="loggedinview.dart"></script>
 </polymer-element>

@@ -14,11 +14,7 @@ final messages = new MessageLookup();
 class MessageLookup extends MessageLookupByLibrary {
 
   get localeName => 'uk';
-  static age() => "Вік: ";
-
-  static agePlaceholder() => "Введіть Ваш вік тут...";
-
-  static askToBeDelegate() => "Запропонувати йому стати делегатом,якщо Ви довіряєте цьому користувачеві";
+  static askToBeDelegate() => "Запропонувати цьому користувачу стати делегатом";
 
   static becameDelegate() => "Стати делегатом";
 
@@ -36,31 +32,29 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static commands() => "Команди";
 
-  static createDocument() => "створити документ";
+  static createDocument() => "Створити документ";
 
   static createDocumentButton() => "Створити документ";
 
   static createDocumentHeader() => "Створити документ";
 
-  static delegate() => "Обран користувачем id:";
+  static delegate() => "Обраний користувачем id:";
 
-  static delegatedByUser() => "Цей коористувач обраний:";
+  static delegatedByUser() => "Обраний користувач:";
 
-  static delegatedThisUser() => "Люди,які обрали цього користувача";
+  static delegatedThisUser() => "Люди,які обрали цього користувача:";
 
   static description() => "Опис: ";
 
   static descriptionPlaceholder() => "Введіть опис діяльності, якою б Ви хотіли займатися...";
 
-  static developersOnly() => "";
-
   static documentHeader() => "Документ №1";
 
   static documentListHeader() => "Список документів";
 
-  static documentNameMessage() => "Ім\'я документу: ";
+  static documentNameMessage() => "Назва документу: ";
 
-  static documentNamePlaceholder() => "Введіть ім\'я документу тут...";
+  static documentNamePlaceholder() => "Введіть назву документу тут...";
 
   static documentTextMessage() => "Текст документу: ";
 
@@ -74,6 +68,8 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static documentsList() => "Список документів";
 
+  static en() => "анг";
+
   static facebook() => "Facebook: ";
 
   static facebookPlaceholder() => "Введіть Ваш facebook сюди...";
@@ -84,9 +80,9 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static instagramPlaceholder() => "Введіть Ваш instagram тут...";
 
-  static loading() => "Загрузка...";
+  static loading() => "Завантаження...";
 
-  static login() => "";
+  static login() => "Зайти";
 
   static logout() => "Вийти";
 
@@ -100,11 +96,13 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static publicTable() => "Громадський стіл";
 
-  static showAcceptedOption() => "Показати прийняті";
+  static rus() => "рус";
 
-  static showCancelled() => "Показали анульовані";
+  static showAcceptedOption() => "Прийняті документи ";
 
-  static showRejectedOption() => "Показати відкинуті";
+  static showCancelled() => "Анульовані документи";
+
+  static showRejectedOption() => "Відхилені документи";
 
   static showVotingOption() => "Показати голоси";
 
@@ -112,11 +110,13 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static twitterPlaceholder() => "Введіть Ваш twitter тут...";
 
-  static updateInfo() => "Зберегти інформацію користувача";
+  static ukr() => "укр";
+
+  static updateInfo() => "Зберегти ";
 
   static userInformation() => "Інформація користувача";
 
-  static userIsUnknown() => "Будь ласка,оберіть - Ви бажаєте бути вибоцем чи делегатом: ";
+  static userIsUnknown() => "Оберіть ким ви бажаєте бути: виборцем чи делегатом. ";
 
   static userSettings() => "Налаштування користувача";
 
@@ -124,7 +124,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static vkontkte() => "Vkontakte: ";
 
-  static welcomeDescription() => "Загальногонаціональний позапартійний проект, створений для того, щоб всі громадяні могли вести діалог з приводу подльших шляхів розвитку громадянського суспільства в нашій країні.\n\nОсновні цінності проекту:\n- Довіра - прозора система вибору представників;\n- Доступність - в діалозі може прийняти участ будь-яка людина;\n- Загальнонаціональність - представлені всі верстви населення.";
+  static welcomeDescription() => "Загальногонаціональний позапартійний проект, створений для того, щоб всі громадяні могли вести діалог з приводу подальших шляхів розвитку громадянського суспільства в нашій країні.\n\nОсновні цінності проекту:\n- Довіра - прозора система вибору представників;\n- Доступність - в діалозі може прийняти участ будь-яка людина;\n- Загальнонаціональність - представлені всі верстви населення.";
 
   static welcomeHeader() => "Громадський стіл";
 
@@ -140,8 +140,6 @@ class MessageLookup extends MessageLookupByLibrary {
 
 
   final messages = const {
-    "age" : age,
-    "agePlaceholder" : agePlaceholder,
     "askToBeDelegate" : askToBeDelegate,
     "becameDelegate" : becameDelegate,
     "becameDelegateButton" : becameDelegateButton,
@@ -159,7 +157,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "delegatedThisUser" : delegatedThisUser,
     "description" : description,
     "descriptionPlaceholder" : descriptionPlaceholder,
-    "developersOnly" : developersOnly,
     "documentHeader" : documentHeader,
     "documentListHeader" : documentListHeader,
     "documentNameMessage" : documentNameMessage,
@@ -170,6 +167,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "documentVoteNoButton" : documentVoteNoButton,
     "documentVoteYesButton" : documentVoteYesButton,
     "documentsList" : documentsList,
+    "en" : en,
     "facebook" : facebook,
     "facebookPlaceholder" : facebookPlaceholder,
     "goToDocumentButton" : goToDocumentButton,
@@ -183,12 +181,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "phone" : phone,
     "phonePlaceholder" : phonePlaceholder,
     "publicTable" : publicTable,
+    "rus" : rus,
     "showAcceptedOption" : showAcceptedOption,
     "showCancelled" : showCancelled,
     "showRejectedOption" : showRejectedOption,
     "showVotingOption" : showVotingOption,
     "twitter" : twitter,
     "twitterPlaceholder" : twitterPlaceholder,
+    "ukr" : ukr,
     "updateInfo" : updateInfo,
     "userInformation" : userInformation,
     "userIsUnknown" : userIsUnknown,

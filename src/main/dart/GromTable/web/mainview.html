@@ -4,7 +4,6 @@
 <link rel="import" href="createdocumentview.html">
 <link rel="import" href="documentslistview.html">
 <link rel="import" href="commandsview.html">
-<link rel="import" href="loginview.html">
 <link rel="import" href="headerview.html">
 <link rel="import" href="usersettingsview.html">
 <link rel="import" href="welcomeview.html">
@@ -12,27 +11,18 @@
 
 <polymer-element name="main-view">
   <template>
-    <style>
-    .fancy {
-      background-color: #00A0FF;
-      color: #fff;
-      font-size: 20px;
-      padding: 10px 20px;
-      -webkit-border-radius: 2px;
-      border: 0px;
-    }
-    </style>
+  <template if="{{isInitialized}}">
     <template if="{{devSettings.showSettings}}">
       <dev-settings-view></dev-settings-view>
     </template>
+    <div>
+      <a data-lang="uk" on-click="{{chooseLanguage}}">{{withLocale('uk')}}</a> |
+      <a data-lang="ru" on-click="{{chooseLanguage}}">{{withLocale('ru')}}</a> |
+      <a data-lang="en" on-click="{{chooseLanguage}}">{{withLocale('en')}}</a>
+    </div>
     <template if="{{state.view != 'welcome'}}">
       <header-view></header-view>
-      <template if="{{!viewerContext.isLoggedIn}}">
-        <login-view></login-view>
-      </template>
-      <template if="{{viewerContext.isLoggedIn}}">
-        <loggedin-view></loggedin-view>
-      </template>
+      <loggedin-view></loggedin-view>
       <commands-view></commands-view>
     </template>
     <template if="{{state.view == 'user'}}">
@@ -59,13 +49,7 @@
     <template if="{{state.view == 'welcome'}}">
       <welcome-view></welcome-view>
     </template>
-    <!--
-    <select value="{{selectedLocale}}">
-      <option value="uk">Ukrainian</option>
-      <option value="en_US">English</option>
-      <option value="ru">Russian</option>
-    </select>
-    -->
+  </template>
   </template>
   <script type="application/dart" src="mainview.dart"></script>
 </polymer-element>
