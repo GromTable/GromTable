@@ -11,12 +11,14 @@ import 'devsettings.dart';
 @CustomTag('main-view')
 class MainView extends PolymerElement {
   static const SELECTED_LOCALE_KEY = 'selectedLocale';
+  static MainView instance = null;
   @observable bool isInitialized = false;
   
   State state = State.instance;
   DevSettings devSettings = DevSettings.instance;
 
   MainView.created() : super.created() {
+    instance = this;
     var href = Host.clientHref;
     // Only localhost allowed to access api.
     if (href.contains("127.0.0.1")) {
@@ -25,17 +27,7 @@ class MainView extends PolymerElement {
 
     changeSelectedLocale(getSelectedLocale());
   }
-  
-  withLocale(String locale) {
-    switch (locale) {
-      case 'uk':
-        return Intl.withLocale(locale, () => ukr());
-      case 'ru':
-        return Intl.withLocale(locale, () => rus());
-      case 'en':
-        return Intl.withLocale(locale, () => en());
-    }
-  }
+
   
   String getSelectedLocale() {
     var locale = window.localStorage[SELECTED_LOCALE_KEY];
@@ -65,25 +57,5 @@ class MainView extends PolymerElement {
     }
     window.localStorage[SELECTED_LOCALE_KEY] = selectedLocale;
   }
-  
-  String ukr() => Intl.message(
-      "ukr",
-      name: 'ukr',
-      args: [],
-      desc: 'Ukrainian language',
-      examples: {});
-  
-  String rus() => Intl.message(
-      "rus",
-      name: 'rus',
-      args: [],
-      desc: 'Russian language',
-      examples: {});
-  
-  String en() => Intl.message(
-      "en",
-      name: 'en',
-      args: [],
-      desc: 'English language',
-      examples: {});
+
 }

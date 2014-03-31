@@ -3,17 +3,6 @@
 <polymer-element name="loggedin-view">
   <template>
     <style>
-    .fancy {
-      background-color: #00A0FF;
-      color: #fff;
-      font-size: 20px;
-      padding: 10px 20px;
-      -webkit-border-radius: 2px;
-      border: 0px;
-    }
-    .login {
-      background-color: #E7EFF8;
-    }
     .loginInner {
       padding: 10px 10px 10px 10px;
     }
@@ -25,12 +14,9 @@
           Loading...
         </template>
         <template if="{{viewerContext.currentUser != null}}">
-          <h3>{{loggedInAs()}}</h3>
-          <user-view user="{{viewerContext.currentUser}}"></user-view>
-          <button class="fancy" on-click="{{logout}}">{{logoutMessage()}}</button>
-          <p>
-            {{user.type}}
-          </p>
+          <div><user-view user="{{viewerContext.currentUser}}"></user-view></div>
+          <a on-click="{{userSettings}}">{{userSettingsMessage()}}</a> | 
+          <a on-click="{{logout}}">{{logoutMessage()}}</a>
         </template>
         </div>
       </div>

@@ -1,19 +1,39 @@
-<link rel="import" href="userview.html">
-<link rel="import" href="documentvotesview.html">
-<link rel="import" href="facebookcommentsview.html">
+<link rel="import" href="loggedinview.html">
 
 <polymer-element name="header-view">
   <template>
     <style>
+    .center {
+      display: block;
+      margin: 0 auto;
+      text-align: center;
+    }
     .header {
-      background-color: #AAAAAA;
-      padding: 10px 10px 10px 30px;
+      width: 400px;
+      margin: 0 auto;
+    }
+    .login {
+      position:absolute;
+      right:0px;
+      top: 20px;
+      z-index:1;
+      width: 300px;
+      background-color: white;
     }
     </style>
-    <div class="header">
-    <template if="{{viewerContext != null}}">
-      <h1>{{headerMessage()}}</h1>
-    </template>
+    <div>
+      <div class="header">
+        <img class="center" src="images/logo.png"/>
+        <h1 class="center">{{headerMessage()}}</h1>
+      </div>
+      <div class="login">
+        <div>
+          <a data-lang="uk" on-click="{{chooseLanguage}}">{{withLocale('uk')}}</a> |
+          <a data-lang="ru" on-click="{{chooseLanguage}}">{{withLocale('ru')}}</a> |
+          <a data-lang="en" on-click="{{chooseLanguage}}">{{withLocale('en')}}</a>
+        </div>
+        <loggedin-view></loggedin-view>
+      </div>
     </div>
   </template>
   <script type="application/dart" src="headerview.dart"></script>

@@ -1,4 +1,3 @@
-<link rel="import" href="loggedinview.html">
 <link rel="import" href="userinfoview.html">
 <link rel="import" href="documentview.html">
 <link rel="import" href="createdocumentview.html">
@@ -15,14 +14,9 @@
     <template if="{{devSettings.showSettings}}">
       <dev-settings-view></dev-settings-view>
     </template>
-    <div>
-      <a data-lang="uk" on-click="{{chooseLanguage}}">{{withLocale('uk')}}</a> |
-      <a data-lang="ru" on-click="{{chooseLanguage}}">{{withLocale('ru')}}</a> |
-      <a data-lang="en" on-click="{{chooseLanguage}}">{{withLocale('en')}}</a>
-    </div>
+
     <template if="{{state.view != 'welcome'}}">
       <header-view></header-view>
-      <loggedin-view></loggedin-view>
       <commands-view></commands-view>
     </template>
     <template if="{{state.view == 'user'}}">

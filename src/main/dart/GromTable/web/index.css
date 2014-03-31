@@ -6,3 +6,6 @@
   -webkit-border-radius: 2px;
   border: 0px;
 }
+html * {
+  font-family: Century gothic, sans-serif;
+}

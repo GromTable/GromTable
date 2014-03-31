@@ -7,6 +7,7 @@ import 'host.dart';
 import 'viewercontext.dart';
 import 'devsettings.dart';
 import 'error.dart';
+import 'state.dart';
 
 @CustomTag('loggedin-view')
 class LoggedinView extends PolymerElement {
@@ -43,13 +44,7 @@ class LoggedinView extends PolymerElement {
   void logout(event, detail, target) {
     ViewerContext.instance.logout();
   }
-  
-  login() => Intl.message(
-    "Login using:",
-    name: 'login',
-    args: [],
-    desc: 'Invitation to login into site.',
-    examples: {});
+
   
   void loginViaFacebook() {
     ViewerContext.instance.loginViaFacebook();
@@ -58,6 +53,24 @@ class LoggedinView extends PolymerElement {
   void loginTestUsers() {
     ViewerContext.instance.loginViaTestUsers();
   }
+   
+  void userSettings(event, detail, target) {
+    State.instance = new State(State.USER_SETTINGS, '');
+  }
+  
+  login() => Intl.message(
+    "Login using:",
+    name: 'login',
+    args: [],
+    desc: 'Invitation to login into site.',
+    examples: {});
+  
+  userSettingsMessage() => Intl.message(
+      "settings",
+      name: 'userSettings',
+      args: [],
+      desc: 'Label on user settings button.',
+      examples: {});
   
   logoutMessage() => Intl.message(
     "Logout",
@@ -65,26 +78,4 @@ class LoggedinView extends PolymerElement {
     args: [],
     desc: 'String on logout button',
     examples: {});
-  
-  userIsUnknownMessage() => Intl.message(
-    "Please, decide whether you want to be voter or delegate:",
-    name: "userIsUnknown",
-    args: [],
-    desc: 'Message in case when logged in user is did not choose his role',
-    examples: {});
-  
-  becameVoterButtonMessage() => Intl.message(
-      "Became voter",
-      name: "becameVoterButton",
-      args: [],
-      desc: 'Button to became voter',
-      examples: {});
-  
-  becameDelegateButtonMessage() => Intl.message(
-      "Became delegate",
-      name: "becameDelegateButton",
-      args: [],
-      desc: 'Button to became delegate',
-      examples: {});
-      
 }

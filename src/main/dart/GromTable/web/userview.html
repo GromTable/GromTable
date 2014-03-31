@@ -1,6 +1,8 @@
 <polymer-element name="user-view">
+  <style>
+  </style>
   <template>
-    <a data-user="{{user.id}}" on-click="{{userClick}}"><img src="{{user.getPictureUrl()}}" height="50" width="50">{{user.name}} ({{user.type}})</a>
+    <a data-user="{{user.id}}" on-click="{{userClick}}"><img src="{{user.getPictureUrl()}}" height="50" width="50" style="-webkit-border-radius: 50px 50px 50px 50px; border-radius: 50px 50px 50px 50px; -moz-border-radius: 50px 50px 50px 50px;">{{user.name}}</a>
   </template>
   <script type="application/dart" src="userview.dart"></script>
 </polymer-element>

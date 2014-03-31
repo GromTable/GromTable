@@ -17,10 +17,6 @@ class CommandsView extends PolymerElement {
     State.instance = new State(State.DOCUMENTS_LIST, '');
   }
   
-  void userSettings(event, detail, target) {
-    State.instance = new State(State.USER_SETTINGS, '');
-  }
-  
   commandsMessage() => Intl.message(
       "Commands",
       name: 'commands',
@@ -41,11 +37,5 @@ class CommandsView extends PolymerElement {
       args: [],
       desc: 'Label on show documents list button.',
       examples: {});
-  
-  userSettingsMessage() => Intl.message(
-      "User Settings",
-      name: 'userSettings',
-      args: [],
-      desc: 'Label on user settings button.',
-      examples: {});
+
 }

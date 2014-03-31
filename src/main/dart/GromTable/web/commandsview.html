@@ -5,39 +5,30 @@
 <polymer-element name="commands-view">
   <template>
     <style>
-    .fancy {
-      background-color: #00A0FF;
-      color: #fff;
-      font-size: 20px;
-      padding: 10px 20px;
-      -webkit-border-radius: 2px;
-      border: 0px;
-    }
-    .deleteAction {
-      background-color: #FF0000;
+    .center {
+      display: block;
+      margin: 20px auto 0 auto;
+      text-align: center;
     }
     .commands {
-      background-color: #EBF8E5;
-      padding: 10px 10px 10px 10px;
+      width: 400px;
+      margin: 0 auto;
     }
-    .header {
-      padding: 0px 0px 0px 30px;
+    .command {
+      width: 200px;
+      float: left;
+      margin: 0 auto;
+      cursor: pointer;
+    }
+    .command:hover {
+      background-color: #18D673;
     }
     </style>
-    <template if="{{viewerContext != null}}">
     <div class="commands">
-      <h3 class="header">{{commandsMessage()}}</h3>
-      <div>
-      <template if="{{viewerContext.currentUser.type == 'DELEGATE'}}">
-        <button class="fancy" on-click="{{createDocument}}">{{createDocumentMessage()}}</button>
-      </template>
-      <button class="fancy" on-click="{{documentsList}}">{{documentsListMessage()}}</button>
-      <template if="{{viewerContext.currentUser != null}}">
-        <button class="fancy" on-click="{{userSettings}}">{{userSettingsMessage()}}</button>
-      </template>
-      </div>
+      <div class="command"><a on-click="{{createDocument}}"><img class="center" src="images/new_doc.png"><span class="center">{{createDocumentMessage()}}</span></a></div>
+      <div class="command"><a on-click="{{documentsList}}"><img class="center" src="images/list_doc.png"><span class="center">{{documentsListMessage()}}</span></a></div>
     </div>
-    </template>
+    <div style="clear:both;"></div>
   </template>
   <script type="application/dart" src="commandsview.dart"></script>
 </polymer-element>
