@@ -1,0 +1,19 @@
+<link rel="import" href="useractionview.html">
+
+<polymer-element name="user-actions-view">
+  <template>
+    <style>
+    </style>
+    <template if="{{useractions != null}}">
+      <div>
+        {{userActionsMessage()}}
+        <ul>
+        <template repeat="{{action in sortByTime(useractions)}}">
+          <li><user-action-view action="{{action}}"></user-action-view></li>
+        </template>
+        </ul>
+      </div>
+    </template>
+  </template>
+  <script type="application/dart" src="useractionsview.dart"></script>
+</polymer-element>

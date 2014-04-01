@@ -14,7 +14,8 @@ public class GetUserInfoImplTest extends BaseTest {
     GetUserInfoResult graphResult = new GetUserInfoImpl(user.getId(), true, 10).genLoad();
 
     Assert.assertEquals(graphResult.getUser(), user);
+    Assert.assertEquals(0, graphResult.getUserActions().size());
+    Assert.assertEquals(0, graphResult.getUserVotes().size());
     Assert.assertNull(graphResult.getDelegate());
-    Assert.assertNull(graphResult.getDelegateVotes());
   }
 }

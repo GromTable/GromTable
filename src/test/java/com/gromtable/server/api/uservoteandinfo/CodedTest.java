@@ -31,12 +31,9 @@ public class CodedTest extends BaseTest {
     GetUserInfoResult userInfo = new GetUserInfoImpl(user1.getId(), true, 5).genLoad();
     Assert.assertEquals(userInfo.getUser().getId(), user1.getId());
     Assert.assertNull(userInfo.getDelegate());
-    Assert.assertNull(userInfo.getDelegateVotes());
     userInfo = new GetUserInfoImpl(user1.getId(), true, 10).genLoad();
 
     Assert.assertEquals(userInfo.getUser().getId(), user1.getId());
     Assert.assertEquals(userInfo.getDelegate().getId(), user2.getId());
-    Assert.assertEquals(userInfo.getDelegateVotes().size(), 1);
-    Assert.assertEquals(userInfo.getDelegateVotes().get(0).getId(), user1.getId());
   }
 }

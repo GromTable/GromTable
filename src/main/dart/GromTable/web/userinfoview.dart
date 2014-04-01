@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:intl/intl.dart';
 import 'package:polymer/polymer.dart';
 import 'user.dart';
+import 'useraction.dart';
 import 'host.dart';
 import 'state.dart';
 import 'viewercontext.dart';
@@ -11,16 +12,16 @@ import 'error.dart';
 @CustomTag('user-info-view')
 class UserInfoView extends PolymerElement {
   static final USER_KEY = 'user';
+  static final USER_ACTIONS_KEY = 'userActions';
   static final DELEGATE_KEY = 'delegate';
   static final USER_VOTES_KEY = 'userVotes';
-  static final DELEGATE_VOTES_KEY = 'delegateVotes';
   
   @published bool isLoaded = false;
   @published String userid = null;
   @observable User user = null;
+  @observable List<UserAction> userActions = null;
   @observable User delegate = null;
   @observable List<User> userVotes = null;
-  @observable List<User> delegateVotes = null;
   @observable ViewerContext viewerContext = ViewerContext.instance;
 
   UserInfoView.created(): super.created() {
@@ -35,6 +36,17 @@ class UserInfoView extends PolymerElement {
       startLoadingUserInfo(userid);
     }
     super.attributeChanged(name, oldValue, newValue);
+  }
+  
+  List<UserAction> loadActionList(List<Map<String, Object>> list) {
+    if (list == null) {
+      return null;
+    }
+    List<UserAction> actionList = [];
+    for (var item in list) {
+      actionList.add(new UserAction.fromMap(item));
+    }
+    return actionList;
   }
   
   List<User> loadUserList(List<Map<String, String>> list) {
@@ -111,9 +123,9 @@ class UserInfoView extends PolymerElement {
     Map map = JSON.decode(response);
     ErrorHandler.handleResponse(map);
     user = new User.fromMap(map[USER_KEY]);
+    userActions = loadActionList(map[USER_ACTIONS_KEY]);
     delegate = loadUser(map[DELEGATE_KEY]);
     userVotes = loadUserList(map[USER_VOTES_KEY]);
-    delegateVotes = loadUserList(map[DELEGATE_VOTES_KEY]);
     isLoaded = true;
   }
   

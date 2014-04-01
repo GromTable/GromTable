@@ -5,12 +5,15 @@ import java.util.List;
 
 import com.gromtable.server.core.data.Id;
 import com.gromtable.server.core.data.Key;
+import com.gromtable.server.core.entity.ActionType;
+import com.gromtable.server.core.entity.EntityAction;
 import com.gromtable.server.core.entity.EntityVote;
 import com.gromtable.server.core.entity.VoteDocumentDecision;
 import com.gromtable.server.core.entity.VoteType;
 import com.gromtable.server.core.environment.BaseEnvironment;
 import com.gromtable.server.core.environment.Environment;
 import com.gromtable.server.core.hashout.HashoutDocumentToUser;
+import com.gromtable.server.core.hashout.HashoutUserToAction;
 import com.gromtable.server.core.hashout.HashoutUserToDocument;
 import com.gromtable.server.core.loader.Loader;
 
@@ -30,6 +33,7 @@ public class VoteDocumentImpl extends Loader<VoteDocumentResult> {
     long time = environment.getTime().getTimeMillis();
     HashoutUserToDocument hashoutUserToDocument = new HashoutUserToDocument();
     HashoutDocumentToUser hashoutDocumentToUser = new HashoutDocumentToUser();
+    HashoutUserToAction hashoutUserToAction = new HashoutUserToAction();
     Key key = getKey(voterId, documentId);
     List<EntityVote> currentVotes = hashoutUserToDocument.loadEntities(key);
     List<EntityVote> activeVotes = new ArrayList<EntityVote>();
@@ -48,8 +52,15 @@ public class VoteDocumentImpl extends Loader<VoteDocumentResult> {
 
     EntityVote newVote = new EntityVote(VoteType.DOCUMENT, voterId, documentId, time);
     newVote.setVoteDocumentDecision(voteDecision);
-    hashoutUserToDocument.addEntity(getKey(voterId, documentId), newVote);
+    newVote.saveToDb(voterId.getDbId());
+    EntityAction newAction = new EntityAction(ActionType.VOTE_DOCUMENT, time, voterId);
+    newAction.setDocumentId(documentId);
+    newAction.setVoteId(newVote.getId());
+    newAction.setVoteDocumentDecision(voteDecision);
+    newAction.saveToDb(voterId.getDbId());
+    hashoutUserToDocument.addKey(getKey(voterId, documentId), newVote.getId().getKey());
     hashoutDocumentToUser.addKey(documentId.getKey(), getKey(voterId, newVote.getId()));
+    hashoutUserToAction.addKey(voterId.getKey(), newAction.getId().getKey());
     return new VoteDocumentResult(true, newVote.getId());
   }
 }

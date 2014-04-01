@@ -38,7 +38,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static createDocumentHeader() => "Створити документ";
 
-  static delegate() => "Обраний користувачем id:";
+  static delegate() => "Обрати даного користвача своим представником";
 
   static delegatedByUser() => "Обраний користувач:";
 

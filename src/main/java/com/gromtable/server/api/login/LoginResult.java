@@ -23,6 +23,7 @@ public class LoginResult extends BaseControllerResult {
       cookie.setMaxAge(30 * 24 * 60 * 60);
       cookie.setPath("/");
       response.addCookie(cookie);
+      System.out.println(redirectUrl);
       response.sendRedirect(redirectUrl);
     }
   }

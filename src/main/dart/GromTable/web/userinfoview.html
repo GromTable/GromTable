@@ -1,4 +1,5 @@
 <link rel="import" href="userview.html">
+<link rel="import" href="useractionsview.html">
 
 <polymer-element name="user-info-view">
   <template>
@@ -28,12 +29,7 @@
       <br/>
       Facebook: <a href="{{user.facebook}}">{{user.facebook}}</a>
       <p></p>
-      <template if="{{viewerContext.currentUser != null && viewerContext.currentUser.type == 'VOTER' && user.type == 'DELEGATE'}}">
-        <button class="fancy" on-click="{{voteUser}}">{{delegateMessage()}}</button>
-      </template>
-      <template if="{{user.type != 'DELEGATE'}}">
-        {{askToBeDelegateMessage()}}
-      </template>
+      <button class="fancy" on-click="{{voteUser}}">{{delegateMessage()}}</button>
       <p></p>
       <template if="{{delegate != null}}">
          {{delegatedByUser()}}
@@ -46,6 +42,7 @@
            <p><user-view user="{{user}}"></user-view></p>
         </template>
       </template>
+      <user-actions-view useractions="{{userActions}}"></user-actions-view>
     </template>
     </div>
   </template>

@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.gromtable.server.api.helper.VoteFilter;
 import com.gromtable.server.core.data.Id;
+import com.gromtable.server.core.entity.ActionType;
+import com.gromtable.server.core.entity.EntityAction;
 import com.gromtable.server.core.entity.EntityUser;
 import com.gromtable.server.core.entity.EntityUserAndVote;
 import com.gromtable.server.core.entity.EntityVote;
@@ -11,6 +13,7 @@ import com.gromtable.server.core.entity.UserType;
 import com.gromtable.server.core.environment.BaseEnvironment;
 import com.gromtable.server.core.hashout.Hashout;
 import com.gromtable.server.core.hashout.HashoutDelegateToUser;
+import com.gromtable.server.core.hashout.HashoutUserToAction;
 import com.gromtable.server.core.hashout.HashoutUserToDelegate;
 import com.gromtable.server.core.loader.Loader;
 
@@ -28,6 +31,11 @@ public class SetUserInfoImpl extends Loader<SetUserInfoResult> {
     UserType userType = userInfo.getType();
     if (userType != null) {
       long time = BaseEnvironment.getEnvironment().getTime().getTimeMillis();
+      EntityAction newAction = new EntityAction(ActionType.CHANGE_USER_TYPE, time, userId);
+      newAction.setUserType(userType);
+      newAction.saveToDb(userId.getDbId());
+      HashoutUserToAction hashoutUserToAction = new HashoutUserToAction();
+      hashoutUserToAction.addKey(userId.getKey(), newAction.getId().getKey());
       if (user.getType().equals(UserType.DELEGATE) && userType.equals(UserType.VOTER)) {
         endVotes(new HashoutDelegateToUser(), user.getId(), time);
       }

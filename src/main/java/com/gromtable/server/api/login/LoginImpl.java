@@ -6,10 +6,14 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.gromtable.server.core.data.Key;
+import com.gromtable.server.core.entity.ActionType;
+import com.gromtable.server.core.entity.EntityAction;
 import com.gromtable.server.core.entity.EntityUser;
 import com.gromtable.server.core.entity.ErrorType;
 import com.gromtable.server.core.environment.BaseEnvironment;
+import com.gromtable.server.core.environment.Environment;
 import com.gromtable.server.core.hashout.HashoutLoginTokenToUser;
+import com.gromtable.server.core.hashout.HashoutUserToAction;
 import com.gromtable.server.core.loader.Loader;
 import com.gromtable.server.core.viewer.UserSessionToken;
 import com.gromtable.server.core.viewer.ViewerContext;
@@ -25,7 +29,6 @@ public class LoginImpl extends Loader<LoginResult> {
   private String code;
   private String loginUrl;
   private String preloginUrl;
-  private String state;
 
   public LoginImpl(String type, String code, String state) {
     this.type = type;
@@ -35,7 +38,6 @@ public class LoginImpl extends Loader<LoginResult> {
       this.loginUrl = parts[0];
       this.preloginUrl = parts[1];
     }
-    this.state = state;
   }
 
   private String genAccessToken(IHttpFetcher httpFetcher) {
@@ -75,12 +77,22 @@ public class LoginImpl extends Loader<LoginResult> {
     EntityUser user = genUser(httpFetcher, accessToken);
     LoginToken loginToken = new FbLoginToken(user.getFbId());
     Key loginTokenKey = new Key(loginToken.getToken());
+    return saveUser(user, loginTokenKey);
+  }
+
+  private LoginResult saveUser(EntityUser user, Key loginTokenKey) {
+    Environment environment = BaseEnvironment.getEnvironment();
+    long time = environment.getTime().getTimeMillis();
     HashoutLoginTokenToUser hashoutLoginTokenToUser = new HashoutLoginTokenToUser();
     EntityUser savedUser = hashoutLoginTokenToUser.loadEntity(loginTokenKey);
     // We need to create new user.
     if (savedUser == null) {
       hashoutLoginTokenToUser.addEntity(loginTokenKey, user);
       savedUser = user;
+      HashoutUserToAction hashoutUserToAction = new HashoutUserToAction();
+      EntityAction newAction = new EntityAction(ActionType.USER_JOINED, time, user.getId());
+      newAction.saveToDb(user.getId().getDbId());
+      hashoutUserToAction.addKey(user.getId().getKey(), newAction.getId().getKey());
     }
     UserSessionToken sessionToken = ViewerContext.genLogin(savedUser.getId());
     return new LoginResult(sessionToken.getCookieData(), preloginUrl);
@@ -94,15 +106,7 @@ public class LoginImpl extends Loader<LoginResult> {
     EntityUser user = parseUser(code);
     LoginToken loginToken = new TestLoginToken(user.getTestId());
     Key loginTokenKey = new Key(loginToken.getToken());
-    HashoutLoginTokenToUser hashoutLoginTokenToUser = new HashoutLoginTokenToUser();
-    EntityUser savedUser = hashoutLoginTokenToUser.loadEntity(loginTokenKey);
-    // We need to create new user.
-    if (savedUser == null) {
-      hashoutLoginTokenToUser.addEntity(loginTokenKey, user);
-      savedUser = user;
-    }
-    UserSessionToken sessionToken = ViewerContext.genLogin(savedUser.getId());
-    return new LoginResult(sessionToken.getCookieData(), state);
+    return saveUser(user, loginTokenKey);
   }
 
   public LoginResult genLoad() {

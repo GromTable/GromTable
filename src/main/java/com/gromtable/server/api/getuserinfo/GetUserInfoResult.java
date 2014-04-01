@@ -10,20 +10,28 @@ import com.gromtable.server.core.util.EqualsUtil;
 
 public class GetUserInfoResult extends BaseControllerResult {
   private final EntityUser user;
+  private List<UserActionResult> userActions;
   private final EntityUser delegate;
   private final List<EntityUser> userVotes;
-  private final List<EntityUser> delegateVotes;
 
   public GetUserInfoResult(
-    EntityUser user, EntityUser delegate, List<EntityUser> userVotes, List<EntityUser> delegateVotes) {
+    EntityUser user, List<UserActionResult> userActions, EntityUser delegate, List<EntityUser> userVotes) {
     this.user = user;
+    this.userActions = userActions;
     this.delegate = delegate;
     this.userVotes = userVotes;
-    this.delegateVotes = delegateVotes;
   }
 
   public EntityUser getUser() {
     return user;
+  }
+
+  public void setUserActions(List<UserActionResult> userActions) {
+    this.userActions = userActions;
+  }
+
+  public List<UserActionResult> getUserActions() {
+    return userActions;
   }
 
   public EntityUser getDelegate() {
@@ -32,10 +40,6 @@ public class GetUserInfoResult extends BaseControllerResult {
 
   public List<EntityUser> getUserVotes() {
     return userVotes;
-  }
-
-  public List<EntityUser> getDelegateVotes() {
-    return delegateVotes;
   }
 
   public int hashCode() {
@@ -49,7 +53,7 @@ public class GetUserInfoResult extends BaseControllerResult {
         EqualsUtil.equals(this.user, other.user)
         && EqualsUtil.equals(this.delegate, other.delegate)
         && EqualsUtil.setEquals(this.userVotes, other.userVotes)
-        && EqualsUtil.setEquals(this.delegateVotes, other.delegateVotes);
+        && EqualsUtil.setEquals(this.userActions, other.userActions);
     }
     return false;
   }

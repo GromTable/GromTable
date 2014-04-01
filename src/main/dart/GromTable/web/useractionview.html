@@ -1,0 +1,31 @@
+<polymer-element name="user-action-view">
+  <template>
+    <template if="{{action != null}">
+      {{getTimeToString(action.time)}}
+      <template if="{{action.actionType == 'USER_JOINED'}}">
+        {{userJoinedStoryMessage(action.actor.name)}}
+      </template>
+      <template if="{{action.actionType == 'CREATE_DOCUMENT'}}">
+        {{createDocumentStoryMessage(action.actor.name, action.document.name)}}
+      </template>
+      <template if="{{action.actionType == 'CHANGE_DOCUMENT'}}">
+        {{changeDocumentStoryMessage(action.actor.name, action.document.name)}}
+      </template>
+      <template if="{{action.actionType == 'VOTE_USER'}}">
+        {{voteUserStoryMessage(action.actor.name, action.delegate.name)}}
+      </template>
+      <template if="{{action.actionType == 'VOTE_DOCUMENT'}}">
+        {{voteDocumentStoryMessage(action.actor.name, action.document.name, action.voteDecision)}}
+      </template>
+      <template if="{{action.actionType == 'CHANGE_USER_TYPE'}}">
+        <template if="{{action.userType == 'DELEGATE'}}">
+          {{becameDelegateStoryMessage(action.actor.name)}}
+        </template>
+        <template if="{{action.userType == 'VOTER'}}">
+          {{becameVoterStoryMessage(action.actor.name)}}
+        </template>
+      </template>
+    </template>
+  </template>
+  <script type="application/dart" src="useractionview.dart"></script>
+</polymer-element>

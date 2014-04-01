@@ -10,9 +10,11 @@ import junit.framework.Assert;
 import com.gromtable.server.api.getdocumentinfo.GetDocumentInfoResult;
 import com.gromtable.server.api.getuserinfo.GetUserInfoImpl;
 import com.gromtable.server.api.getuserinfo.GetUserInfoResult;
+import com.gromtable.server.api.getuserinfo.UserActionResult;
 import com.gromtable.server.api.setuserinfo.SetUserInfoImpl;
 import com.gromtable.server.api.voteuser.VoteUserImpl;
 import com.gromtable.server.core.data.Id;
+import com.gromtable.server.core.entity.ActionType;
 import com.gromtable.server.core.entity.EntityDocument;
 import com.gromtable.server.core.entity.EntityUser;
 import com.gromtable.server.core.entity.UserType;
@@ -27,6 +29,7 @@ public class TestCommand {
   private static final String VOTE_DOCUMENT = "vote_document";
   private static final String GET_DOCUMENT_INFO = "get_document_info";
   private static final String NULL = "null";
+  private static final String ANY = "any";
   private StringTokenizer st;
   private Map<String, EntityUser> users;
   private Map<String, EntityDocument> documents;
@@ -61,13 +64,37 @@ public class TestCommand {
 
   private GetUserInfoResult readUserResult() {
     EntityUser resultUser = getUser(st.nextToken());
-    List<EntityUser> userVotes = readList();
+    List<UserActionResult> resultUserActions = readActionList();
+    List<EntityUser> userVotes = readUserList();
     EntityUser resultDelegate = getUser(st.nextToken());
-    List<EntityUser> delegateVotes = readList();
-    return new GetUserInfoResult(resultUser, resultDelegate, userVotes, delegateVotes);
+    return new GetUserInfoResult(resultUser, resultUserActions, resultDelegate, userVotes);
   }
 
-  private List<EntityUser> readList() {
+  private List<UserActionResult> readActionList() {
+    String number = st.nextToken();
+    if (number.equals(ANY)) {
+      return null;
+    }
+    long length = Long.parseLong(number);
+    List<UserActionResult> list = new ArrayList<UserActionResult>();
+    for (int i = 0; i < length; i++) {
+      String actionType = st.nextToken();
+      String actionTime = st.nextToken();
+      list.add(getUserAction(actionType, actionTime));
+    }
+    return list;
+  }
+
+  private UserActionResult getUserAction(String actionType, String actionTime) {
+    ActionType typeAction = ActionType.valueOf(actionType.toUpperCase());
+    long timeAction = Long.parseLong(actionTime);
+    UserActionResult  action = new UserActionResult();
+    action.setActionType(typeAction);
+    action.setTime(timeAction);
+    return action;
+  }
+
+  private List<EntityUser> readUserList() {
     String number = st.nextToken();
     if (number.equals(NULL)) {
       return null;
@@ -117,6 +144,7 @@ public class TestCommand {
 
       Id userId = user.getId();
       GetUserInfoResult result = new GetUserInfoImpl(userId, showVotes, votesTime).genLoad();
+      simplifyResult(result, userResult);
       Assert.assertEquals(userResult, result);
     } else if (commandName.equals(VOTE_DOCUMENT)) {
       voter = getUser(st.nextToken());
@@ -127,6 +155,21 @@ public class TestCommand {
       showVotes = Boolean.parseBoolean(st.nextToken());
       votesTime = Long.parseLong(st.nextToken());
       documentResult = readDocumentResult();
+    }
+  }
+
+  private void simplifyResult(GetUserInfoResult result, GetUserInfoResult expectedResult) {
+    if (expectedResult.getUserActions() == null) {
+      result.setUserActions(null);
+    } else {
+      for (UserActionResult userAction : result.getUserActions()) {
+        userAction.setActor(null);
+        userAction.setDelegate(null);
+        userAction.setDocument(null);
+        userAction.setUserType(null);
+        userAction.setVote(null);
+        userAction.setVoteDecision(null);
+      }
     }
   }
 

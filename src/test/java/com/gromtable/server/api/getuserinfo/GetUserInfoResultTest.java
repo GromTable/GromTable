@@ -24,11 +24,12 @@ public class GetUserInfoResultTest extends BaseTest {
     list3.add(user1);
     list3.add(user2);
     Assert.assertTrue(EqualsUtil.setEquals(list2, list3));
+    List<UserActionResult> userActions = new ArrayList<UserActionResult>();
 
-    GetUserInfoResult result1 = new GetUserInfoResult(user1, user2, list1, list2);
-    GetUserInfoResult result2 = new GetUserInfoResult(user1, user2, list1, list2);
-    GetUserInfoResult result3 = new GetUserInfoResult(user1, user2, list1, list1);
-    GetUserInfoResult result4 = new GetUserInfoResult(user1, user2, list1, list3);
+    GetUserInfoResult result1 = new GetUserInfoResult(user1, userActions, user2, list2);
+    GetUserInfoResult result2 = new GetUserInfoResult(user1, userActions, user2, list2);
+    GetUserInfoResult result3 = new GetUserInfoResult(user1, userActions, user2, list1);
+    GetUserInfoResult result4 = new GetUserInfoResult(user1, userActions, user2, list3);
     Assert.assertTrue(result1.equals(result2));
     Assert.assertTrue(result1.equals(result4));
     Assert.assertFalse(result1.equals(result3));

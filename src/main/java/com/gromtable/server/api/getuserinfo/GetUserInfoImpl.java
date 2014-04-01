@@ -5,10 +5,14 @@ import java.util.List;
 
 import com.gromtable.server.api.helper.VoteFilter;
 import com.gromtable.server.core.data.Id;
+import com.gromtable.server.core.entity.EntityAction;
+import com.gromtable.server.core.entity.EntityDocument;
 import com.gromtable.server.core.entity.EntityUser;
 import com.gromtable.server.core.entity.EntityUserAndVote;
+import com.gromtable.server.core.entity.EntityVote;
 import com.gromtable.server.core.environment.BaseEnvironment;
 import com.gromtable.server.core.hashout.HashoutDelegateToUser;
+import com.gromtable.server.core.hashout.HashoutUserToAction;
 import com.gromtable.server.core.hashout.HashoutUserToDelegate;
 import com.gromtable.server.core.loader.Loader;
 
@@ -31,7 +35,6 @@ public class GetUserInfoImpl extends Loader<GetUserInfoResult> {
     EntityUser user = EntityUser.load(userId);
     EntityUser delegate = null;
     List<EntityUser> userVotes = null;
-    List<EntityUser> delegateVotes = null;
 
     if (showVotes) {
       userVotes = getVotes(user);
@@ -44,12 +47,45 @@ public class GetUserInfoImpl extends Loader<GetUserInfoResult> {
       if (userDelegateVotes.size() == 1) {
         delegate = userDelegateVotes.get(0).getUser();
       }
-      if (delegate != null) {
-        delegateVotes = getVotes(delegate);
-      }
     }
+    List<UserActionResult> userActions = genUserActions(userId);
 
-    return new GetUserInfoResult(user, delegate, userVotes, delegateVotes);
+    return new GetUserInfoResult(user, userActions, delegate, userVotes);
+  }
+
+  private List<UserActionResult> genUserActions(Id userId) {
+    HashoutUserToAction hashoutUserToAction = new HashoutUserToAction();
+    List<EntityAction> userActions = hashoutUserToAction.loadEntities(userId.getKey());
+    List<UserActionResult> userActionResults = new ArrayList<UserActionResult>();
+    for (EntityAction action : userActions) {
+      userActionResults.add(genUserAction(action));
+    }
+    return userActionResults;
+  }
+
+  private UserActionResult genUserAction(EntityAction action) {
+    UserActionResult userActionResult = new UserActionResult();
+    userActionResult.setActionType(action.getActionType());
+    userActionResult.setTime(action.getTime());
+    Id actorId = action.getActorId();
+    if (actorId != null) {
+      userActionResult.setActor(EntityUser.load(actorId));
+    }
+    userActionResult.setUserType(action.getUserType());
+    Id documentId = action.getDocumentId();
+    if (documentId != null) {
+      userActionResult.setDocument(EntityDocument.load(documentId));
+    }
+    Id delegateId = action.getDelegateId();
+    if (delegateId != null) {
+      userActionResult.setDelegate(EntityUser.load(delegateId));
+    }
+    Id voteId = action.getVoteId();
+    if (voteId != null) {
+      userActionResult.setVote(EntityVote.load(voteId));
+    }
+    userActionResult.setVoteDecision(action.getVoteDecision());
+    return userActionResult;
   }
 
   private List<EntityUser> getVotes(EntityUser user) {
