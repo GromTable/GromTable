@@ -8,7 +8,7 @@
     }
     </style>
     <template if="{{viewerContext.isLoggedIn}}">
-      <div class="login">
+      <div>
         <div class="loginInner">
         <template if="{{viewerContext.currentUser == null}}">
           Loading...
@@ -22,7 +22,7 @@
       </div>
     </template>
     <template if="{{!viewerContext.isLoggedIn}}">
-      <h3 class="login">{{login()}}</h3>
+      <h3>{{login()}}</h3>
       <button class="fancy" on-click="{{loginViaFacebook}}">Facebook</button>
       <template if="{{devSettings.isDemoLogin}}">
         <button class="fancy" on-click="{{loginTestUsers}}">Test Users</button>
