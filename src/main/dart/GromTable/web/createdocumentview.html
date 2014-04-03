@@ -2,18 +2,57 @@
 
 <polymer-element name="create-document-view">
   <template>
-    <h1>{{createDocumentHeader()}}</h1>
-    <p>
-    <label>{{documentNameMessage()}}<input value="{{document.name}}" placeholder="{{documentNamePlaceholder()}}"></label>
-    </p>
-    <p>
-    <lable>{{documentTextMessage()}}<textarea rows="4" cols="50" value="{{document.text}}" placeholder="{{documentTextPlacehlder()}}"></textarea></lable>
-    </p>
-    <button on-click="{{createDocument}}">{{createDocumentButton()}}</button>
+    <style>
+    .createDocument {
+      display: block;
+      margin: 40px auto 0 auto;
+      text-align: center;
+      width: 600px;
+    }
+    .documentName {
+      width: 300px;
+    }
+    .documentText {
+      margin: 20px 0 0 0;
+      width: 100%;
+    }
+    .documentButtons {
+      margin: 10px 0 0 0;
+    }
+    .createDocumentButton, .cancelDocumentButton {
+      background-color: #18D673;
+      color: #fff;
+      font-size: 20px;
+      padding: 10px 20px;
+      -webkit-border-radius: 2px;
+      border: 0px;
+    }
+    .createDocumentButton {
+      background-color: #18D673;
+      float: left;
+    }
+    .cancelDocumentButton {
+      background-color: #CC4D3D;
+      float: right;
+    }
+    </style>
+    <div class="createDocument">
+    <h2>{{getDocumentName(document.name)}}</h2>
+    <br/>
+    <label>{{documentNameMessage()}}<input class="documentName" value="{{document.name}}" placeholder="{{documentNamePlaceholder()}}"></label>
+    <br/>
+    <textarea class="documentText" rows="10" value="{{document.text}}" placeholder="{{documentTextPlacehlder()}}"></textarea>
+    <br/>
+    <div class="documentButtons">
+      <button class="createDocumentButton" on-click="{{createDocument}}">{{createDocumentButton()}}</button>
+      <button class="cancelDocumentButton" on-click="{{cancelDocument}}">{{cancelDocumentButton()}}</button>
+      <div style="clear:both;"></div>
+    </div>
 
     <template if="{{basedocument != null}}">
       <documents-diff-view basedocument="{{basedocument}}" newdocument="{{document}}"></documents-diff-view>
     </template>
+    </div>
   </template>
   <script type="application/dart" src="createdocumentview.dart"></script>
 </polymer-element>

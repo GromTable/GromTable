@@ -9,22 +9,46 @@ import 'error.dart';
 
 @CustomTag('create-document-view')
 class CreateDocumentView extends PolymerElement {
+  static const DRAFT_DOCUMENT_KEY = 'draftDocument';
   @published DocumentInfo basedocument = null;
-  @observable DocumentInfo document = new DocumentInfo(null, null);
+  @observable DocumentInfo document = new DocumentInfo('', '');
   CreateDocumentView.created() : super.created() {
   }
   
   enteredView() {
     if (basedocument != null) {
-      document.name = basedocument.name;
-      document.text = basedocument.text;
+      document = new DocumentInfo(basedocument.name, basedocument.text);
+
+    } else {
+      try {
+        var savedDocument = window.localStorage[DRAFT_DOCUMENT_KEY];
+        if (savedDocument != null) {
+          document = new DocumentInfo.fromAutoSaveSerialization(savedDocument);
+        }
+      } catch (exception) {
+        // In case we saved bad version somehow.
+        print(exception);
+        document = new DocumentInfo('', '');
+        autoSave(null);
+      }
     }
+    new PathObserver(document, 'name').changes.listen(autoSave);
+    new PathObserver(document, 'text').changes.listen(autoSave);
     super.enteredView();
   }
   
+  void autoSave(var x) {
+    window.localStorage[DRAFT_DOCUMENT_KEY] = document.autoSaveSerialization();
+  }
   
   void createDocument(event, detail, target) {
     startCreateDocument(document);
+  }
+  
+  void cancelDocument(event, detail, target) {
+    document.name = '';
+    document.text = '';
+    State.instance = new State(State.DOCUMENTS_LIST, '');
   }
 
   void startCreateDocument(DocumentInfo document) {
@@ -67,6 +91,9 @@ class CreateDocumentView extends PolymerElement {
     ErrorHandler.handleResponse(map);
     var success = map['success'];
     if (success) {
+      // Clear draft document.
+      document.name = '';
+      document.text = '';
       String documentId = map['documentId'];
       startLoadingDocument(documentId);
     }
@@ -76,11 +103,19 @@ class CreateDocumentView extends PolymerElement {
     State.instance = new State(State.DOCUMENT, documentId);
   }
   
-  createDocumentHeader() => Intl.message(
-      "Create document",
-      name: 'createDocumentHeader',
+  @observable
+  String getDocumentName(String documentName) {
+    if (documentName.isEmpty) {
+      return documentDefaultName();
+    }
+    return documentName;
+  }
+  
+  documentDefaultName() => Intl.message(
+      "New document",
+      name: 'documentDefaultName',
       args: [],
-      desc: 'Header on create document page.',
+      desc: 'Default name of the document.',
       examples: {});
   
   documentNameMessage() => Intl.message(
@@ -117,6 +152,13 @@ class CreateDocumentView extends PolymerElement {
     args: [],
     desc: 'Label on create document button.',
     examples: {});
+  
+  cancelDocumentButton() => Intl.message(
+      "Cancel",
+      name: 'cancelDocumentButton',
+      args: [],
+      desc: 'Label on cancel document button.',
+      examples: {}); 
   
   showChangesButton() => Intl.message(
     "Show changes",

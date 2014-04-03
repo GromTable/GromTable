@@ -2,6 +2,7 @@ library document;
 
 import 'package:polymer/polymer.dart';
 import 'package:intl/intl.dart';
+import 'dart:convert';
 import 'user.dart';
 
 class DocumentInfo extends Observable {
@@ -42,6 +43,14 @@ class DocumentInfo extends Observable {
     this.text = map[TEXT_KEY];
     this.voteByTime = map[VOTE_BY_TIME_KEY];
     this.status = map[STATUS_KEY];
+  }
+  
+  factory DocumentInfo.fromAutoSaveSerialization(String json) {
+    return new DocumentInfo.fromObject(JSON.decode(json));
+  }
+  
+  String autoSaveSerialization() {
+    return JSON.encode({NAME_KEY: name, TEXT_KEY: text});
   }
   
   @observable
