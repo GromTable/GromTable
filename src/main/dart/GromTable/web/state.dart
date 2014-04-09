@@ -34,7 +34,7 @@ class State extends Observable {
   State.fromString(String str) {
     List<String> parts = str.split(DELIMITER);
     this.view = UNKNOWN;
-    if (parts.length >= 1) {
+    if (parts.length >= 1 && parts[0].length > 0) {
       this.view = parts[0];
     }
     if (parts.length >= 2) {
