@@ -8,6 +8,7 @@ import 'document.dart';
 import 'viewercontext.dart';
 
 class State extends Observable {
+  static final String DELIMITER = '-';
   static final DOCUMENT = 'document';
   static final USER = 'user';
   static final CREATE_DOCUMENT = 'create_document';
@@ -22,22 +23,25 @@ class State extends Observable {
   static State _instance = new State.fromString(Host.hash);
   static bool _isListen = false;
 
-  @observable String view;
-  @observable String id;
+  @observable String view = null;
+  @observable String id = null;
+  @observable int time = null;
   @observable DocumentInfo baseDocument = null;
   
-  State(this.view, this.id) {
+  State(this.view, {this.id : null, this.time : null}) {
   }
   
   State.fromString(String str) {
-    str = str.replaceAll('#', '');
-    List<String> validViews = [DOCUMENT, USER, CREATE_DOCUMENT, CHANGE_DOCUMENT, DOCUMENTS_LIST, DOCUMENT_CHANGES, USER_SETTINGS, WELCOME, TRANSLATION];
+    List<String> parts = str.split(DELIMITER);
     this.view = UNKNOWN;
-    for (var view in validViews) {
-      if (str.startsWith(view)) {
-        this.view = view;
-        this.id = str.substring(view.length);
-      }
+    if (parts.length >= 1) {
+      this.view = parts[0];
+    }
+    if (parts.length >= 2) {
+      this.id = parts[1];
+    }
+    if (parts.length >= 3) {
+      this.time = int.parse(parts[2]);
     }
     if (view == State.UNKNOWN) {
       if (!ViewerContext.instance.isLoggedIn) {
@@ -50,13 +54,15 @@ class State extends Observable {
     if (State._isListen == false) {
       State._isListen = true;
       window.onPopState.listen((_) {
-        State.instance = new State.fromString(Host.hash);
+        if (State.instance.toString() != Host.hash) {
+          State.instance = new State.fromString(Host.hash);
+        }
       });
     }
   }
   
   void goToStatut(Map<String, String> settings) {
-    State.instance = new State(State.DOCUMENT, settings['client_status_document_id']);
+    State.instance = new State(State.DOCUMENT, id : settings['client_status_document_id']);
   }
   
   static State get instance {
@@ -66,13 +72,21 @@ class State extends Observable {
   static void set instance(State state) {
     State.instance.view = state.view;
     State.instance.id = state.id;
+    State.instance.time = state.time;
     Host.hash = state.toString();
   }
   
   String toString() {
-    if (view == UNKNOWN) {
-      return '';
+    List<String> parts = [];
+    if (view != UNKNOWN) {
+      parts.add(view);
     }
-    return view + id;
+    if (id != null) {
+      parts.add(id);
+    }
+    if (time != null) {
+      parts.add(time.toString());
+    }
+    return parts.join(DELIMITER);
   }
 }

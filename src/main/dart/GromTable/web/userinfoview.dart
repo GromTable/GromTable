@@ -8,6 +8,7 @@ import 'host.dart';
 import 'state.dart';
 import 'viewercontext.dart';
 import 'error.dart';
+import 'runonce.dart';
 
 @CustomTag('user-info-view')
 class UserInfoView extends PolymerElement {
@@ -16,8 +17,12 @@ class UserInfoView extends PolymerElement {
   static final DELEGATE_KEY = 'delegate';
   static final USER_VOTES_KEY = 'userVotes';
   
-  @published bool isLoaded = false;
+  RunOnce runOnce = new RunOnce();
+
   @published String userid = null;
+  @published int time = null;
+  
+  @observable bool isLoaded = false;
   @observable User user = null;
   @observable List<UserAction> userActions = null;
   @observable User delegate = null;
@@ -32,9 +37,7 @@ class UserInfoView extends PolymerElement {
   }
   
   attributeChanged(String name, String oldValue, String newValue) {
-    if (name == 'userid' && userid != null && userid != '') {
-      startLoadingUserInfo(userid);
-    }
+    runOnce.schedule(() => startLoadingUserInfo(userid, time));
     super.attributeChanged(name, oldValue, newValue);
   }
   
@@ -68,7 +71,7 @@ class UserInfoView extends PolymerElement {
   }
   
   void loadGraph(userId) {
-    State.instance = new State(State.USER, userId);
+    State.instance = new State(State.USER, id: userId);
   }
   
   void voteUser(event, detail, target) {
@@ -97,19 +100,22 @@ class UserInfoView extends PolymerElement {
     ErrorHandler.handleResponse(map);
     var success = map['success'];
     if (success) {
-      startLoadingUserInfo(State.instance.id);
+      startLoadingUserInfo(userid, time);
     }
   }
   
-  void startLoadingUserInfo(String userId, [votesTime = 0]) {
+  void startLoadingUserInfo(String userId, int time) {
     isLoaded = false;
+    if (time == null) {
+      time = 0;
+    }
     Uri uri = new Uri.http(
       Host.apiDomain,
       '/api/get_user_info',
       {
         'user_id': userId,
         'show_votes': true.toString(),
-        'votes_time': votesTime.toString(),
+        'votes_time': time.toString(),
       }
     );
     var request = HttpRequest.getString(uri.toString(), withCredentials : true)

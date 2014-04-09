@@ -34,10 +34,7 @@ public class HashoutGetMultiLoader extends StoreLoader<Columns> {
   }
 
   public void hbasePostDispatch(Result result, byte[] familyName) {
-    System.out.println(result);
-    System.out.println(familyName);
     Map<byte[], byte[]> familyMap = result.getFamilyMap(familyName);
-    System.out.println(familyMap);
     Columns columns = new Columns();
     if (familyMap != null) {
       for (Map.Entry<byte[], byte[]> column : familyMap.entrySet()) {

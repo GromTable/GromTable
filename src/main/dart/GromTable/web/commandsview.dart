@@ -10,11 +10,11 @@ class CommandsView extends PolymerElement {
   } 
   
   void createDocument(event, detail, target) {
-    State.instance = new State(State.CREATE_DOCUMENT, '');
+    State.instance = new State(State.CREATE_DOCUMENT);
   }
   
   void documentsList(event, detail, target) {
-    State.instance = new State(State.DOCUMENTS_LIST, '');
+    State.instance = new State(State.DOCUMENTS_LIST);
   }
   
   commandsMessage() => Intl.message(

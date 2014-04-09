@@ -34,7 +34,7 @@
       <input type="checkbox" id="cancelled" checked="{{showCancelled}}">{{showCancelledMessage()}}
       <ul>
         <template repeat="{{doc in filteredDocuments}}">
-          <li>{{doc.name}} {{doc.status}} {{doc.getVoteByString()}}<button class="fancy" data-document="{{doc.id}}" on-click="{{goToDocument}}">{{goToDocumentButton()}}</button></li>
+          <li>{{doc.name}} {{doc.getVoteDecisionMessage()}} {{doc.getVoteByString()}}<button class="fancy" data-document="{{doc.id}}" on-click="{{goToDocument}}">{{goToDocumentButton()}}</button></li>
         </template>
       </ul>
     </div>

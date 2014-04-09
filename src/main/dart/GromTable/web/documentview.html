@@ -5,7 +5,7 @@
 <polymer-element name="document-view">
   <template>
     <style>
-    .buttonYes, .buttonNo, .buttonHold, .buttonProposeChange {
+    .buttonYes, .buttonNo, .buttonHold, .buttonProposeChange, .buttonEndResults, .buttonCurrentResults {
       background-color: #18D673;
       color: #fff;
       font-size: 20px;
@@ -55,13 +55,26 @@
         <pre>{{document.text}}</pre>    
       </div>
       <div>
-      Author of the document: <user-view user="{{document.author}}"></user-view>   
+      {{documentAuthorMessage()}} <user-view user="{{document.author}}"></user-view>   
       <p>
         <button class="buttonYes" on-click="{{voteYes}}">{{documentVoteYesButtonMessage()}}</button>
         <button class="buttonNo" on-click="{{voteNo}}">{{documentVoteNoButtonMessage()}}</button>
         <button class="buttonHold" on-click="{{voteHold}}">{{documentVoteHoldButtonMessage()}}</button>
+        <!--
         <button class="buttonProposeChange" on-click="{{documentChanges}}">{{documentChangesButtonMessage()}}</button>
-      </p>  
+        -->
+      </p>
+
+      <template if="{{document.showEndOfVoteResults()}}">        
+        {{voteEndedMessage(document.getVoteDecisionMessage())}}
+        <br>
+        <template if="{{time == null}}">
+          <button class="buttonEndResults" on-click="{{endResults}}">{{documentEndResultsMessage()}}</button>
+        </template>
+        <template if="{{time != null}}">
+          <button class="buttonCurrentResults" on-click="{{currentResults}}">{{documentCurrentResultsMessage()}}</button>
+        </template>
+      </template>
       <document-votes-view totalvotes="{{document.totalVotes}}" allvotes="{{document.allVotes}}" viewercontext="{{viewerContext}}" state="{{getState(document.totalVotes, document.allVotes)}}"></document-votes-view>
       <facebook-comments-view url="{{getHref()}}"></facebook-comments-view>
       </div>  

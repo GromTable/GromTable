@@ -56,16 +56,16 @@ class WelcomeView extends PolymerElement {
   }
   
   void goToStatusWithSettings(Map<String, String> settings) {
-    State.instance = new State(State.DOCUMENT, settings['client_status_document_id']);
+    State.instance = new State(State.DOCUMENT, id: settings['client_status_document_id']);
   }
   
   void loginViaFacebook() {
-    State.instance = new State(State.DOCUMENTS_LIST, '');
+    State.instance = new State(State.DOCUMENTS_LIST);
     ViewerContext.instance.loginViaFacebook();
   }
   
   void loginTestUsers() {
-    State.instance = new State(State.DOCUMENTS_LIST, '');
+    State.instance = new State(State.DOCUMENTS_LIST);
     ViewerContext.instance.loginViaTestUsers();
   }
   

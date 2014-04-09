@@ -14,13 +14,12 @@
     <template if="{{devSettings.showSettings}}">
       <dev-settings-view></dev-settings-view>
     </template>
-
     <template if="{{state.view != 'welcome'}}">
       <header-view></header-view>
       <commands-view></commands-view>
     </template>
     <template if="{{state.view == 'user'}}">
-      <user-info-view userid="{{state.id}}"></user-info-view>
+      <user-info-view userid="{{state.id}}" time="{{state.time}}"></user-info-view>
     </template>
     <template if="{{state.view == 'create_document'}}">
       <create-document-view></create-document-view>
@@ -29,7 +28,7 @@
       <create-document-view basedocument="{{state.baseDocument}}"></create-document-view>
     </template>
     <template if="{{state.view == 'document'}}">
-      <document-view></document-view>
+      <document-view documentid="{{state.id}}" time="{{state.time}}"></document-view>
     </template>
     <template if="{{state.view == 'documents_list'}}">
       <documents-list-view></documents-list-view>

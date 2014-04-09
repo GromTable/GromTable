@@ -64,13 +64,13 @@ class DocumentView extends PolymerElement {
   }
 
   void proposeChanges(event, detail, target) {
-    State.instance = new State(State.CHANGE_DOCUMENT, '');
+    State.instance = new State(State.CHANGE_DOCUMENT);
     State.instance.baseDocument = basedocument;
   }
   
   void goToDocument(event, detail, target) {
     String documentId = target.attributes['data-document'];
-    State.instance = new State(State.DOCUMENT, documentId);
+    State.instance = new State(State.DOCUMENT, id: documentId);
   }
   
   bool showDocument(document) {

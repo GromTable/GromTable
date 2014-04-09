@@ -9,6 +9,6 @@ class AdminCommandsView extends PolymerElement {
   }
   
   void goToTranslation(event, detail, target) {
-    State.instance = new State(State.TRANSLATION, '');
+    State.instance = new State(State.TRANSLATION);
   }
 }

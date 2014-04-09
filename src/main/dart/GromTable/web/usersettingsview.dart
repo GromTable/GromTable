@@ -45,7 +45,7 @@ class UserSettingsView extends PolymerElement {
   void onSetUserInfoDone(String response) {
     Map map = JSON.decode(response);
     ErrorHandler.handleResponse(map);
-    State.instance = new State(State.USER, viewerContext.currentUser.id);
+    State.instance = new State(State.USER, id: viewerContext.currentUser.id);
     // Clowntown - this shoud return new user info
     window.location.reload();
   }

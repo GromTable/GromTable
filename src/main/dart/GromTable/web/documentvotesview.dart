@@ -1,12 +1,16 @@
 import 'package:polymer/polymer.dart';
+import 'package:intl/intl.dart';
 import 'user.dart';
+import 'document.dart';
 import 'viewercontext.dart';
+import 'state.dart';
 
 class VoteRow extends Observable {
   @observable String clazz;
+  @observable String userId;
   @observable List<String> columns;
   
-  VoteRow(this.clazz, this.columns);
+  VoteRow(this.clazz, this.columns, {this.userId: null});
   
   String toString() {
     return columns.toString();
@@ -28,16 +32,20 @@ class DocumentVotesView extends PolymerElement {
   }
   
   List<VoteRow> getTable(var totalVoes, var allVotes, User currentUser) {
-    var decisions = ['YES', 'NO', 'HOLD'];
+    var decisions = [DocumentInfo.VOTE_YES, DocumentInfo.VOTE_NO, DocumentInfo.VOTE_HOLD];
     var rows = [];
-    rows.add(new VoteRow("delegateHeader", ["DELEGATE", "DELEGATE VOTE", "TOTAL VOTES", "YES", "NO", "HOLD"]));
-    rows.add(new VoteRow("totalVotes", ["TOTAL", "", getTotalVotes(totalvotes), getVote('YES', totalvotes), getVote('NO', totalvotes), getVote('HOLD', totalvotes)]));
+    rows.add(new VoteRow("delegateHeader",
+        [delegateHeaderMessage(), delegateVoteHeaderMessage(), totalVotesHeaderMessage(),
+         DocumentInfo.voteYesMessage(), DocumentInfo.voteNoMessage(), DocumentInfo.voteHoldMessage()]));
+    rows.add(new VoteRow("totalVotes",
+        [totalRawMessage(), "", getTotalVotes(totalvotes), getVote(DocumentInfo.VOTE_YES, totalvotes),
+         getVote(DocumentInfo.VOTE_NO, totalvotes), getVote(DocumentInfo.VOTE_HOLD, totalvotes)]));
     for (var delegateGroupVotes in allvotes) {
       var groupVotes = delegateGroupVotes['groupVotes'];
       var columns = [];
       var delegateVote = delegateGroupVotes['delegateVote'];
       columns.add(getUserName(delegateVote));
-      columns.add(getUserDecision(delegateVote));
+      columns.add(DocumentInfo.getVoteMessage(getUserDecision(delegateVote)));
       columns.add(getTotalVotes(groupVotes));
       for (var decision in decisions) {
         columns.add(getVote(decision, groupVotes));
@@ -46,12 +54,12 @@ class DocumentVotesView extends PolymerElement {
       if (currentUser != null && getUserId(delegateVote) == currentUser.id) {
         clazz += "Current";
       }
-      rows.add(new VoteRow(clazz, columns));
+      rows.add(new VoteRow(clazz, columns, userId : getUserId(delegateVote)));
       var usersVote = delegateGroupVotes['usersVote'];
       for (var userVote in usersVote) {
         var columns = [];
         columns.add(getUserName(userVote));
-        columns.add(getUserDecision(userVote));
+        columns.add(DocumentInfo.getVoteMessage(getUserDecision(userVote)));
         columns.add(1);
         for (var decision in decisions) {
           columns.add(userVote['decision'] == decision ? 1 : 0);
@@ -60,15 +68,50 @@ class DocumentVotesView extends PolymerElement {
         if (currentUser != null && getUserId(userVote) == currentUser.id) {
           clazz += "Current";
         }
-        rows.add(new VoteRow(clazz, columns));
+        rows.add(new VoteRow(clazz, columns, userId : getUserId(userVote)));
       }
     }
     return rows;
   }
   
+  delegateHeaderMessage() => Intl.message(
+      "Delegate",
+      name: 'delegateHeaderMessage',
+      args: [],
+      desc: 'Delegate column for votes table.',
+      examples: {});
+  
+  delegateVoteHeaderMessage() => Intl.message(
+      "Delegate vote",
+      name: 'delegateVoteHeaderMessage',
+      args: [],
+      desc: 'Delegate vote column for votes table.',
+      examples: {});  
+  
+  totalVotesHeaderMessage() => Intl.message(
+      "Total votes",
+      name: 'totalVotesHeaderMessage',
+      args: [],
+      desc: 'Total votes column for votes table.',
+      examples: {});
+  
+  totalRawMessage() => Intl.message(
+      "Total",
+      name: 'totalRawMessage',
+      args: [],
+      desc: 'Label on raw with total votes.',
+      examples: {});
+  
+  independentVotersMessage() => Intl.message(
+      "Independent voters",
+      name: 'independentVotersMessage',
+      args: [],
+      desc: 'Label on raw with independent voters.',
+      examples: {});  
+
   String getUserDecision(var userVote) {
     if (userVote == null) {
-      return 'NA';
+      return DocumentInfo.VOTE_NA;
     }
     return userVote['decision'];
   }
@@ -82,7 +125,7 @@ class DocumentVotesView extends PolymerElement {
   
   String getUserName(var userVote) {
     if (userVote == null) {
-      return 'Independent voters';
+      return independentVotersMessage();
     }
     return userVote['user']['name'];
   }
@@ -113,8 +156,12 @@ class DocumentVotesView extends PolymerElement {
     }
     return 0;
   }
-  
-  attributeChanged(String name, String oldValue, String newValue) {
-    super.attributeChanged(name, oldValue, newValue);
+
+  void rowClick(event, detail, target) {
+    String userId = target.attributes['data-userid'];
+    if (userId != null && userId.isNotEmpty) {
+      State.instance = new State(State.USER, id: userId, time: State.instance.time);
+    }
   }
+  
 }

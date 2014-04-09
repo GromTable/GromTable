@@ -27,7 +27,6 @@ class CreateDocumentView extends PolymerElement {
         }
       } catch (exception) {
         // In case we saved bad version somehow.
-        print(exception);
         document = new DocumentInfo('', '');
         autoSave(null);
       }
@@ -48,7 +47,7 @@ class CreateDocumentView extends PolymerElement {
   void cancelDocument(event, detail, target) {
     document.name = '';
     document.text = '';
-    State.instance = new State(State.DOCUMENTS_LIST, '');
+    State.instance = new State(State.DOCUMENTS_LIST);
   }
 
   void startCreateDocument(DocumentInfo document) {
@@ -100,7 +99,7 @@ class CreateDocumentView extends PolymerElement {
   }
   
   void startLoadingDocument(String documentId) {
-    State.instance = new State(State.DOCUMENT, documentId);
+    State.instance = new State(State.DOCUMENT, id: documentId);
   }
   
   @observable

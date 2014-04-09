@@ -28,7 +28,7 @@ class Host {
     return window.location.href;
   }
   static String get hash {
-    return window.location.hash;
+    return window.location.hash.replaceAll("#", "");
   }
   
   static void set hash(String hash) {

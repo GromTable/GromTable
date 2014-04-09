@@ -5,21 +5,23 @@
     <style>
     .delegateHeader {
     }
-    .delegate {
+    .delegate td, .delegateCurrent td {
       padding: 0 0 0 10px;
     }
     .delegateCurrent {
       background-color: yellow;
     }
-    .voter {
+    .voter td {
       padding: 0 0 0 20px;
     }
     .voterCurrent {
       background-color: yellow;
+    }
+    
+    .voterCurrent td {
       padding: 0 0 0 20px;
     }
-    .totalVotes {
-    }
+    
     .votes {
       border-collapse:collapse;
       width:100%;
@@ -35,8 +37,8 @@
       <thead>
       </thead>       
       <tbody>
-        <tr template repeat="{{row in getTable(totalvotes, allvotes, viewercontext.currentUser)}}">
-          <td class="{{row.clazz}}" template repeat="{{column in row.columns}}">
+        <tr class="{{row.clazz}}" data-userid="{{row.userId}}" on-click="{{rowClick}}" template repeat="{{row in getTable(totalvotes, allvotes, viewercontext.currentUser)}}">
+          <td template repeat="{{column in row.columns}}">
             {{column}}
           </td>
         </tr>     

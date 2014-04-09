@@ -55,7 +55,7 @@ class LoggedinView extends PolymerElement {
   }
    
   void userSettings(event, detail, target) {
-    State.instance = new State(State.USER_SETTINGS, '');
+    State.instance = new State(State.USER_SETTINGS);
   }
   
   login() => Intl.message(

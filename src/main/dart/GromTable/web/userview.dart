@@ -15,6 +15,6 @@ class UserView extends PolymerElement {
   
   void userClick(event, detail, target) {
     String userId = target.attributes['data-user'];
-    State.instance = new State(State.USER, userId);
+    State.instance = new State(State.USER, id: userId);
   }
 }

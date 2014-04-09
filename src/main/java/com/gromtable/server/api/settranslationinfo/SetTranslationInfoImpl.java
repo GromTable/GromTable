@@ -30,7 +30,6 @@ public class SetTranslationInfoImpl extends Loader<SetTranslationInfoResult> {
   }
 
   public SetTranslationInfoResult genLoad() {
-    System.out.println(intlMessagesSource + " " + intlMessagesUk + " " + intlMessagesRu + " " + intlMessagesEn);
     checkPermission(viewerId);
     HashoutListToJson hashoutListToJson = new HashoutListToJson();
     List<EntityJson> jsons = hashoutListToJson.loadEntities(HashoutList.INTL_MESSAGES_CURRENT.getId().getKey());

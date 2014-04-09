@@ -7,31 +7,44 @@ import 'state.dart';
 import 'document.dart';
 import 'viewercontext.dart';
 import 'error.dart';
+import 'runonce.dart';
 
 @CustomTag('document-view')
 class DocumentView extends PolymerElement {
+  RunOnce runOnce = new RunOnce();
+  @published String documentid;
+  @published int time;
   @observable bool isLoaded = false;
   @observable String error = null;
   @observable DocumentInfo document = null;
   @observable ViewerContext viewerContext = ViewerContext.instance;
   
   DocumentView.created() : super.created() {
-
   }
   
   enteredView() {
-    startLoadingDocument(State.instance.id);
+    // TODO: Why atrributeChanged not called normally?
+    onPropertyChange(this, #time, () => attributeChanged('timeX', '', ''));
     super.enteredView();
   }
   
-  void startLoadingDocument(String documentId) {
+  attributeChanged(String name, String oldValue, String newValue) {
+    runOnce.schedule(() => startLoadingDocument(documentid, time));
+    super.attributeChanged(name, oldValue, newValue);
+  }
+  
+  void startLoadingDocument(String documentId, int votesTime) {
+    var votes_time = "0";
+    if (votesTime  != null) {
+      votes_time = votesTime.toString();
+    }
     Uri uri = new Uri.http(
       Host.apiDomain,
       '/api/get_document_info',
       {
         'document_id': documentId,
         'show_votes' : true.toString(),
-        'votes_time' : 0.toString(),
+        'votes_time' : votes_time,
       }
     );
     var request = HttpRequest.getString(uri.toString())
@@ -49,7 +62,7 @@ class DocumentView extends PolymerElement {
   }
   
   void authorClick(userId) {
-    State.instance = new State(State.USER, userId);
+    State.instance = new State(State.USER, id: userId);
   }
   
   void startVoteDocument(String documentId, String voteDecision) {
@@ -71,24 +84,33 @@ class DocumentView extends PolymerElement {
   void onVoteDocumentDone(String response) {
     Map map = JSON.decode(response);
     ErrorHandler.handleResponse(map);
-    startLoadingDocument(State.instance.id);
+    startLoadingDocument(documentid, time);
   }
   
   void voteYes(event, detail, target) {
-    startVoteDocument(State.instance.id, 'yes');
+    startVoteDocument(documentid, 'yes');
   }
   
   void voteNo(event, detail, target) {
-    startVoteDocument(State.instance.id, 'no');
+    startVoteDocument(documentid, 'no');
   }
   
   void voteHold(event, detail, target) {
-    startVoteDocument(State.instance.id, 'hold');
+    startVoteDocument(documentid, 'hold');
   }
   
   void documentChanges(event, detail, target) {
-    State.instance = new State(State.DOCUMENT_CHANGES, '');
+    State.instance = new State(State.DOCUMENT_CHANGES);
     State.instance.baseDocument = document;
+  }
+  
+  void endResults(event, detail, target) {
+    State.instance = new State(State.DOCUMENT, id: document.id, time: document.voteByTime);
+  }
+  
+  void currentResults(event, detail, target) {
+    var newState = new State(State.DOCUMENT, id: document.id);
+    State.instance = newState;    
   }
   
   @observable
@@ -105,6 +127,13 @@ class DocumentView extends PolymerElement {
       name: 'documentHeader',
       args: [],
       desc: 'Header for document page.',
+      examples: {});
+  
+  documentAuthorMessage() => Intl.message(
+      "Author of the document:",
+      name: 'documentAuthorMessage',
+      args: [],
+      desc: 'Author of the document.',
       examples: {});
   
   documentVoteYesButtonMessage() => Intl.message(
@@ -134,5 +163,26 @@ class DocumentView extends PolymerElement {
       args: [],
       desc: 'Text on the button to see proposed document changes.',
       examples: {});
-
+  
+  documentEndResultsMessage() => Intl.message(
+      "Show end of vote results.",
+      name: 'endResultsButton',
+      args: [],
+      desc: 'Text on button to see result in the end of the vote.',
+      examples: {});
+  
+  documentCurrentResultsMessage() => Intl.message(
+      "Show current results.",
+      name: 'endResultsButton',
+      args: [],
+      desc: 'Text on button to see result in the end of the vote.',
+      examples: {});
+  
+  
+  voteEndedMessage(voteDecision) => Intl.message(
+      "Vote on the document ended with decision: $voteDecision",
+      name: 'voteEndedMessage',
+      args: [voteDecision],
+      desc: 'Message with result of the vote for document.',
+      examples: {'voteDecision' : 'ACCEPTED'});
 }

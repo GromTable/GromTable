@@ -22,7 +22,6 @@ public class CreateDocumentController extends ApiController<CreateDocumentReques
   }
 
   protected CreateDocumentResult genControllerResult(CreateDocumentRequest request) {
-    System.out.println(BaseEnvironment.getEnvironment().getTime().getTimeMillis());
     long voteByTime = BaseEnvironment.getEnvironment().getTime().getTimeMillis() + 48 * 60 * 60 * 1000L;
     return new CreateDocumentImpl(
       request.getParentId(), request.getName(),

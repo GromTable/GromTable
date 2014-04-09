@@ -37,8 +37,8 @@ public class GetDocumentInfoImpl extends Loader<GetDocumentInfoResult> {
   public GetDocumentInfoResult genLoad() {
     EntityDocument document = EntityDocument.load(documentId);
     EntityUser author = EntityUser.load(document.getCreatorId());
-    GetDocumentInfoResult result = new GetDocumentInfoResult(document, author);
     long currentTime = BaseEnvironment.getEnvironment().getTime().getTimeMillis();
+    GetDocumentInfoResult result = new GetDocumentInfoResult(currentTime, document, author);
     if (showVotes) {
       HashoutDocumentToUser hashoutDocumentToUser = new HashoutDocumentToUser();
       HashoutUserToDelegate hashoutUserToDelegate = new HashoutUserToDelegate();

@@ -5,7 +5,19 @@ import 'package:intl/intl.dart';
 import 'dart:convert';
 import 'user.dart';
 
+// TODO: refactor this to be more close to java version.
 class DocumentInfo extends Observable {
+  static const VOTE_YES = 'YES';
+  static const VOTE_NO = 'NO';
+  static const VOTE_HOLD = 'HOLD';
+  static const VOTE_NA = 'NA';
+  
+  static const VOTING = 'VOTING';
+  static const ACCEPTED = 'ACCEPTED';
+  static const REJECTED = 'REJECTED';
+  static const CANCELED = 'CANCELED';
+  
+  static final CURRENT_TIME_KEY = 'currentTime';
   static final DOCUMENT_KEY = 'document';
   static final ID_KEY = 'id';
   static final NAME_KEY = 'name';
@@ -19,6 +31,7 @@ class DocumentInfo extends Observable {
   @observable String id;
   @observable String name;
   @observable String text;
+  @observable int currentTime;
   @observable int voteByTime;
   @observable String status;
   @observable User author;
@@ -28,10 +41,13 @@ class DocumentInfo extends Observable {
   DocumentInfo(this.name, this.text);
   
   DocumentInfo.fromMap(Map<String, Object> map) {
+    this.currentTime = map[CURRENT_TIME_KEY];
     var documentMap = map[DOCUMENT_KEY];
     this.id = documentMap[ID_KEY];
     this.name = documentMap[NAME_KEY];
     this.text = documentMap[TEXT_KEY];
+    this.status = documentMap[STATUS_KEY];
+    this.voteByTime = documentMap[VOTE_BY_TIME_KEY];
     this.author = new User.fromMap(map[AUTHOR_KEY]);
     this.totalVotes = map[TOTAL_VOTES_KEY];
     this.allVotes = map[ALL_VOTES_KEY];
@@ -57,5 +73,98 @@ class DocumentInfo extends Observable {
   String getVoteByString() {
     DateFormat format = new DateFormat("yyyy.MM.dd HH:mm:ss");
     return format.format(new DateTime.fromMillisecondsSinceEpoch(voteByTime));
+  }
+  
+  @observable
+  static String getVoteMessage(String vote) {
+    switch (vote) {
+      case VOTE_YES:
+        return voteYesMessage();
+      case VOTE_NO:
+        return voteNoMessage();
+      case VOTE_HOLD:
+        return voteHoldMessage();
+      case VOTE_NA:
+        return voteNAMessage();
+      default:
+        throw new Exception("Unknown vote $vote");
+    }
+  }
+  
+  @observable
+  String getVoteDecisionMessage() {
+    switch (status) {
+      case VOTING:
+        return votingMessage();
+      case ACCEPTED:
+        return acceptedMessage();
+      case REJECTED:
+        return rejectedMessage();
+      case CANCELED:
+        return canceledMessage();
+      default:
+        throw new Exception("Unknown status: $status");
+    }
+  }
+
+  static voteYesMessage() => Intl.message(
+      "Yes",
+      name: 'voteYes',
+      args: [],
+      desc: 'Yes vote on some document.',
+      examples: {});
+  
+  static voteNoMessage() => Intl.message(
+      "No",
+      name: 'voteNo',
+      args: [],
+      desc: 'No vote on some document.',
+      examples: {});
+  
+  static voteHoldMessage() => Intl.message(
+      "Hold",
+      name: 'voteHold',
+      args: [],
+      desc: 'Hold vote on some document.',
+      examples: {});
+  
+  static voteNAMessage() => Intl.message(
+      "NA",
+      name: 'voteNA',
+      args: [],
+      desc: 'Case when vote decision is not applicable.',
+      examples: {});
+  
+  votingMessage() => Intl.message(
+      "Votting",
+      name: 'votingMessage',
+      args: [],
+      desc: 'Document status at some point of time.',
+      examples: {});
+  
+  acceptedMessage() => Intl.message(
+      "Accepted",
+      name: 'acceptedMessage',
+      args: [],
+      desc: 'Document status at some point of time.',
+      examples: {});  
+  
+  rejectedMessage() => Intl.message(
+      "Rejected",
+      name: 'rejectedMessage',
+      args: [],
+      desc: 'Document status at some point of time.',
+      examples: {}); 
+   
+  canceledMessage() => Intl.message(
+      "Canceled",
+      name: 'canceledMessage',
+      args: [],
+      desc: 'Document status at some point of time.',
+      examples: {}); 
+  
+  @observable
+  bool showEndOfVoteResults() {
+    return this.voteByTime < this.currentTime;
   }
 }
