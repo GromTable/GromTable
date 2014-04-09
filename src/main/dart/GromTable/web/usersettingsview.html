@@ -15,18 +15,30 @@
     }
     .updateInfo {
       background-color: #18D673;
+      float: left;
     }
     .becameDelegateButton {
       background-color: #18D673;
+      float: right;
     }
-    .becameDelegate {
-      background-color: #FAF8EA;
-      padding: 10px 10px 10px 10px;
+    .becameVoterButton {
+      background-color: #CC4D3D;
+      float: right;
+    }
+    .userSettings {
+      display: block;
+      margin: 40px auto 0 auto;
+      text-align: center;
+      width: 500px;
+    }
+    input, textarea {
+      width: 100%;
     }
     </style>
-    <template if="{{user != null}}">
-    <div class="becameDelegate">
-      <div class="commands">
+    <template if="{{viewerContext.currentUser != null}}">
+    <div class="userSettings">
+      <h1>{{userSettingsMessage()}}</h1>
+      <div class="userInfo">
         <label>{{nameMessage()}}<input value="{{user.name}}" placeholder="{{namePlaceholder()}}"></label><br>
         <label>{{birthdayMessage()}}<input value="{{user.birthday}}" placeholder="{{birthdayPlaceholder()}}"></label><br>
         <label>{{cityMessage()}}<input value="{{user.city}}" placeholder="{{cityPlaceholder()}}"></label><br>
@@ -38,18 +50,16 @@
         <lable>{{instagramMessage()}}<input value="{{user.instagram}}" placeholder="{{instagramPlaceholder()}}"></lable><br>
         <lable>{{twitterMessage()}}<input value="{{user.twitter}}" placeholder="{{twitterPlaceholder()}}"></lable><br>
         <lable>{{googleMessage()}}<input value="{{user.google}}" placeholder="{{googlePlaceholder()}}"></lable><br>
+        <div>
         <button class="fancy updateInfo" on-click="{{updateInfo}}">{{updateInfoMessage()}}</button>
-        <p>
-        {{voterDelegateExplanation()}}
-        </p>
-        <p>
         <template if="{{viewerContext.currentUser.type == 'DELEGATE'}}">
-          <button class="fancy becameDelegateButton" on-click="{{becameVoter}}">{{becameVoterMessage()}}</button>
+          <button class="fancy becameVoterButton" on-click="{{becameVoter}}">{{becameVoterMessage()}}</button>
         </template>
         <template if="{{viewerContext.currentUser.type == 'VOTER'}}">
           <button class="fancy becameDelegateButton" on-click="{{becameDelegate}}">{{becameDelegateMessage()}}</button>
         </template>
-        </p>
+        <div style="clear:both;"></div>
+        </div>
       </div>
     </div>
     </template>

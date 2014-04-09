@@ -7,6 +7,7 @@ import 'state.dart';
 import 'dart:html';
 import 'error.dart';
 import 'user.dart';
+import 'commonmessages.dart';
 
 @CustomTag('user-settings-view')
 class UserSettingsView extends PolymerElement {
@@ -57,6 +58,8 @@ class UserSettingsView extends PolymerElement {
   void becameDelegate(event, detail, target) {
     startSetUserType('DELEGATE');
   }
+  
+  userSettingsMessage() => CommonMessages.userSettingsMessage();
   
   nameMessage() => Intl.message(
       "Name: ",

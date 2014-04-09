@@ -8,6 +8,7 @@ import 'viewercontext.dart';
 import 'devsettings.dart';
 import 'error.dart';
 import 'state.dart';
+import 'commonmessages.dart';
 
 @CustomTag('loggedin-view')
 class LoggedinView extends PolymerElement {
@@ -65,12 +66,7 @@ class LoggedinView extends PolymerElement {
     desc: 'Invitation to login into site.',
     examples: {});
   
-  userSettingsMessage() => Intl.message(
-      "settings",
-      name: 'userSettings',
-      args: [],
-      desc: 'Label on user settings button.',
-      examples: {});
+  userSettingsMessage() => CommonMessages.userSettingsMessage();
   
   logoutMessage() => Intl.message(
     "Logout",
