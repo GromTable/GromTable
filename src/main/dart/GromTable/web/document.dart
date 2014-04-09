@@ -71,7 +71,7 @@ class DocumentInfo extends Observable {
   
   @observable
   String getVoteByString() {
-    DateFormat format = new DateFormat("yyyy.MM.dd HH:mm:ss");
+    DateFormat format = new DateFormat("[yyyy.MM.dd / HH:mm]");
     return format.format(new DateTime.fromMillisecondsSinceEpoch(voteByTime));
   }
   

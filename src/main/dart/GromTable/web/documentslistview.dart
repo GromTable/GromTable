@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'host.dart';
 import 'state.dart';
 import 'document.dart';
+import 'documentitem.dart';
 import 'error.dart';
 import 'viewercontext.dart';
 
@@ -17,7 +18,7 @@ class DocumentView extends PolymerElement {
   @observable bool showAccepted = true;
   @observable bool showRejected = false;
   @observable bool showCancelled = false;
-  @observable List<DocumentInfo> filteredDocuments = [];
+  @observable List<DocumentItem> filteredDocuments = [];
   @observable ViewerContext viewerContext = ViewerContext.instance;
   
   DocumentView.created() : super.created() {
@@ -93,14 +94,31 @@ class DocumentView extends PolymerElement {
   }
   
   void search() {
-    List<DocumentInfo> newFilteredDocument = [];
+    List<DocumentItem> newFilteredDocument = [];
+    var lower = searchParam.toLowerCase();
     for (var document in _allDocuments) {
       if (showDocument(document)) {
-        newFilteredDocument.add(document);
+        var documentName = document.name.toLowerCase();
+        var searchIndex = documentName.indexOf(lower);
+        var beforeName = document.name.substring(0, searchIndex);
+        var selectedName = document.name.substring(searchIndex, searchIndex + lower.length);
+        var afterName = document.name.substring(searchIndex + lower.length);
+        
+        newFilteredDocument.add(new DocumentItem(
+          document.id, document.name, document.getVoteDecisionMessage(), document.getVoteByString(),
+          beforeName, selectedName, afterName
+        ));
       }
     }
     filteredDocuments = newFilteredDocument;
   }
+  
+  searchPlaceholder() => Intl.message(
+      "Search by name",
+      name: 'searchPlaceholder',
+      args: [],
+      desc: 'Placeholder for document search.',
+      examples: {});
   
   documentListMessage() => Intl.message(
       "Document list",

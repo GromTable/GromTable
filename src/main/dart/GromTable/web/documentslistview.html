@@ -5,8 +5,21 @@
 <polymer-element name="documents-list-view">
   <template>
     <style>
-      #searchdocumentt {
-         margin-top: 20px;
+      .documentsList {
+        display: block;
+        margin: 40px auto 0 auto;
+        text-align: center;
+        width: 100%;
+      }
+      .documentItems, .options {
+        margin-top: 20px;
+      }
+      .documentItem {
+        cursor: pointer;
+      }
+      #searchdocument {
+         margin-top: 0px;
+         width: 300px;
       }
     .fancy, .proposeChanges {
       background-color: #00A0FF;
@@ -20,23 +33,29 @@
       background-color: #18D673;
     }
     </style>
+    <div class="documentsList">
     <h1>{{documentListMessage()}}</h1>
     <div>
       <template if="{{basedocument != null && viewerContext.currentUser.type == 'DELEGATE'}}">
         <button class="proposeChanges" on-click="{{proposeChanges}}">{{proposeChangesButtonMessage()}}</button>
       </template>
       <br/>
-      <input id="searchdocument" type="text" value="{{searchParam}}" placeholder="Search">
+      <input id="searchdocument" type="text" value="{{searchParam}}" placeholder={{searchPlaceholder()}}>
       <br/>
+      <div class="options">
       <input type="checkbox" id="voting" checked="{{showVoting}}">{{showVotingMessage()}}
       <input type="checkbox" id="accepted" checked="{{showAccepted}}">{{showAcceptedMessage()}}
       <input type="checkbox" id="rejected" checked="{{showRejected}}">{{showRejectedMessage()}}
       <input type="checkbox" id="cancelled" checked="{{showCancelled}}">{{showCancelledMessage()}}
-      <ul>
-        <template repeat="{{doc in filteredDocuments}}">
-          <li>{{doc.name}} {{doc.getVoteDecisionMessage()}} {{doc.getVoteByString()}}<button class="fancy" data-document="{{doc.id}}" on-click="{{goToDocument}}">{{goToDocumentButton()}}</button></li>
-        </template>
-      </ul>
+      </div>
+      <br/>
+      <div class="documentItems">
+      <template repeat="{{doc in filteredDocuments}}">
+        <a class="documentItem" data-document="{{doc.id}}" on-click="{{goToDocument}}">{{doc.beforeName}}<b>{{doc.selectedName}}</b>{{doc.afterName}} {{doc.voteDecision}} {{doc.voteByString}}</a>
+        <br/>
+      </template>
+      </div>
+    </div>
     </div>
   </template>
   <script type="application/dart" src="documentslistview.dart"></script>
