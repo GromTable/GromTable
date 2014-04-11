@@ -11,7 +11,7 @@ class TestUserView extends PolymerElement {
   
   void loginUser(event, detail, target) {
     String name = Uri.encodeQueryComponent(target.attributes['data-name']);
-    String login_url = (Host.hash + '&code=' + name).substring(1);
+    String login_url = (Host.hash + '&code=' + name);
     window.location.assign(login_url);
   }
 }

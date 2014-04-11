@@ -30,10 +30,12 @@
     .documentBox {
       border: 1px solid black;
       padding: 25px 25px 25px 25px;
+      text-align: left;
     }
     .document {
-      background-color: #FAF8EA;
-      padding: 10px 10px 10px 10px;
+      width: 600px;
+      margin: 40px auto 0 auto;
+      text-align: center;
     }
     pre {
  white-space: pre-wrap;       /* css-3 */
@@ -45,21 +47,22 @@
 
     </style>
     <div class="document">
-    <h1>{{documentHeaderMessage()}}</h1>
+
     <template if="{{!isLoaded}}">
       Loading...
     </template>
     <template if="{{isLoaded}}">
-      <div class="documentBox" style = "border:1px solid black;">
-        <h2>{{document.name}}</h2>
+      <h2>{{document.name}}</h2>
+      <h3>{{documentHeaderMessage()}}</h3>
+      {{documentAuthorMessage()}} <user-view user="{{document.author}}"></user-view> 
+      <div class="documentBox">
         <pre>{{document.text}}</pre>    
       </div>
       <div>
-      {{documentAuthorMessage()}} <user-view user="{{document.author}}"></user-view>   
       <p>
         <button class="buttonYes" on-click="{{voteYes}}">{{documentVoteYesButtonMessage()}}</button>
-        <button class="buttonNo" on-click="{{voteNo}}">{{documentVoteNoButtonMessage()}}</button>
         <button class="buttonHold" on-click="{{voteHold}}">{{documentVoteHoldButtonMessage()}}</button>
+        <button class="buttonNo" on-click="{{voteNo}}">{{documentVoteNoButtonMessage()}}</button>
         <!--
         <button class="buttonProposeChange" on-click="{{documentChanges}}">{{documentChangesButtonMessage()}}</button>
         -->
@@ -77,7 +80,7 @@
       </template>
       <document-votes-view totalvotes="{{document.totalVotes}}" allvotes="{{document.allVotes}}" viewercontext="{{viewerContext}}" state="{{getState(document.totalVotes, document.allVotes)}}"></document-votes-view>
       <facebook-comments-view url="{{getHref()}}"></facebook-comments-view>
-      </div>  
+      </div>
     </template>
     </div>
   </template>
