@@ -4,8 +4,9 @@
 <polymer-element name="user-info-view">
   <template>
     <style>
-    .fancy {
-      background-color: #00A0FF;
+    .delegateButton {
+      background-color: #18D673 ;
+      margin: 40px 0 0 0;
       color: #fff;
       font-size: 20px;
       padding: 10px 20px;
@@ -13,8 +14,12 @@
       border: 0px;
     }
     .user {
-      background-color: #FAF8EA;
-      padding: 10px 10px 10px 10px;
+      width: 600px;
+      margin: 40px auto 0 auto;
+      text-align: center;
+    }
+    .description {
+      text-align: left;
     }
     </style>
     <div class="user">
@@ -24,12 +29,11 @@
     <template if="{{isLoaded}}">
       <h3>{{userInformation()}}</h3>
       <user-view user="{{user}}"></user-view>
-      <br/>
-      {{user.description}}
-      <br/>
-      Facebook: <a href="{{user.facebook}}">{{user.facebook}}</a>
-      <p></p>
-      <button class="fancy" on-click="{{voteUser}}">{{delegateMessage()}}</button>
+      <h3>{{user.city}}</h3>
+      <div class="description">
+        {{user.description}}
+      </div>
+      <button class="delegateButton" on-click="{{voteUser}}">{{delegateMessage()}}</button>
       <p></p>
       <template if="{{delegate != null}}">
          {{delegatedByUser()}}

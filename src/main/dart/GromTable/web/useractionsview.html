@@ -3,11 +3,17 @@
 <polymer-element name="user-actions-view">
   <template>
     <style>
+    .userActions {
+      text-align: center;
+    }
+    .userActionsList {
+      text-align: left;
+    }
     </style>
     <template if="{{useractions != null}}">
-      <div>
+      <div class="userActions">
         {{userActionsMessage()}}
-        <ul>
+        <ul class="userActionsList">
         <template repeat="{{action in sortByTime(useractions)}}">
           <li><user-action-view action="{{action}}"></user-action-view></li>
         </template>
