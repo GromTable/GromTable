@@ -34,6 +34,15 @@ class DocumentView extends PolymerElement {
     onPropertyChange(this, #showCancelled, search);
   }
   
+  void searchEnter(Event e, var detail, var target) {
+    int code = (e as KeyboardEvent).keyCode;
+    if (code == 13) {
+      if (filteredDocuments.length == 1) {
+        State.instance = new State(State.DOCUMENT, id: filteredDocuments[0].id);        
+      }
+    }
+  }
+  
   void startLoadingDocumentsList() {
     Map<String, String> requestData = {};
     if (basedocument != null) {
@@ -76,7 +85,7 @@ class DocumentView extends PolymerElement {
   
   bool showDocument(document) {
     var lower = searchParam.toLowerCase();
-    if (document.name.toLowerCase().contains(lower)) {
+    if (document.getNameWithDocumentId().toLowerCase().contains(lower)) {
       switch (document.status) {
         case 'VOTING':
           return showVoting;
@@ -96,16 +105,16 @@ class DocumentView extends PolymerElement {
   void search() {
     List<DocumentItem> newFilteredDocument = [];
     var lower = searchParam.toLowerCase();
-    for (var document in _allDocuments) {
+    for (DocumentInfo document in _allDocuments) {
       if (showDocument(document)) {
-        var documentName = document.name.toLowerCase();
+        var documentName = document.getNameWithDocumentId().toLowerCase();
         var searchIndex = documentName.indexOf(lower);
-        var beforeName = document.name.substring(0, searchIndex);
-        var selectedName = document.name.substring(searchIndex, searchIndex + lower.length);
-        var afterName = document.name.substring(searchIndex + lower.length);
+        var beforeName = documentName.substring(0, searchIndex);
+        var selectedName = documentName.substring(searchIndex, searchIndex + lower.length);
+        var afterName = documentName.substring(searchIndex + lower.length);
         
         newFilteredDocument.add(new DocumentItem(
-          document.id, document.name, document.getVoteDecisionMessage(), document.getVoteByString(),
+          document.id, documentName, document.getVoteDecisionMessage(), document.getVoteByString(),
           beforeName, selectedName, afterName
         ));
       }

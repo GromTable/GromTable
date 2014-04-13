@@ -4,7 +4,8 @@ public enum DocumentStatus {
   VOTING("VOTING"),
   ACCEPTED("ACCEPTED"),
   REJECTED("REJECTED"),
-  CANCELED("CANCELED");
+  CANCELED("CANCELED"),
+  COUNTING("COUNTING");
 
   private final String name;
 

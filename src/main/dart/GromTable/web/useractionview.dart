@@ -1,6 +1,7 @@
 import 'package:intl/intl.dart';
 import 'package:polymer/polymer.dart';
 import 'useraction.dart';
+import 'document.dart';
 import 'util.dart';
 
 @CustomTag('user-action-view')
@@ -25,14 +26,14 @@ class UserActionView extends PolymerElement {
   createDocumentStoryMessage(actorName, documentName) => Intl.message(
       "$actorName created '$documentName' document.",
       name: 'userDocumentStory',
-      args: [actorName],
+      args: [actorName, documentName],
       desc: 'Story about creating a document.',
       examples: {'actorName' : 'Roman', 'documentName' : 'Simple name'});
   
   changeDocumentStoryMessage(actorName, documentName) => Intl.message(
     "$actorName changed '$documentName' document.",
     name: 'userDocumentStory',
-    args: [actorName],
+    args: [actorName, documentName],
     desc: 'Story about changing a document.',
     examples: {'actorName' : 'Roman', 'documentName' : 'Simple name'});
 
@@ -42,11 +43,14 @@ class UserActionView extends PolymerElement {
       args: [actorName, delegateName],
       desc: 'Story about delegating someone.',
       examples: {'actorName' : 'Roman', 'delegateName': 'Ivan'});
+  
+  voteDocumentStoryMessage(actorName, documentName, voteDecision) =>
+      voteDocumentStory1Message(actorName, documentName, DocumentInfo.getVoteMessage(voteDecision));
 
-  voteDocumentStoryMessage(actorName, documentName, voteDecision) => Intl.message(
+  voteDocumentStory1Message(actorName, documentName, voteDecision) => Intl.message(
       "$actorName voted on the '$documentName' with decision: $voteDecision",
       name: 'voteDocumentStory',
-      args: [documentName, voteDecision],
+      args: [actorName, documentName, voteDecision],
       desc: 'Story about voting on the document.',
       examples: {'actorName' : 'Roman', 'documentName': 'Simple document', 'voteDecision' : 'YES'});
   

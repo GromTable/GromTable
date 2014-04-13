@@ -3,6 +3,7 @@ package com.gromtable.server.api.createdocument;
 import com.gromtable.server.core.data.Id;
 import com.gromtable.server.core.entity.ActionType;
 import com.gromtable.server.core.entity.EntityAction;
+import com.gromtable.server.core.entity.EntityCounters;
 import com.gromtable.server.core.entity.EntityDocument;
 import com.gromtable.server.core.environment.BaseEnvironment;
 import com.gromtable.server.core.environment.Environment;
@@ -13,6 +14,7 @@ import com.gromtable.server.core.loader.Loader;
 
 public class CreateDocumentImpl extends Loader<CreateDocumentResult> {
   private Id parentId;
+  private long documentId;
   private String name;
   private String text;
   private long voteByTime;
@@ -28,7 +30,8 @@ public class CreateDocumentImpl extends Loader<CreateDocumentResult> {
 
   public CreateDocumentResult genLoad() {
     Environment environment = BaseEnvironment.getEnvironment();
-    EntityDocument document = new EntityDocument(name, text, voteByTime, creatorId);
+    documentId = EntityCounters.nextDocumentId();
+    EntityDocument document = new EntityDocument(documentId, name, text, voteByTime, creatorId);
     document.saveToDb(creatorId.getDbId());
     long time = environment.getTime().getTimeMillis();
     HashoutListToDocument hashoutListToDocument = new HashoutListToDocument();

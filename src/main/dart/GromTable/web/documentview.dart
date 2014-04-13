@@ -122,12 +122,12 @@ class DocumentView extends PolymerElement {
     return Host.clientHref;
   }
   
-  documentHeaderMessage() => Intl.message(
-      "Document number #1",
+  documentHeaderMessage(documentId) => Intl.message(
+      "Document number $documentId",
       name: 'documentHeader',
-      args: [],
+      args: [documentId],
       desc: 'Header for document page.',
-      examples: {});
+      examples: {'documentId' : 1});
   
   documentAuthorMessage() => Intl.message(
       "Author of the document:",
@@ -173,7 +173,7 @@ class DocumentView extends PolymerElement {
   
   documentCurrentResultsMessage() => Intl.message(
       "Show current results.",
-      name: 'endResultsButton',
+      name: 'currentResultsButton',
       args: [],
       desc: 'Text on button to see result in the end of the vote.',
       examples: {});

@@ -14,17 +14,27 @@ final messages = new MessageLookup();
 class MessageLookup extends MessageLookupByLibrary {
 
   get localeName => 'ru';
+  static acceptedMessage() => "Принят";
+
   static askToBeDelegate() => "Предложить этому пользователю стать делегатом";
 
   static becameDelegate() => "Стать делегатом";
 
-  static becameDelegateButton() => "Стать делегатом";
-
   static becameDelegateExplanation() => "X";
+
+  static becameDelegateStory(actorName) => "$actorName решил стать сотныком";
 
   static becameVoter() => "Стать избирателем";
 
-  static becameVoterButton() => "Стать избирателем";
+  static becameVoterStory(actorName) => "$actorName отказался быть сотником";
+
+  static birthday() => "День рождения:";
+
+  static birthdayPlaceholder() => "Введите Ваш день рождения:";
+
+  static cancelDocumentButton() => "Отмена";
+
+  static canceledMessage() => "Отменен";
 
   static city() => "Город: ";
 
@@ -36,19 +46,29 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static createDocumentButton() => "Создать документ";
 
-  static createDocumentHeader() => "Создать документ";
+  static currentResultsButton() => "Показать результаты на конец голосования";
 
-  static delegate() => "Избран пользователем id:";
+  static delegate() => "Избрать даного человека своим сотником";
 
-  static delegatedByUser() => "Избранный пользователь:";
+  static delegateHeaderMessage() => "Сотники";
 
-  static delegatedThisUser() => "Люди, которые избрали этого пользователя:";
+  static delegateVoteHeaderMessage() => "Решения сотника";
+
+  static delegatedByUser() => "Сотнык пользователя:";
+
+  static delegatedThisUser() => "Люди, которые избрали этого пользователя своим сотником:";
 
   static description() => "Описание: ";
 
   static descriptionPlaceholder() => "Введите описание деятельности, которой Вы хотели бы заниматься здесь...";
 
-  static documentHeader() => "Документ №1";
+  static documentAuthorMessage() => "Автор документа";
+
+  static documentChangesButton() => "Изменения в документе";
+
+  static documentDefaultName() => "Новый документ";
+
+  static documentHeader(documentId) => "Документ №$documentId";
 
   static documentListHeader() => "Список документов";
 
@@ -70,11 +90,19 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static en() => "анг";
 
+  static endResultsButton() => "Показать текущие результаты";
+
   static facebook() => "Facebook: ";
 
   static facebookPlaceholder() => "Введите Ваш facebook здесь...";
 
   static goToDocumentButton() => "Перейти к документу";
+
+  static google() => "Google ";
+
+  static googlePlaceholder() => "Введите ваш Google ";
+
+  static independentVotersMessage() => "Назависимые голосы";
 
   static instagram() => "Instagram: ";
 
@@ -96,15 +124,25 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static publicTable() => "Общественный стол";
 
+  static rejectedMessage() => "Отклоненый";
+
   static rus() => "рус";
 
-  static showAcceptedOption() => "Принятые документы";
+  static searchPlaceholder() => "Поиск по имени";
 
-  static showCancelled() => "Аннулированные документы";
+  static showAcceptedOption() => "Принятые";
 
-  static showRejectedOption() => "Отклоненные документы";
+  static showCancelled() => "Отменение";
 
-  static showVotingOption() => "Показать голоса";
+  static showChangesButton() => "Показать изменения";
+
+  static showRejectedOption() => "Отклоненные";
+
+  static showVotingOption() => "Голосуютса";
+
+  static totalRawMessage() => "Всего";
+
+  static totalVotesHeaderMessage() => "Всего голосов";
 
   static twitter() => "Twitter: ";
 
@@ -114,15 +152,35 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static updateInfo() => "Сохранить ";
 
+  static userActions() => "Новости пользователе:";
+
+  static userDocumentStory(actorName, documentName) => "$actorName предолжил изменения к документу \'$documentName\'.";
+
   static userInformation() => "Информация пользователя";
 
-  static userIsUnknown() => "Выберите кем вы хотите быть: избирателем или делегатом. ";
+  static userJoinedStory(actorName) => "$actorName присоеденился к проекту.";
 
-  static userSettings() => "Настройки пользователя";
+  static userSettings() => "Настройки";
 
   static vkontaktePlaceholder() => "Введите Ваш vkontakte здесь...";
 
   static vkontkte() => "Vkontakte: ";
+
+  static voteDocumentStory(actorName, documentName, voteDecision) => "$actorName проголосовал по донумету \'$documentName\' с решениям: $voteDecision";
+
+  static voteEndedMessage(voteDecision) => "Голосование по документу окончено с результатом: $voteDecision";
+
+  static voteHold() => "Воздерживаюсь";
+
+  static voteNA() => ". ";
+
+  static voteNo() => "Отвергаю";
+
+  static voteUserStory(actorName, delegateName) => "$actorName избрал сотником $delegateName.";
+
+  static voteYes() => "Поддерживаю";
+
+  static votingMessage() => "Голосования";
 
   static zip() => "Индекс: ";
 
@@ -130,23 +188,33 @@ class MessageLookup extends MessageLookupByLibrary {
 
 
   final messages = const {
+    "acceptedMessage" : acceptedMessage,
     "askToBeDelegate" : askToBeDelegate,
     "becameDelegate" : becameDelegate,
-    "becameDelegateButton" : becameDelegateButton,
     "becameDelegateExplanation" : becameDelegateExplanation,
+    "becameDelegateStory" : becameDelegateStory,
     "becameVoter" : becameVoter,
-    "becameVoterButton" : becameVoterButton,
+    "becameVoterStory" : becameVoterStory,
+    "birthday" : birthday,
+    "birthdayPlaceholder" : birthdayPlaceholder,
+    "cancelDocumentButton" : cancelDocumentButton,
+    "canceledMessage" : canceledMessage,
     "city" : city,
     "cityPlaceholder" : cityPlaceholder,
     "commands" : commands,
     "createDocument" : createDocument,
     "createDocumentButton" : createDocumentButton,
-    "createDocumentHeader" : createDocumentHeader,
+    "currentResultsButton" : currentResultsButton,
     "delegate" : delegate,
+    "delegateHeaderMessage" : delegateHeaderMessage,
+    "delegateVoteHeaderMessage" : delegateVoteHeaderMessage,
     "delegatedByUser" : delegatedByUser,
     "delegatedThisUser" : delegatedThisUser,
     "description" : description,
     "descriptionPlaceholder" : descriptionPlaceholder,
+    "documentAuthorMessage" : documentAuthorMessage,
+    "documentChangesButton" : documentChangesButton,
+    "documentDefaultName" : documentDefaultName,
     "documentHeader" : documentHeader,
     "documentListHeader" : documentListHeader,
     "documentNameMessage" : documentNameMessage,
@@ -158,9 +226,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "documentVoteYesButton" : documentVoteYesButton,
     "documentsList" : documentsList,
     "en" : en,
+    "endResultsButton" : endResultsButton,
     "facebook" : facebook,
     "facebookPlaceholder" : facebookPlaceholder,
     "goToDocumentButton" : goToDocumentButton,
+    "google" : google,
+    "googlePlaceholder" : googlePlaceholder,
+    "independentVotersMessage" : independentVotersMessage,
     "instagram" : instagram,
     "instagramPlaceholder" : instagramPlaceholder,
     "loading" : loading,
@@ -171,20 +243,35 @@ class MessageLookup extends MessageLookupByLibrary {
     "phone" : phone,
     "phonePlaceholder" : phonePlaceholder,
     "publicTable" : publicTable,
+    "rejectedMessage" : rejectedMessage,
     "rus" : rus,
+    "searchPlaceholder" : searchPlaceholder,
     "showAcceptedOption" : showAcceptedOption,
     "showCancelled" : showCancelled,
+    "showChangesButton" : showChangesButton,
     "showRejectedOption" : showRejectedOption,
     "showVotingOption" : showVotingOption,
+    "totalRawMessage" : totalRawMessage,
+    "totalVotesHeaderMessage" : totalVotesHeaderMessage,
     "twitter" : twitter,
     "twitterPlaceholder" : twitterPlaceholder,
     "ukr" : ukr,
     "updateInfo" : updateInfo,
+    "userActions" : userActions,
+    "userDocumentStory" : userDocumentStory,
     "userInformation" : userInformation,
-    "userIsUnknown" : userIsUnknown,
+    "userJoinedStory" : userJoinedStory,
     "userSettings" : userSettings,
     "vkontaktePlaceholder" : vkontaktePlaceholder,
     "vkontkte" : vkontkte,
+    "voteDocumentStory" : voteDocumentStory,
+    "voteEndedMessage" : voteEndedMessage,
+    "voteHold" : voteHold,
+    "voteNA" : voteNA,
+    "voteNo" : voteNo,
+    "voteUserStory" : voteUserStory,
+    "voteYes" : voteYes,
+    "votingMessage" : votingMessage,
     "zip" : zip,
     "zipPlaceholder" : zipPlaceholder
   };

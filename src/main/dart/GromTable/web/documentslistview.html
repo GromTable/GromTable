@@ -40,7 +40,7 @@
         <button class="proposeChanges" on-click="{{proposeChanges}}">{{proposeChangesButtonMessage()}}</button>
       </template>
       <br/>
-      <input id="searchdocument" type="text" value="{{searchParam}}" placeholder={{searchPlaceholder()}}>
+      <input id="searchdocument" type="text" value="{{searchParam}}" placeholder={{searchPlaceholder()}} on-keypress="{{searchEnter}}">
       <br/>
       <div class="options">
       <input type="checkbox" id="voting" checked="{{showVoting}}">{{showVotingMessage()}}

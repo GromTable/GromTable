@@ -7,7 +7,7 @@ import org.junit.Test;
 public class EntityDocumentTest extends EntityObjectTest<EntityDocument> {
   protected EntityObject<EntityDocument> getEntityObject() {
     EntityUser creator = new EntityUser("1", "Document Creator").save();
-    return new EntityDocument("Document name", "Document text", 10, creator.getId());
+    return new EntityDocument(23, "Document name", "Document text", 10, creator.getId());
   }
 
   protected Class<EntityDocument> getEntityObjectClass() {
@@ -17,8 +17,10 @@ public class EntityDocumentTest extends EntityObjectTest<EntityDocument> {
   @Test
   public void genWriteCreateDocumentTest() {
     EntityUser creator = new EntityUser("1", "Document Creator").save();
-    EntityDocument savedDocument = new EntityDocument("Document name", "Document text", 10, creator.getId()).save();
+    EntityDocument savedDocument = new EntityDocument(23, "Document name", "Document text", 10, creator.getId()).save();
     EntityDocument loadedDocument = EntityDocument.load(savedDocument.getId());
+    Assert.assertEquals(savedDocument.getDocumentId(), 23);
+    Assert.assertEquals(loadedDocument.getDocumentId(), 23);
     Assert.assertEquals(savedDocument.getName(), "Document name");
     Assert.assertEquals(loadedDocument.getName(), "Document name");
     Assert.assertEquals(savedDocument.getText(), "Document text");
@@ -32,7 +34,8 @@ public class EntityDocumentTest extends EntityObjectTest<EntityDocument> {
   @Test
   public void genWriteCreateDocumentRussianTest() {
     EntityUser creator = new EntityUser("1", "Document Creator").save();
-    EntityDocument savedDocument = new EntityDocument("Имя документа", "Текст документа", 10, creator.getId()).save();
+    EntityDocument savedDocument =
+        new EntityDocument(23, "Имя документа", "Текст документа", 10, creator.getId()).save();
     EntityDocument loadedDocument = EntityDocument.load(savedDocument.getId());
     Assert.assertEquals(savedDocument.getName(), "Имя документа");
     Assert.assertEquals(loadedDocument.getName(), "Имя документа");

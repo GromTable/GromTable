@@ -20,6 +20,7 @@ class DocumentInfo extends Observable {
   static final CURRENT_TIME_KEY = 'currentTime';
   static final DOCUMENT_KEY = 'document';
   static final ID_KEY = 'id';
+  static final DOCUMENT_ID_KEY = 'documentId';
   static final NAME_KEY = 'name';
   static final TEXT_KEY = 'text';
   static final VOTE_BY_TIME_KEY = 'voteByTime';
@@ -29,6 +30,7 @@ class DocumentInfo extends Observable {
   static final ALL_VOTES_KEY = 'allVotes';
   
   @observable String id;
+  @observable int documentId;
   @observable String name;
   @observable String text;
   @observable int currentTime;
@@ -44,6 +46,7 @@ class DocumentInfo extends Observable {
     this.currentTime = map[CURRENT_TIME_KEY];
     var documentMap = map[DOCUMENT_KEY];
     this.id = documentMap[ID_KEY];
+    this.documentId = documentMap[DOCUMENT_ID_KEY];
     this.name = documentMap[NAME_KEY];
     this.text = documentMap[TEXT_KEY];
     this.status = documentMap[STATUS_KEY];
@@ -55,6 +58,7 @@ class DocumentInfo extends Observable {
   
   DocumentInfo.fromObject(Map<String, Object> map) {
     this.id = map[ID_KEY];
+    this.documentId = map[DOCUMENT_ID_KEY];
     this.name = map[NAME_KEY];
     this.text = map[TEXT_KEY];
     this.voteByTime = map[VOTE_BY_TIME_KEY];
@@ -73,6 +77,19 @@ class DocumentInfo extends Observable {
   String getVoteByString() {
     DateFormat format = new DateFormat("[yyyy.MM.dd / HH:mm]");
     return format.format(new DateTime.fromMillisecondsSinceEpoch(voteByTime));
+  }
+  
+  String getNameWithDocumentId() {
+    return name + "(" + getDocumentId() + ")";
+  }
+  
+  @observable
+  String getDocumentId() {
+    var res = documentId.toString();
+    while (res.length < 4) {
+      res = "0" + res;
+    }
+    return res;
   }
   
   @observable

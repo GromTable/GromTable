@@ -14,17 +14,27 @@ final messages = new MessageLookup();
 class MessageLookup extends MessageLookupByLibrary {
 
   get localeName => 'uk';
+  static acceptedMessage() => "Принят";
+
   static askToBeDelegate() => "Запропонувати цьому користувачу стати делегатом";
 
   static becameDelegate() => "Стати делегатом";
 
-  static becameDelegateButton() => "Стати делегатом";
-
   static becameDelegateExplanation() => "X";
+
+  static becameDelegateStory(actorName) => "$actorName вирішив стати сотником.";
 
   static becameVoter() => "Стати виборцем";
 
-  static becameVoterButton() => "Стати виборцем";
+  static becameVoterStory(actorName) => "$actorName відмовився бути сотником";
+
+  static birthday() => "День народження:";
+
+  static birthdayPlaceholder() => "Введіть Ваш день народження:";
+
+  static cancelDocumentButton() => "Відміна";
+
+  static canceledMessage() => "Відмінений";
 
   static city() => "Місто: ";
 
@@ -36,19 +46,29 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static createDocumentButton() => "Створити документ";
 
-  static createDocumentHeader() => "Створити документ";
+  static currentResultsButton() => "Показати результати на кінець голосування";
 
-  static delegate() => "Обрати даного користвача своим представником";
+  static delegate() => "Вибрати дану людину своїм сотником";
 
-  static delegatedByUser() => "Обраний користувач:";
+  static delegateHeaderMessage() => "Сотники";
 
-  static delegatedThisUser() => "Люди,які обрали цього користувача:";
+  static delegateVoteHeaderMessage() => "Рішення сотника";
+
+  static delegatedByUser() => "Сотник користувача:";
+
+  static delegatedThisUser() => "Люди,які обрали цього користувача своїм сотником:";
 
   static description() => "Опис: ";
 
   static descriptionPlaceholder() => "Введіть опис діяльності, якою б Ви хотіли займатися...";
 
-  static documentHeader() => "Документ №1";
+  static documentAuthorMessage() => "Автор документу";
+
+  static documentChangesButton() => "Зміни в документі";
+
+  static documentDefaultName() => "Новий документ";
+
+  static documentHeader(documentId) => "Документ №$documentId";
 
   static documentListHeader() => "Список документів";
 
@@ -70,11 +90,19 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static en() => "анг";
 
+  static endResultsButton() => "Показати поточні результати";
+
   static facebook() => "Facebook: ";
 
   static facebookPlaceholder() => "Введіть Ваш facebook сюди...";
 
   static goToDocumentButton() => "Перейти до документу";
+
+  static google() => "Google ";
+
+  static googlePlaceholder() => "Введіть ваш Google ";
+
+  static independentVotersMessage() => "Незалежні голоси";
 
   static instagram() => "Instagram: ";
 
@@ -96,15 +124,25 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static publicTable() => "Громадський стіл";
 
+  static rejectedMessage() => "Відхилений";
+
   static rus() => "рус";
 
-  static showAcceptedOption() => "Прийняті документи ";
+  static searchPlaceholder() => "Пошук по імені";
 
-  static showCancelled() => "Анульовані документи";
+  static showAcceptedOption() => "Прийняті";
 
-  static showRejectedOption() => "Відхилені документи";
+  static showCancelled() => "Відмінені";
 
-  static showVotingOption() => "Показати голоси";
+  static showChangesButton() => "Показати зміни";
+
+  static showRejectedOption() => "Відхилені";
+
+  static showVotingOption() => "Голосуються";
+
+  static totalRawMessage() => "Всього";
+
+  static totalVotesHeaderMessage() => "Всього голосів";
 
   static twitter() => "Twitter: ";
 
@@ -114,15 +152,35 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static updateInfo() => "Зберегти ";
 
+  static userActions() => "Новини користувача:";
+
+  static userDocumentStory(actorName, documentName) => "$actorName запропонував зміни до документу \'$documentName\'.";
+
   static userInformation() => "Інформація користувача";
 
-  static userIsUnknown() => "Оберіть ким ви бажаєте бути: виборцем чи делегатом. ";
+  static userJoinedStory(actorName) => "$actorName приеднався до проекту.";
 
-  static userSettings() => "Налаштування користувача";
+  static userSettings() => "Налаштування";
 
   static vkontaktePlaceholder() => "Введіть Ваш vkontakte тут...";
 
   static vkontkte() => "Vkontakte: ";
+
+  static voteDocumentStory(actorName, documentName, voteDecision) => "$actorName проголосував по документу \'$documentName\' з рішенням: $voteDecision";
+
+  static voteEndedMessage(voteDecision) => "Голосування по документу закінчелось з результатом: $voteDecision";
+
+  static voteHold() => "Утримуюсь";
+
+  static voteNA() => ".";
+
+  static voteNo() => "Відкидаю";
+
+  static voteUserStory(actorName, delegateName) => "$actorName вибрав сотником $delegateName.";
+
+  static voteYes() => "Підтримую";
+
+  static votingMessage() => "Голосування";
 
   static welcomeDescription() => "Загальногонаціональний позапартійний проект, створений для того, щоб всі громадяні могли вести діалог з приводу подальших шляхів розвитку громадянського суспільства в нашій країні.\n\nОсновні цінності проекту:\n- Довіра - прозора система вибору представників;\n- Доступність - в діалозі може прийняти участ будь-яка людина;\n- Загальнонаціональність - представлені всі верстви населення.";
 
@@ -140,23 +198,33 @@ class MessageLookup extends MessageLookupByLibrary {
 
 
   final messages = const {
+    "acceptedMessage" : acceptedMessage,
     "askToBeDelegate" : askToBeDelegate,
     "becameDelegate" : becameDelegate,
-    "becameDelegateButton" : becameDelegateButton,
     "becameDelegateExplanation" : becameDelegateExplanation,
+    "becameDelegateStory" : becameDelegateStory,
     "becameVoter" : becameVoter,
-    "becameVoterButton" : becameVoterButton,
+    "becameVoterStory" : becameVoterStory,
+    "birthday" : birthday,
+    "birthdayPlaceholder" : birthdayPlaceholder,
+    "cancelDocumentButton" : cancelDocumentButton,
+    "canceledMessage" : canceledMessage,
     "city" : city,
     "cityPlaceholder" : cityPlaceholder,
     "commands" : commands,
     "createDocument" : createDocument,
     "createDocumentButton" : createDocumentButton,
-    "createDocumentHeader" : createDocumentHeader,
+    "currentResultsButton" : currentResultsButton,
     "delegate" : delegate,
+    "delegateHeaderMessage" : delegateHeaderMessage,
+    "delegateVoteHeaderMessage" : delegateVoteHeaderMessage,
     "delegatedByUser" : delegatedByUser,
     "delegatedThisUser" : delegatedThisUser,
     "description" : description,
     "descriptionPlaceholder" : descriptionPlaceholder,
+    "documentAuthorMessage" : documentAuthorMessage,
+    "documentChangesButton" : documentChangesButton,
+    "documentDefaultName" : documentDefaultName,
     "documentHeader" : documentHeader,
     "documentListHeader" : documentListHeader,
     "documentNameMessage" : documentNameMessage,
@@ -168,9 +236,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "documentVoteYesButton" : documentVoteYesButton,
     "documentsList" : documentsList,
     "en" : en,
+    "endResultsButton" : endResultsButton,
     "facebook" : facebook,
     "facebookPlaceholder" : facebookPlaceholder,
     "goToDocumentButton" : goToDocumentButton,
+    "google" : google,
+    "googlePlaceholder" : googlePlaceholder,
+    "independentVotersMessage" : independentVotersMessage,
     "instagram" : instagram,
     "instagramPlaceholder" : instagramPlaceholder,
     "loading" : loading,
@@ -181,20 +253,35 @@ class MessageLookup extends MessageLookupByLibrary {
     "phone" : phone,
     "phonePlaceholder" : phonePlaceholder,
     "publicTable" : publicTable,
+    "rejectedMessage" : rejectedMessage,
     "rus" : rus,
+    "searchPlaceholder" : searchPlaceholder,
     "showAcceptedOption" : showAcceptedOption,
     "showCancelled" : showCancelled,
+    "showChangesButton" : showChangesButton,
     "showRejectedOption" : showRejectedOption,
     "showVotingOption" : showVotingOption,
+    "totalRawMessage" : totalRawMessage,
+    "totalVotesHeaderMessage" : totalVotesHeaderMessage,
     "twitter" : twitter,
     "twitterPlaceholder" : twitterPlaceholder,
     "ukr" : ukr,
     "updateInfo" : updateInfo,
+    "userActions" : userActions,
+    "userDocumentStory" : userDocumentStory,
     "userInformation" : userInformation,
-    "userIsUnknown" : userIsUnknown,
+    "userJoinedStory" : userJoinedStory,
     "userSettings" : userSettings,
     "vkontaktePlaceholder" : vkontaktePlaceholder,
     "vkontkte" : vkontkte,
+    "voteDocumentStory" : voteDocumentStory,
+    "voteEndedMessage" : voteEndedMessage,
+    "voteHold" : voteHold,
+    "voteNA" : voteNA,
+    "voteNo" : voteNo,
+    "voteUserStory" : voteUserStory,
+    "voteYes" : voteYes,
+    "votingMessage" : votingMessage,
     "welcomeDescription" : welcomeDescription,
     "welcomeHeader" : welcomeHeader,
     "welcomeLoginViaFacebook" : welcomeLoginViaFacebook,

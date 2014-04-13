@@ -55,7 +55,7 @@ public class TestCommand {
     EntityDocument savedDocument = documents.get(document);
     if (savedDocument == null) {
       EntityUser author = new EntityUser("" + documents.size(), "Author").save();
-      savedDocument = new EntityDocument(document, document, 100, author.getId());
+      savedDocument = new EntityDocument(23, document, document, 100, author.getId());
       savedDocument.save();
       documents.put(document, savedDocument);
     }

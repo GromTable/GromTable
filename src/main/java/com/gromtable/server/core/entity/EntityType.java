@@ -9,7 +9,8 @@ public enum EntityType {
   ENTITY_VOTE(8),
   ENTITY_ACTION(9),
   ENTITY_LIST(10),
-  ENTITY_JSON(11);
+  ENTITY_JSON(11),
+  ENTITY_COUNTERS(12);
 
   private final long id;
 

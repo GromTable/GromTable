@@ -6,13 +6,15 @@ import com.gromtable.server.api.getdocumentinfo.GetDocumentInfoResult;
 import com.gromtable.server.core.data.Id;
 
 public class EntityDocument extends EntityObject<EntityDocument> {
-  private String name;
-  private String text;
-  private long voteByTime;
+  private final long documentId;
+  private final String name;
+  private final String text;
+  private final long voteByTime;
   private DocumentStatus status;
-  private Id creatorId;
+  private final Id creatorId;
 
-  public EntityDocument(String name, String text, long voteByTime, Id creatorId) {
+  public EntityDocument(long documentId, String name, String text, long voteByTime, Id creatorId) {
+    this.documentId = documentId;
     this.name = name;
     this.text = text;
     this.voteByTime = voteByTime;
@@ -22,6 +24,10 @@ public class EntityDocument extends EntityObject<EntityDocument> {
 
   public EntityType getEntityType() {
     return EntityType.ENTITY_DOCUMENT;
+  }
+
+  public long getDocumentId() {
+    return documentId;
   }
 
   public String getName() {

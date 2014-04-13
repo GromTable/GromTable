@@ -28,7 +28,7 @@ public class CodedTest extends BaseTest {
     EntityUser user1 = new EntityUser("1", "Viewer").save();
     EntityUser user2 = new EntityUser("2", "Viewer").save();
     EntityUser user3 = new EntityUser("3", "Viewer").save();
-    EntityDocument document = new EntityDocument("Document", "Document", 20, user1.getId()).save();
+    EntityDocument document = new EntityDocument(23, "Document", "Document", 20, user1.getId()).save();
     constantTime.setNanoTime(5);
     EntityUser userVoterType = new EntityUser();
     userVoterType.setType(UserType.VOTER);
